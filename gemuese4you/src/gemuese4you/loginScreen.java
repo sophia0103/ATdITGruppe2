@@ -18,7 +18,7 @@ JTextField tUser;
 		
 		pLogin = new JPanel(new GridLayout(3, 2));
 		
-		lUser = new JLabel("Username: ");
+		lUser = new JLabel("Username: Sophia ");
 		lPassword = new JLabel("Password: ");
 		lTitle = new JLabel("Log-In");
 		lEmpty = new JLabel("");
