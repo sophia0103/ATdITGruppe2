@@ -15,20 +15,27 @@ JTextField tUser;
 	public loginScreen() {
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
+		Color orange = new Color(255, 229, 204);
+		c.setBackground(orange);
 		
 		pLogin = new JPanel(new GridLayout(3, 2));
+		pLogin.setBackground(orange);
 		
-		lUser = new JLabel("Username: Sophia ");
+		lUser = new JLabel("Username: ");
 		lPassword = new JLabel("Password: ");
 		lTitle = new JLabel("Log-In");
+		lTitle.setFont(new Font("Verdana", Font.BOLD, 20));
 		lEmpty = new JLabel("");
 		
 		tUser = new JTextField();
+		tUser.setPreferredSize(new Dimension(200, 50));
 		tPassword = new JPasswordField();
 		
 		btLogin = new JButton("Log-In");
 		btLogin.addActionListener(this);
 		lLoginTitle = new JLabel("Gemüse4You");
+		lLoginTitle.setFont(new Font("Verdana", Font.ITALIC, 18));
+		lLoginTitle.setIcon(new ImageIcon("images/carrot.png"));
 		
 		pLogin.add(lLoginTitle);
 		pLogin.add(lEmpty);
