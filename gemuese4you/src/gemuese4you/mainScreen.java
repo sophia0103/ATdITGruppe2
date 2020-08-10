@@ -2,6 +2,7 @@ package gemuese4you;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -13,7 +14,8 @@ public class mainScreen extends JFrame implements ActionListener {
 	JLabel lTitle;
 	Color orange;
 	public static int offerID;
-	public static ArrayList<JPanel> offerList;
+	public static ArrayList<Offer> offerList;
+	private static Connection connection;
 
 	public mainScreen() {
 		c = getContentPane();
@@ -42,6 +44,14 @@ public class mainScreen extends JFrame implements ActionListener {
 		this.setTitle("Gemüse 4 You");
 	}
 
+	 public static Connection getConnection() throws ClassNotFoundException, SQLException {
+         if (connection == null) {
+             Class.forName("org.mariadb.jdbc.Driver");
+             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "root");
+         }
+         return connection;
+     }
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
@@ -63,14 +73,14 @@ public class mainScreen extends JFrame implements ActionListener {
 	public JPanel getShopScreen() {
 		JPanel shopScreen = new JPanel(new BorderLayout());
 		JPanel titlebar = getTitleBar("Shop");
+		JButton btAddOffer = getAddOfferButton();
+		btAddOffer.addActionListener(new AddOfferListener());
+		titlebar.add(btAddOffer, BorderLayout.EAST);
 		shopScreen.add(titlebar, BorderLayout.NORTH);
-		offerList = new ArrayList<JPanel>();
-		offerList.add(newOffer("Karl", 350, "apple.png"));
-		offerList.add(newOffer("Erika", 350, "beetroot.png"));
-		offerList.add(newOffer("Bernd", 350, "salad.png"));
+		offerList = new ArrayList<Offer>();
 		JPanel pOffer = new JPanel(new GridLayout(offerList.size(), 1));
 		for (int i = 0; i < offerList.size(); i++) {
-			pOffer.add(offerList.get(i));
+//			pOffer.add(offerList.get(i));
 		}
 		shopScreen.add(pOffer, BorderLayout.CENTER);
 		return shopScreen;
@@ -136,5 +146,36 @@ public class mainScreen extends JFrame implements ActionListener {
 		btBack.addActionListener(this);
 		return btBack;
 	}
+	
+	public JButton getAddOfferButton() {
+		JButton btAdd = new JButton();
+		btAdd = new JButton();
+		btAdd.setBackground(orange);
+		btAdd.setIcon(new ImageIcon("images/add.png"));
+		btAdd.setMargin(new Insets(0, 0, 0, 0));
+		btAdd.setBorder(null);
+		btAdd.addActionListener(this);
+		return btAdd;
+	}
 
+	class AddOfferListener implements ActionListener {
+		
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			Statement stmt = connection.createStatement();
+			String queryOffers = "SELECT * FROM offers";
+			ResultSet resOffers = stmt.executeQuery(queryOffers);
+			while(!resOffers.isAfterLast()) {
+				String queryProductList = "SELECT product FROM productsinoffer WHERE productsinoffer.offerID = "+resOffers.getInt(1);
+//				offerList.add(new Offer(resOffers.getInt(1), resOffers.getInt(2), resOffers.getInt(3)))
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	}
 }
