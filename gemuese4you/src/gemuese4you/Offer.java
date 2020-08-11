@@ -3,6 +3,7 @@ package gemuese4you;
 import java.sql.*;
 import java.util.ArrayList;
 
+//represents the database entity offers
 public class Offer {
 	private int offerID, farmerID, distance;
 	private Date date;
@@ -26,6 +27,7 @@ public class Offer {
 		}
 	}
 
+	//returns the first name of the farmer who created the offer
 	public String getFarmerFirstName() {
 		try {
 			Statement stmt = connection.createStatement();
@@ -39,6 +41,8 @@ public class Offer {
 		}
 	}
 
+	
+	//returns the Product List which belongs to the offer
 	public ArrayList<String> getProductList() {
 		try {
 			ArrayList<String> productList = new ArrayList<String>();

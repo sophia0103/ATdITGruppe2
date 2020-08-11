@@ -34,7 +34,9 @@ public class shopScreen extends Screen {
 
 	}
 
-	public JPanel readOffers(ArrayList<Offer> offerList) {
+	
+	//reads the current offers in the database and adds them to the offer list
+	public void readOffers() {
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -48,32 +50,9 @@ public class shopScreen extends Screen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 	}
 
-	public JPanel getOfferPanel(Offer offer) {
-
-		JPanel pOffer = new JPanel(new BorderLayout());
-		JPanel pFooter = new JPanel();
-		JLabel lDes = new JLabel(offer.getDate() + " :" + offer.getFarmerFirstName() + "´s offer is "
-				+ offer.getDistance() + " m away.");
-		pFooter.add(lDes);
-		pOffer.add(pFooter, BorderLayout.SOUTH);
-		JButton btImage = new JButton();
-		btImage.setIcon(new ImageIcon("images/" + offer.getProductList().get(0)));
-		btImage.setMargin(new Insets(0, 0, 0, 0));
-		btImage.setBorder(null);
-		pOffer.add(btImage, BorderLayout.CENTER);
-		ActionListener al = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				getOfferDialog(offer);
-			}
-		};
-		btImage.addActionListener(al);
-		return pOffer;
-	}
-
+	//opens a dialog in which the attributes of the specified offer are listed
 	public void getOfferDialog(Offer offer) {
 		JFrame openAddOfferDialog = new JFrame();
 		openAddOfferDialog.setBackground(orange);
@@ -95,6 +74,7 @@ public class shopScreen extends Screen {
 
 	}
 
+	//returns a button to add an offer
 	public JButton getAddOfferButton() {
 		JButton btAdd = new JButton();
 		btAdd = new JButton();
@@ -106,14 +86,19 @@ public class shopScreen extends Screen {
 		return btAdd;
 	}
 
+	//Function which is called when the add offer button is pressed
 	class AddOfferListener implements ActionListener {
 		JTextField tName, tDist, tProducts;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			offerID++;
+			JFrame AddOfferDialog = openAddOfferDialog();
+			AddOfferDialog.setVisible(true);
+			AddOfferDialog.setSize(500, 500);
 		}
 
+		
+		//opens a dialog to create a new offer
 		public JFrame openAddOfferDialog() {
 			JFrame addOfferDialog = new JFrame();
 			Container c = addOfferDialog.getContentPane();
@@ -129,11 +114,23 @@ public class shopScreen extends Screen {
 			btSave.setIcon(new ImageIcon("images/save.png"));
 			btSave.setMargin(new Insets(0, 0, 0, 0));
 			btSave.setBorder(null);
-//			ActionListener saveListener = new ActionListener() {
-//				Statement stmt = connection.createStatement();
-//				String saveQuery = "INSERT INTO offers () VALUES ()";
-//			}
-			return null;
+			
+			// Reads the values of the Add Offer Dialog and saves the new offer in the database
+			ActionListener saveListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Statement stmt = connection.createStatement();
+						String saveQuery = "INSERT INTO offers (offerID, distance, date) VALUES ("+offerID+","+tDist.getText()+", "+Util.returnDateAsString()+")";
+						stmt.execute(saveQuery);
+						offerID++;
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			};
+			return addOfferDialog;
 
 		}
 	}

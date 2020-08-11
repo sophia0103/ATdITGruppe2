@@ -5,9 +5,10 @@ import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
 
-public abstract class Screen extends JPanel{
-static Color orange = new Color(255, 229, 204);;
+public abstract class Screen extends JPanel {
+	static Color orange = new Color(255, 229, 204);;
 
+	//returns a title bar for a screen
 	public JPanel getTitleBar(String title) {
 		JPanel pTitleBar = new JPanel(new BorderLayout());
 		JLabel lTitle = new JLabel(title);
@@ -18,6 +19,7 @@ static Color orange = new Color(255, 229, 204);;
 		return pTitleBar;
 	}
 
+	// returns a button to get back to the last Screen
 	public JButton getBackButton() {
 		JButton btBack = new JButton();
 		btBack = new JButton();
@@ -34,9 +36,9 @@ static Color orange = new Color(255, 229, 204);;
 				log.setVisible(true);
 				log.setSize(500, 500);
 				log.setTitle("Gemüse 4 You");
-				
+
 			}
-			
+
 		};
 		return btBack;
 	}
