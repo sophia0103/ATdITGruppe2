@@ -32,10 +32,15 @@ public class shopScreen extends Screen {
 			e.printStackTrace();
 		}
 
+		// display existing offers
+		readOffers();
+		for (int i = 0; i < offerList.size(); i++) {
+			this.add(getOfferPanel(offerList.get(i)));
+		}
+
 	}
 
-	
-	//reads the current offers in the database and adds them to the offer list
+	// reads the current offers in the database and adds them to the offer list
 	public void readOffers() {
 		Statement stmt;
 		try {
@@ -43,8 +48,14 @@ public class shopScreen extends Screen {
 			String queryOffers = "SELECT * FROM offers";
 			ResultSet resOffers = stmt.executeQuery(queryOffers);
 			while (!resOffers.isAfterLast()) {
-				offerList.add(
-						new Offer(resOffers.getInt(1), resOffers.getInt(2), resOffers.getInt(3), resOffers.getDate(4)));
+				if (resOffers.next()) {
+					int offerID = resOffers.getInt(1);
+					int farmerID = resOffers.getInt(2);
+					int distance = resOffers.getInt(3);
+					Date date = resOffers.getDate(4);
+					offerList.add(new Offer(offerID, farmerID, distance,date
+							));
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +63,27 @@ public class shopScreen extends Screen {
 		}
 	}
 
-	//opens a dialog in which the attributes of the specified offer are listed
+	// returns a panel for one offer in order to display them on the shopScreen
+	public JPanel getOfferPanel(Offer offer) {
+		JPanel pOffer = new JPanel(new BorderLayout());
+		JLabel pFooter = new JLabel(offer.getDate() + " : " + offer.getFarmerFirstName() + "´s offer is "
+				+ offer.getDistance() + " m away.");
+		JButton btIcon = new JButton();
+		btIcon.setIcon(new ImageIcon("images/" + offer.getProductList().get(0) + ".png"));
+		btIcon.setMargin(new Insets(0, 0, 0, 0));
+		btIcon.setBorder(null);
+		ActionListener al = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getOfferDialog(offer);
+			}
+		};
+		pOffer.add(pFooter, BorderLayout.SOUTH);
+		pOffer.add(btIcon, BorderLayout.CENTER);
+		return pOffer;
+	}
+
+	// opens a dialog in which the attributes of the specified offer are listed
 	public void getOfferDialog(Offer offer) {
 		JFrame openAddOfferDialog = new JFrame();
 		openAddOfferDialog.setBackground(orange);
@@ -74,7 +105,7 @@ public class shopScreen extends Screen {
 
 	}
 
-	//returns a button to add an offer
+	// returns a button to add an offer
 	public JButton getAddOfferButton() {
 		JButton btAdd = new JButton();
 		btAdd = new JButton();
@@ -86,7 +117,7 @@ public class shopScreen extends Screen {
 		return btAdd;
 	}
 
-	//Function which is called when the add offer button is pressed
+	// Function which is called when the add offer button is pressed
 	class AddOfferListener implements ActionListener {
 		JTextField tName, tDist, tProducts;
 
@@ -97,13 +128,12 @@ public class shopScreen extends Screen {
 			AddOfferDialog.setSize(500, 500);
 		}
 
-		
-		//opens a dialog to create a new offer
+		// opens a dialog to create a new offer
 		public JFrame openAddOfferDialog() {
 			JFrame addOfferDialog = new JFrame();
 			Container c = addOfferDialog.getContentPane();
 			c.setLayout(new BorderLayout());
-			JPanel pInput = new JPanel(new GridLayout(3,1));
+			JPanel pInput = new JPanel(new GridLayout(3, 1));
 			tName = new JTextField();
 			tDist = new JTextField();
 			tProducts = new JTextField();
@@ -114,14 +144,34 @@ public class shopScreen extends Screen {
 			btSave.setIcon(new ImageIcon("images/save.png"));
 			btSave.setMargin(new Insets(0, 0, 0, 0));
 			btSave.setBorder(null);
-			
-			// Reads the values of the Add Offer Dialog and saves the new offer in the database
+
+			// Reads the values of the Add Offer Dialog and saves the new offer in the
+			// database
 			ActionListener saveListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						Statement stmt = connection.createStatement();
-						String saveQuery = "INSERT INTO offers (offerID, distance, date) VALUES ("+offerID+","+tDist.getText()+", "+Util.returnDateAsString()+")";
+						// create productList
+
+						String[] productArray = tProducts.getText().split(",");
+						ArrayList<String> productList = new ArrayList();
+						for (int i = 0; i < productArray.length; i++) {
+							productList.add(productArray[i]);
+						}
+
+						// if one of the products doesn´t yet exist in the database, add it
+						for (int i = 0; i < productList.size(); i++) {
+							String checkQuery = "SELECT * FROM products WHERE productName =" + productList.get(i);
+							if (stmt.executeQuery(checkQuery) == null) {
+								String prodQuery = "INSERT INTO products(productName) VALUES (" + productList.get(i)
+										+ ")";
+								stmt.executeQuery(prodQuery);
+							}
+						}
+						// Insert new offer into the offers database table
+						String saveQuery = "INSERT INTO offers (offerID, distance, date) VALUES (" + offerID + ","
+								+ tDist.getText() + ", " + Util.returnDateAsString() + ")";
 						stmt.execute(saveQuery);
 						offerID++;
 					} catch (SQLException e1) {

@@ -24,7 +24,6 @@ public class mainScreen extends JFrame {
 
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		pHome = getHomeScreen();
-//		pShop = getShopScreen();
 		pShop = new shopScreen();
 
 		pShop.setBackground(orange);

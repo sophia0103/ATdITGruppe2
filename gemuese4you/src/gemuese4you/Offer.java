@@ -15,7 +15,6 @@ public class Offer {
 		this.farmerID = farmerID;
 		this.distance = distance;
 		this.date = date;
-		this.productList = this.getProductList();
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
@@ -25,9 +24,10 @@ public class Offer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.productList = this.getProductList();
 	}
 
-	//returns the first name of the farmer who created the offer
+	// returns the first name of the farmer who created the offer
 	public String getFarmerFirstName() {
 		try {
 			Statement stmt = connection.createStatement();
@@ -41,18 +41,18 @@ public class Offer {
 		}
 	}
 
-	
-	//returns the Product List which belongs to the offer
+	// returns the Product List which belongs to the offer
 	public ArrayList<String> getProductList() {
 		try {
 			ArrayList<String> productList = new ArrayList<String>();
 			Statement stmt = connection.createStatement();
 			String queryGPL = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
-					+ this.offerID;
+					+ offerID;
 			ResultSet rsGPL = stmt.executeQuery(queryGPL);
 			while (!rsGPL.isAfterLast()) {
-				productList.add(rsGPL.getString(0));
-				rsGPL.next();
+				if (rsGPL.next()) {
+				productList.add(rsGPL.getString(1));
+				}
 			}
 			return productList;
 		} catch (
