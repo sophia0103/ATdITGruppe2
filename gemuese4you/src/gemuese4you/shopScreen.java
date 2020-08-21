@@ -8,16 +8,20 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class shopScreen extends Screen {
-	public static int offerID;
 	public static ArrayList<Offer> offerList;
-	Connection connection;
+	static Connection connection;
+	public static int lastOfferID;
+	JPanel offerPanel;
 
 	public shopScreen() {
 		this.setLayout(new BorderLayout());
 		JPanel titlebar = getTitleBar("Shop");
 		JButton btAddOffer = getAddOfferButton();
-		btAddOffer.addActionListener(new AddOfferListener());
-		titlebar.add(btAddOffer, BorderLayout.EAST);
+		JButton btRefresh = getRefreshButton();
+		JPanel pEast = new JPanel(new GridLayout(1, 2));
+		pEast.add(btRefresh);
+		pEast.add(btAddOffer);
+		titlebar.add(pEast, BorderLayout.EAST);
 		this.add(titlebar, BorderLayout.NORTH);
 
 		offerList = new ArrayList<Offer>();
@@ -31,18 +35,30 @@ public class shopScreen extends Screen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		showCurrentOffers();
+	}
 
-		// display existing offers
-		readOffers();
-		for (int i = 0; i < offerList.size(); i++) {
-			this.add(getOfferPanel(offerList.get(i)));
+	public static int getLastOfferID() {
+		int lastOfferID;
+		try {
+			Statement stmt = connection.createStatement();
+			;
+			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
+			ResultSet rsLast = stmt.executeQuery(lastOfferIDQuery);
+			rsLast.next();
+			lastOfferID = rsLast.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return (Integer) null;
 		}
-
+		return lastOfferID;
 	}
 
 	// reads the current offers in the database and adds them to the offer list
 	public void readOffers() {
 		Statement stmt;
+		offerList.clear();
 		try {
 			stmt = connection.createStatement();
 			String queryOffers = "SELECT * FROM offers";
@@ -50,11 +66,10 @@ public class shopScreen extends Screen {
 			while (!resOffers.isAfterLast()) {
 				if (resOffers.next()) {
 					int offerID = resOffers.getInt(1);
-					int farmerID = resOffers.getInt(2);
+					String userID = resOffers.getString(2);
 					int distance = resOffers.getInt(3);
-					Date date = resOffers.getDate(4);
-					offerList.add(new Offer(offerID, farmerID, distance,date
-							));
+					String date = resOffers.getString(4);
+					offerList.add(new Offer(offerID, userID, distance, date));
 				}
 			}
 		} catch (SQLException e) {
@@ -66,18 +81,19 @@ public class shopScreen extends Screen {
 	// returns a panel for one offer in order to display them on the shopScreen
 	public JPanel getOfferPanel(Offer offer) {
 		JPanel pOffer = new JPanel(new BorderLayout());
-		JLabel pFooter = new JLabel(offer.getDate() + " : " + offer.getFarmerFirstName() + "´s offer is "
-				+ offer.getDistance() + " m away.");
+		JLabel pFooter = new JLabel(
+				offer.getDate() + " : " + offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
 		JButton btIcon = new JButton();
 		btIcon.setIcon(new ImageIcon("images/" + offer.getProductList().get(0) + ".png"));
 		btIcon.setMargin(new Insets(0, 0, 0, 0));
 		btIcon.setBorder(null);
-		ActionListener al = new ActionListener() {
+		ActionListener offerListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getOfferDialog(offer);
 			}
 		};
+		btIcon.addActionListener(offerListener);
 		pOffer.add(pFooter, BorderLayout.SOUTH);
 		pOffer.add(btIcon, BorderLayout.CENTER);
 		return pOffer;
@@ -90,7 +106,7 @@ public class shopScreen extends Screen {
 		Container c = openAddOfferDialog.getContentPane();
 		c.setBackground(orange);
 		c.setLayout(new GridLayout(3, 1));
-		JLabel lOfferTitle = new JLabel(offer.getFarmerFirstName() + "´s offer: ");
+		JLabel lOfferTitle = new JLabel(offer.getUserID() + "´s offer: ");
 		JLabel lDist = new JLabel("Distance: " + offer.getDistance());
 		String prod = "";
 		for (int i = 0; i < offer.getProductList().size(); i++) {
@@ -113,75 +129,47 @@ public class shopScreen extends Screen {
 		btAdd.setIcon(new ImageIcon("images/add.png"));
 		btAdd.setMargin(new Insets(0, 0, 0, 0));
 		btAdd.setBorder(null);
-		btAdd.addActionListener(new AddOfferListener());
+		// Function which is called when the add offer button is pressed
+		ActionListener addListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddOfferScreen AddOfferDialog = new AddOfferScreen();
+			}
+		};
+		btAdd.addActionListener(addListener);
 		return btAdd;
 	}
 
-	// Function which is called when the add offer button is pressed
-	class AddOfferListener implements ActionListener {
-		JTextField tName, tDist, tProducts;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JFrame AddOfferDialog = openAddOfferDialog();
-			AddOfferDialog.setVisible(true);
-			AddOfferDialog.setSize(500, 500);
-		}
-
-		// opens a dialog to create a new offer
-		public JFrame openAddOfferDialog() {
-			JFrame addOfferDialog = new JFrame();
-			Container c = addOfferDialog.getContentPane();
-			c.setLayout(new BorderLayout());
-			JPanel pInput = new JPanel(new GridLayout(3, 1));
-			tName = new JTextField();
-			tDist = new JTextField();
-			tProducts = new JTextField();
-			pInput.add(tName);
-			pInput.add(tDist);
-			pInput.add(tProducts);
-			JButton btSave = new JButton();
-			btSave.setIcon(new ImageIcon("images/save.png"));
-			btSave.setMargin(new Insets(0, 0, 0, 0));
-			btSave.setBorder(null);
-
-			// Reads the values of the Add Offer Dialog and saves the new offer in the
-			// database
-			ActionListener saveListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						Statement stmt = connection.createStatement();
-						// create productList
-
-						String[] productArray = tProducts.getText().split(",");
-						ArrayList<String> productList = new ArrayList();
-						for (int i = 0; i < productArray.length; i++) {
-							productList.add(productArray[i]);
-						}
-
-						// if one of the products doesn´t yet exist in the database, add it
-						for (int i = 0; i < productList.size(); i++) {
-							String checkQuery = "SELECT * FROM products WHERE productName =" + productList.get(i);
-							if (stmt.executeQuery(checkQuery) == null) {
-								String prodQuery = "INSERT INTO products(productName) VALUES (" + productList.get(i)
-										+ ")";
-								stmt.executeQuery(prodQuery);
-							}
-						}
-						// Insert new offer into the offers database table
-						String saveQuery = "INSERT INTO offers (offerID, distance, date) VALUES (" + offerID + ","
-								+ tDist.getText() + ", " + Util.returnDateAsString() + ")";
-						stmt.execute(saveQuery);
-						offerID++;
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			};
-			return addOfferDialog;
-
-		}
+	public JButton getRefreshButton() {
+		JButton btRefresh = new JButton();
+		btRefresh = new JButton();
+		btRefresh.setBackground(orange);
+		btRefresh.setIcon(new ImageIcon("images/refresh.png"));
+		btRefresh.setMargin(new Insets(0, 0, 0, 0));
+		btRefresh.setBorder(null);
+		ActionListener refreshListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showCurrentOffers();
+			}
+		};
+		btRefresh.addActionListener(refreshListener);
+		return btRefresh;
 	}
+
+	public void showCurrentOffers() {
+		// display existing offers
+		if(offerPanel!=null) {
+			this.remove(offerPanel);
+			offerPanel=null;
+		}
+		readOffers();
+		lastOfferID = getLastOfferID();
+		offerPanel = new JPanel(new GridLayout(offerList.size(), 1));
+		for (int i = 0; i < offerList.size(); i++) {
+			offerPanel.add(getOfferPanel(offerList.get(i)));
+		}
+		this.add(offerPanel, BorderLayout.CENTER);
+	}
+
 }

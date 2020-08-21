@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 //represents the database entity offers
 public class Offer {
-	private int offerID, farmerID, distance;
-	private Date date;
+	private int offerID, distance;
+	private String userID, date;
 	private ArrayList<String> productList;
 	private static Connection connection;
 
-	public Offer(int offerID, int farmerID, int distance, Date date) {
+	public Offer(int offerID, String userID, int distance, String date) {
 		this.offerID = offerID;
-		this.farmerID = farmerID;
+		this.userID = userID;
 		this.distance = distance;
 		this.date = date;
 		try {
@@ -28,18 +28,18 @@ public class Offer {
 	}
 
 	// returns the first name of the farmer who created the offer
-	public String getFarmerFirstName() {
-		try {
-			Statement stmt = connection.createStatement();
-			String queryGFFN = "SELECT firstName FROM farmer WHERE farmerID = " + farmerID;
-			ResultSet resGFFN = stmt.executeQuery(queryGFFN);
-			return resGFFN.getString(0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	public String getFarmerUserID() {
+//		try {
+//			Statement stmt = connection.createStatement();
+//			String queryGFFN = "SELECT firstName FROM farmer WHERE farmerID = " + userID;
+//			ResultSet resGFFN = stmt.executeQuery(queryGFFN);
+//			return resGFFN.getString(0);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
 	// returns the Product List which belongs to the offer
 	public ArrayList<String> getProductList() {
@@ -49,9 +49,14 @@ public class Offer {
 			String queryGPL = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
 					+ offerID;
 			ResultSet rsGPL = stmt.executeQuery(queryGPL);
-			while (!rsGPL.isAfterLast()) {
+			String queryEmpty = "SELECT COUNT(productName)FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
+					+ +offerID;
+			ResultSet rsEmpty = stmt.executeQuery(queryEmpty);
+			rsEmpty.next();
+			int queryLength = rsEmpty.getInt(1);
+			while (!rsGPL.isAfterLast() && queryLength>0) {
 				if (rsGPL.next()) {
-				productList.add(rsGPL.getString(1));
+					productList.add(rsGPL.getString(1));
 				}
 			}
 			return productList;
@@ -73,12 +78,12 @@ public class Offer {
 		this.offerID = offerID;
 	}
 
-	public int getFarmerID() {
-		return farmerID;
+	public String getUserID() {
+		return userID;
 	}
 
-	public void setFarmerID(int farmerID) {
-		this.farmerID = farmerID;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 
 	public int getDistance() {
@@ -89,11 +94,11 @@ public class Offer {
 		this.distance = distance;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

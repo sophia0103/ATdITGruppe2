@@ -1,6 +1,7 @@
 package gemuese4you;
 
 import java.sql.*;
+import java.sql.Date;
 import java.text.*;
 import java.util.*;
 
@@ -22,9 +23,9 @@ public class Util {
 
 	//returns the current date as a String
 	public static String returnDateAsString() {
-		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		Calendar c = df.getCalendar();
-		c.setTimeInMillis(System.currentTimeMillis());
-		return df.format(c.get(Calendar.DAY_OF_MONTH) + "." + (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.YEAR));
-	}
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = formatter.getCalendar();
+		Date date = new Date(System.currentTimeMillis());
+		return formatter.format(date);
+		}
 }
