@@ -9,28 +9,26 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class mainScreen extends JFrame {
-	Container c;
-	static JTabbedPane tabPane;
-	JPanel pHome, pShop,  pJob, pProfile, pTitleBar;
-	JLabel lTitle;
-	Color orange;
+	private Container c;
+	private static JTabbedPane tabPane;
+	private JPanel pHome, pShop,  pJob, pProfile, pTitleBar;
+	private JLabel lTitle;
 	private static Connection connection;
 
 	public mainScreen() {
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
-		orange = new Color(255, 229, 204);
-		c.setBackground(orange);
+		c.setBackground(Util.orange);
 
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		pHome = getHomeScreen();
 		pShop = new shopScreen();
 
-		pShop.setBackground(orange);
+		pShop.setBackground(Util.orange);
 		pJob = new JPanel();
-		pJob.setBackground(orange);
+		pJob.setBackground(Util.orange);
 		pProfile = new JPanel();
-		pProfile.setBackground(orange);
+		pProfile.setBackground(Util.orange);
 
 		tabPane.addTab("Home", new ImageIcon("images/home.png"), pHome);
 		tabPane.addTab("Shop", new ImageIcon("images/shop.png"), pShop);
@@ -45,13 +43,13 @@ public class mainScreen extends JFrame {
 
 	public JPanel getHomeScreen() {
 		JPanel homeScreen = new JPanel(new BorderLayout());
-		homeScreen.setBackground(orange);
+		homeScreen.setBackground(Util.orange);
 //		JPanel titlebar = getTitleBar("Home");
 //		homeScreen.add(titlebar, BorderLayout.NORTH);
 
 		JPanel homeScreenContent = new JPanel();
 		homeScreenContent.setLayout(new BoxLayout(homeScreenContent, BoxLayout.Y_AXIS));
-		homeScreenContent.setBackground(orange);
+		homeScreenContent.setBackground(Util.orange);
 
 		JLabel headlineNewestJobs = new JLabel("Neueste Stellenangebote:");
 		headlineNewestJobs.setFont(new Font("Arial", Font.BOLD, 16));

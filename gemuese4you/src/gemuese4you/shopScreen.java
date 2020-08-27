@@ -1,24 +1,36 @@
 package gemuese4you;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class shopScreen extends Screen {
-	public static ArrayList<Offer> offerList;
-	static Connection connection;
+	private static ArrayList<Offer> offerList;
+	private static Connection connection;
+	private JPanel pOffer, pEast;
+	private JButton btAddOffer, btRefresh;
 	public static int lastOfferID;
-	JPanel offerPanel;
 
 	public shopScreen() {
 		this.setLayout(new BorderLayout());
 		JPanel titlebar = getTitleBar("Shop");
-		JButton btAddOffer = getAddOfferButton();
-		JButton btRefresh = getRefreshButton();
-		JPanel pEast = new JPanel(new GridLayout(1, 2));
+		btAddOffer = getAddOfferButton();
+		btRefresh = getRefreshButton();
+		pEast = new JPanel(new GridLayout(1, 2));
 		pEast.add(btRefresh);
 		pEast.add(btAddOffer);
 		titlebar.add(pEast, BorderLayout.EAST);
@@ -29,68 +41,61 @@ public class shopScreen extends Screen {
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		showCurrentOffers();
 	}
 
-	public static int getLastOfferID() {
-		int lastOfferID;
-		try {
-			Statement stmt = connection.createStatement();
-			;
-			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
-			ResultSet rsLast = stmt.executeQuery(lastOfferIDQuery);
-			rsLast.next();
-			lastOfferID = rsLast.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return (Integer) null;
+	// display existing offers
+	public void showCurrentOffers() {
+		// panel has to be removed and added again in order to fetch new offers which
+		// might have been created in the process
+		if (pOffer != null) {
+			this.remove(pOffer);
+			pOffer = null;
 		}
-		return lastOfferID;
+		readOffers();
+		pOffer = new JPanel(new GridLayout(offerList.size(), 1));
+		for (int i = 0; i < offerList.size(); i++) {
+			pOffer.add(getOfferPanel(offerList.get(i)));
+		}
+		this.add(pOffer, BorderLayout.CENTER);
 	}
 
 	// reads the current offers in the database and adds them to the offer list
 	public void readOffers() {
-		Statement stmt;
 		offerList.clear();
 		try {
-			stmt = connection.createStatement();
-			String queryOffers = "SELECT * FROM offers";
+			Statement stmt = connection.createStatement();
+			String queryOffers = "SELECT * FROM offers ORDER BY distance";
 			ResultSet resOffers = stmt.executeQuery(queryOffers);
-			while (!resOffers.isAfterLast()) {
+			while (!resOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")) {
 				if (resOffers.next()) {
 					int offerID = resOffers.getInt(1);
 					String userID = resOffers.getString(2);
 					int distance = resOffers.getInt(3);
-					String date = resOffers.getString(4);
-					offerList.add(new Offer(offerID, userID, distance, date));
+					String exp_date = resOffers.getString(4);
+					double price = resOffers.getDouble(5);
+					offerList.add(new Offer(offerID, userID, distance, exp_date, price));
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	// returns a panel for one offer in order to display them on the shopScreen
+	// returns a panel for each offer in order to display them on the shopScreen
 	public JPanel getOfferPanel(Offer offer) {
 		JPanel pOffer = new JPanel(new BorderLayout());
-		JLabel pFooter = new JLabel(
-				offer.getDate() + " : " + offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
-		JButton btIcon = new JButton();
-		btIcon.setIcon(new ImageIcon("images/" + offer.getProductList().get(0) + ".png"));
-		btIcon.setMargin(new Insets(0, 0, 0, 0));
-		btIcon.setBorder(null);
+		JLabel pFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
+		pOffer.setBackground(new Color(255,237,203));
+		JButton btIcon = Util.getCustomButton(offer.getProductList().get(0));
 		ActionListener offerListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				getOfferDialog(offer);
+				new GetOfferDialog(offer);
 			}
 		};
 		btIcon.addActionListener(offerListener);
@@ -99,54 +104,23 @@ public class shopScreen extends Screen {
 		return pOffer;
 	}
 
-	// opens a dialog in which the attributes of the specified offer are listed
-	public void getOfferDialog(Offer offer) {
-		JFrame openAddOfferDialog = new JFrame();
-		openAddOfferDialog.setBackground(orange);
-		Container c = openAddOfferDialog.getContentPane();
-		c.setBackground(orange);
-		c.setLayout(new GridLayout(3, 1));
-		JLabel lOfferTitle = new JLabel(offer.getUserID() + "´s offer: ");
-		JLabel lDist = new JLabel("Distance: " + offer.getDistance());
-		String prod = "";
-		for (int i = 0; i < offer.getProductList().size(); i++) {
-			prod = prod + offer.getProductList().get(i) + ", ";
-		}
-		JLabel lProducts = new JLabel("Products included: " + prod.substring(0, prod.length() - 2));
-		c.add(lOfferTitle);
-		c.add(lDist);
-		c.add(lProducts);
-		openAddOfferDialog.setVisible(true);
-		openAddOfferDialog.setSize(500, 500);
-
-	}
-
 	// returns a button to add an offer
 	public JButton getAddOfferButton() {
-		JButton btAdd = new JButton();
-		btAdd = new JButton();
-		btAdd.setBackground(orange);
-		btAdd.setIcon(new ImageIcon("images/add.png"));
-		btAdd.setMargin(new Insets(0, 0, 0, 0));
-		btAdd.setBorder(null);
+		JButton btAdd = Util.getCustomButton("add");
 		// Function which is called when the add offer button is pressed
 		ActionListener addListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AddOfferScreen AddOfferDialog = new AddOfferScreen();
+				new AddOfferDialog();
 			}
 		};
 		btAdd.addActionListener(addListener);
 		return btAdd;
 	}
 
+	// returns a button to refresh the shopScreen
 	public JButton getRefreshButton() {
-		JButton btRefresh = new JButton();
-		btRefresh = new JButton();
-		btRefresh.setBackground(orange);
-		btRefresh.setIcon(new ImageIcon("images/refresh.png"));
-		btRefresh.setMargin(new Insets(0, 0, 0, 0));
-		btRefresh.setBorder(null);
+		JButton btRefresh = Util.getCustomButton("refresh");
 		ActionListener refreshListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -155,21 +129,6 @@ public class shopScreen extends Screen {
 		};
 		btRefresh.addActionListener(refreshListener);
 		return btRefresh;
-	}
-
-	public void showCurrentOffers() {
-		// display existing offers
-		if(offerPanel!=null) {
-			this.remove(offerPanel);
-			offerPanel=null;
-		}
-		readOffers();
-		lastOfferID = getLastOfferID();
-		offerPanel = new JPanel(new GridLayout(offerList.size(), 1));
-		for (int i = 0; i < offerList.size(); i++) {
-			offerPanel.add(getOfferPanel(offerList.get(i)));
-		}
-		this.add(offerPanel, BorderLayout.CENTER);
 	}
 
 }
