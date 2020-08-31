@@ -68,17 +68,18 @@ public class shopScreen extends Screen {
 	public void readOffers() {
 		offerList.clear();
 		try {
+			String today = Util.returnDateAsString();
 			Statement stmt = connection.createStatement();
-			String queryOffers = "SELECT * FROM offers ORDER BY distance";
+			String queryOffers = "SELECT * FROM offers WHERE exp_date > '"+ today +"' ORDER BY distance";
 			ResultSet resOffers = stmt.executeQuery(queryOffers);
 			while (!resOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")) {
 				if (resOffers.next()) {
 					int offerID = resOffers.getInt(1);
 					String userID = resOffers.getString(2);
 					int distance = resOffers.getInt(3);
-					String exp_date = resOffers.getString(4);
+					String expDate = resOffers.getString(4);
 					double price = resOffers.getDouble(5);
-					offerList.add(new Offer(offerID, userID, distance, exp_date, price));
+					offerList.add(new Offer(offerID, userID, distance, expDate, price));
 				}
 			}
 		} catch (SQLException e) {

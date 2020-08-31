@@ -13,6 +13,7 @@ import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,10 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class AddOfferDialog extends JFrame implements ActionListener {
-	private JTextField tName, tDist, tProducts;
-	private JLabel lName, lDist, lProducts;
+	private JTextField tName, tDist, tProducts, tPrice, tExpDate;
+	private JLabel lName, lDist, lProducts, lPrice, lExpDate, lProdInfo, lDateInfo;
 	private JPanel pInput;
 	private JButton btSave;
+	JPanel pProd, pDate;
 	static Connection connection;
 
 	public AddOfferDialog() {
@@ -38,19 +40,41 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		}
 		c.setBackground(Util.orange);
 		c.setLayout(new BorderLayout());
-		pInput = new JPanel(new GridLayout(6, 1));
+		pInput = new JPanel(new GridLayout(10, 1));
 		tName = new JTextField();
 		tDist = new JTextField();
 		tProducts = new JTextField();
+		tPrice = new JTextField();
+		tExpDate = new JTextField();
 		lName = new JLabel("Name: ");
 		lDist = new JLabel("Distance: ");
+		pProd = new JPanel(new GridLayout(1,2));
+		pProd.setBackground(Util.orange);
 		lProducts = new JLabel("Products: ");
+		lProdInfo = new JLabel();
+		lProdInfo.setIcon(new ImageIcon("images/info.png"));
+		lProdInfo.setToolTipText("You can enter values as follows: apple,pear,...");
+		pProd.add(lProducts);
+		pProd.add(lProdInfo);
+		lPrice = new JLabel("Price: ");
+		pDate = new JPanel(new GridLayout(1,2)); 
+		pDate.setBackground(Util.orange);
+		lExpDate = new JLabel("Expiration Date: ");
+		lDateInfo = new JLabel();
+		lDateInfo.setIcon(new ImageIcon("images/info.png"));
+		lDateInfo.setToolTipText("This is the date when your offer expires. Please use the format yyyy-mm-dd.");
+		pDate.add(lExpDate);
+		pDate.add(lDateInfo);
 		pInput.add(lName);
 		pInput.add(tName);
 		pInput.add(lDist);
 		pInput.add(tDist);
-		pInput.add(lProducts);
+		pInput.add(pProd);
 		pInput.add(tProducts);
+		pInput.add(lPrice);
+		pInput.add(tPrice);
+		pInput.add(pDate);
+		pInput.add(tExpDate);
 		pInput.setBackground(Util.orange);
 		btSave = Util.getCustomButton("save");
 		c.add(pInput, BorderLayout.CENTER);
@@ -88,10 +112,14 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 				}
 			}
 			// Insert new offer into the offers database table
-			String date = Util.returnDateAsString();
+			
+			//check if the expiration date is before the current date
+			if(Util.returnStringAsDate(tExpDate.getText()).compareTo(Util.returnDate())<0) {
+				throw new Exception();
+			}
 			shopScreen.lastOfferID++;
 			String saveOffer = "INSERT INTO offers VALUES (" + shopScreen.lastOfferID + ",'" + tName.getText() + "',"
-					+ tDist.getText() + ",'" + date + "' )";
+					+ tDist.getText() + ",'" + tExpDate.getText() + "',"+tPrice.getText()+")";
 			stmt.execute(saveOffer);
 			for (int i = 0; i < productList.size(); i++) {
 				String productOffer = "INSERT INTO productsinoffer VALUES (" + shopScreen.lastOfferID
@@ -108,6 +136,9 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		}
 		catch (SQLException e3) {
 			e3.printStackTrace();
+		} catch (Exception e4) {
+			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error", JOptionPane.ERROR_MESSAGE);
+			e4.printStackTrace();
 		}
 	}
 

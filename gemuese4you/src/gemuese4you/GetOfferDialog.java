@@ -50,7 +50,7 @@ public class GetOfferDialog extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(null,
-				"By pushing this button you can add this offer to your shopping cart (Function hasn´t been implemented yet).");
+				"By pushing this button you can add this offer to your shopping cart (function hasn´t been implemented yet).");
 	}
 
 }

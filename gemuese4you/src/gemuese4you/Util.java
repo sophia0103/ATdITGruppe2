@@ -3,9 +3,9 @@ package gemuese4you;
 import java.awt.Color;
 import java.awt.Insets;
 import java.sql.*;
-import java.sql.Date;
 import java.text.*;
 import java.util.*;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,7 +33,21 @@ public class Util {
 		Date date = new Date(System.currentTimeMillis());
 		return formatter.format(date);
 		}
+
+	//parses a String to Date
+	public static Date returnStringAsDate(String sDate) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = formatter.parse(sDate);
+		return date;
+		}
 	
+	//returns the current date as Date
+	public static Date returnDate() {
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date(System.currentTimeMillis());
+		return date;
+	}
+
 	//returns a custom button with an image
 	public static JButton getCustomButton(String iconName) {
 		JButton customButton = new JButton();
