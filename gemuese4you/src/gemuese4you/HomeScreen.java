@@ -1,3 +1,5 @@
+package gemuese4you;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,20 +27,20 @@ public class HomeScreen extends Screen{
 		
 		JLabel headline1 = createHeadline("Neueste Stellenangebote:");
 		
-		String[] content1 = {"\n\u2022 Erntehelfer/in Ludwigshafen", "\n\u2022 Ernteleiter/in Kaiserslautern", "\n\u2022 Kassierer/in Hofladen Jürgens in Walldorf"}; 
+		String[] content1 = {"\n\u2022 Erntehelfer/in Ludwigshafen", "\n\u2022 Ernteleiter/in Kaiserslautern", "\n\u2022 Kassierer/in Hofladen JÃ¼rgens in Walldorf"}; 
 		JButton button1 = createButton(content1);
 
 		JLabel headline2= createHeadline("Neueste Angebote:");
 		
-		String[] content2 = {"\n\u2022 Kartoffeln super günstig!", "\n\u2022 Spagel 500g 2€ bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
+		String[] content2 = {"\n\u2022 Kartoffeln super gÃ¼nstig!", "\n\u2022 Spagel 500g 2â‚¬ bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
 		JButton button2 = createButton(content2);
 		
 		JLabel headline3 = createHeadline("Neuigkeiten:");
 		
-		String[] content3 = {"\n\u2022 Spargelsaison hat endlich angefangen. Jetzt Spagel kaufen!", "\n\u2022 Coronavirus: Was Sie wissen müssen", "\n\u2022 Aktion: Wochen auf jeden Einkauf 5% sparen"};
+		String[] content3 = {"\n\u2022 Spargelsaison hat endlich angefangen. Jetzt Spagel kaufen!", "\n\u2022 Coronavirus: Was Sie wissen mÃ¼ssen", "\n\u2022 Aktion: Wochen auf jeden Einkauf 5% sparen"};
 		JButton button3 = createButton(content3);
 		
-		JLabel headline4 = createHeadline("Über unsere App:");
+		JLabel headline4 = createHeadline("Ãœber unsere App:");
 		
 		String[] content4 = {"\n\u2022 Das Ziel unserer App", "\n\u2022 Wer sind wir?", "\n\u2022 Wie kann man uns erreichen?"};
 		JButton button4 = createButton(content4);
