@@ -27,7 +27,7 @@ public class mainScreen extends JFrame {
 		pShop.setBackground(Util.orange);
 		pJob = new JPanel();
 		pJob.setBackground(Util.orange);
-		pProfile = new JPanel();
+		pProfile = new profileScreen();
 		pProfile.setBackground(Util.orange);
 
 		tabPane.addTab("Home", new ImageIcon("images/home.png"), pHome);
