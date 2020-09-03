@@ -10,7 +10,7 @@ import javax.swing.border.Border;
 
 public class mainScreen extends JFrame {
 	private Container c;
-	private static JTabbedPane tabPane;
+	public static JTabbedPane tabPane;
 	private JPanel pHome, pShop,  pJob, pProfile, pTitleBar;
 	private JLabel lTitle;
 	private static Connection connection;
