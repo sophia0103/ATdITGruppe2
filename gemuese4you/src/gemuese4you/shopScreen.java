@@ -21,20 +21,20 @@ import javax.swing.JPanel;
 public class shopScreen extends Screen {
 	private static ArrayList<Offer> offerList;
 	private static Connection connection;
-	private JPanel pOffer, pEast;
+	private JPanel pOffer, pEast,pTitlebar;
 	private JButton btAddOffer, btRefresh;
 	public static int lastOfferID;
 
 	public shopScreen() {
 		this.setLayout(new BorderLayout());
-		JPanel titlebar = getTitleBar("Shop");
+	 pTitlebar = getTitleBar("Shop");
 		btAddOffer = getAddOfferButton();
 		btRefresh = getRefreshButton();
 		pEast = new JPanel(new GridLayout(1, 2));
 		pEast.add(btRefresh);
 		pEast.add(btAddOffer);
-		titlebar.add(pEast, BorderLayout.EAST);
-		this.add(titlebar, BorderLayout.NORTH);
+		pTitlebar.add(pEast, BorderLayout.EAST);
+		this.add(pTitlebar, BorderLayout.NORTH);
 
 		offerList = new ArrayList<Offer>();
 
