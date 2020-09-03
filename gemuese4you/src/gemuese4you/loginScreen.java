@@ -2,17 +2,29 @@ package gemuese4you;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 
 public class loginScreen extends JFrame implements ActionListener{
-Container c;
-JPanel pLogin;
-JLabel lUser, lPassword, lLoginTitle, lEmpty, lTitle;
-JButton btLogin;
-JPasswordField tPassword;
-JTextField tUser;
+	
+	 private static Util connection;
+
+	mainScreen ms;
+    Container c;
+    JPanel pLogin, pButtons;
+    JLabel lUser, lPassword, lLoginTitle, lEmpty, lTitle;
+    JButton btLogin, btRegister;
+    JPasswordField tPassword;
+    JTextField tUser;
 
 	public loginScreen() {
+		connection = new Util();
+		if(connection == null) {
+			JOptionPane.showMessageDialog(this, "No connection to data base available!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
 		Color orange = new Color(255, 229, 204);
@@ -20,6 +32,9 @@ JTextField tUser;
 		
 		pLogin = new JPanel(new GridLayout(3, 2));
 		pLogin.setBackground(orange);
+		
+		pButtons = new JPanel(new GridLayout(1, 2));
+		pButtons.setBackground(orange);
 		
 		lUser = new JLabel("Username: ");
 		lPassword = new JLabel("Password: ");
@@ -33,6 +48,8 @@ JTextField tUser;
 		
 		btLogin = new JButton("Log-In");
 		btLogin.addActionListener(this);
+		btRegister = new JButton("Register");
+		btRegister.addActionListener(this);
 		lLoginTitle = new JLabel("Gemüse4You");
 		lLoginTitle.setFont(new Font("Verdana", Font.ITALIC, 18));
 		lLoginTitle.setIcon(new ImageIcon("images/carrot.png"));
@@ -44,9 +61,12 @@ JTextField tUser;
 		pLogin.add(lPassword);
 		pLogin.add(tPassword);
 		
+		pButtons.add(btLogin);
+		pButtons.add(btRegister);
+		
 		c.add(lTitle, BorderLayout.NORTH);
 		c.add(pLogin, BorderLayout.CENTER);
-		c.add(btLogin, BorderLayout.SOUTH);
+		c.add(pButtons, BorderLayout.SOUTH);
 		
 	}
 
@@ -56,12 +76,49 @@ JTextField tUser;
 		log.setVisible(true);
 		log.setSize(500, 500);
 		log.setTitle("Gemüse 4 You");
+		log.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+	
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.dispose();
-		mainScreen ms = new mainScreen();
+		if (e.getSource() == btRegister) {
+			Register register = new Register();
+		}else {
+			
+			PreparedStatement stmt;
+			ResultSet rs;
+			String user = tUser.getText();
+			String pass = String.valueOf(tPassword.getPassword());
+			
+			String query = "SELECT * FROM user WHERE UserID = ? AND Password = ?";
+			
+			try {
+				stmt = Util.getConnection().prepareStatement(query);
+				
+				stmt.setString(1, user);
+				stmt.setString(2, pass);
+				
+				rs = stmt.executeQuery();
+				
+				if(rs.next()) {
+					JOptionPane.showMessageDialog(null, "Welcome");
+					ms = new mainScreen();
+					this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(this, "Username or password wrong!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}catch (ClassNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
 		
 	}
 
