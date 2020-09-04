@@ -98,9 +98,9 @@ public class HomeScreen extends Screen implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonJobs) {
-			mainScreen.tabPane.setSelectedIndex(2);
+			MainScreen.tabPane.setSelectedIndex(2);
 		}else if(e.getSource() == buttonShop) {
-			mainScreen.tabPane.setSelectedIndex(1);
+			MainScreen.tabPane.setSelectedIndex(1);
 		}else if(e.getSource() == buttonNews) {
 			//open new window
 		}else{

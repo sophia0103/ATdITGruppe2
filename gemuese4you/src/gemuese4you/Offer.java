@@ -1,6 +1,9 @@
 package gemuese4you;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 //represents the database entity offers
@@ -17,45 +20,53 @@ public class Offer {
 		this.price = price;
 		this.distance = distance;
 		this.date = date;
+
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		this.productList = this.getProductList();
 	}
 
-	// returns the Product List which belongs to the offer
+	// returns a list with all the products in an offer
 	public ArrayList<String> getProductList() {
 		try {
 			ArrayList<String> productList = new ArrayList<String>();
-			Statement stmt = connection.createStatement();
-			String queryGPL = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
+			Statement statement = connection.createStatement();
+			String queryGetProductList = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
 					+ offerID;
-			ResultSet rsGPL = stmt.executeQuery(queryGPL);
-			String queryEmpty = "SELECT COUNT(productName)FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
-					+ +offerID;
-			ResultSet rsEmpty = stmt.executeQuery(queryEmpty);
-			rsEmpty.next();
-			int queryLength = rsEmpty.getInt(1);
-			while (!rsGPL.isAfterLast() && queryLength>0) {
-				if (rsGPL.next()) {
-					productList.add(rsGPL.getString(1));
+			ResultSet resultGetProductList = statement.executeQuery(queryGetProductList);
+			while (!resultGetProductList.isAfterLast()) {
+				if (resultGetProductList.next()) {
+					productList.add(resultGetProductList.getString(1));
 				}
 			}
 			return productList;
-		} catch (
-
-		SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 
+	}
+	
+	//get the ID of the last offer in the database table
+	public static int getLastOfferID() {
+		int lastOfferID;
+		try {
+			Statement statement = connection.createStatement();
+			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
+			ResultSet resultLastOfferID = statement.executeQuery(lastOfferIDQuery);
+			resultLastOfferID.next();
+			lastOfferID = resultLastOfferID.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return lastOfferID;
 	}
 
 	public int getOfferID() {
@@ -81,7 +92,7 @@ public class Offer {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}

@@ -2,7 +2,6 @@ package gemuese4you;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,28 +12,34 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class shopScreen extends Screen {
+public class ShopScreen extends Screen {
 	private static ArrayList<Offer> offerList;
 	private static Connection connection;
-	private JPanel pOffer, pEast,pTitlebar;
-	private JButton btAddOffer, btRefresh;
+	private JPanel panelOffer, panelEast, panelTitlebar;
+	private JButton buttonAddOffer, buttonRefresh;
 	public static int lastOfferID;
 
-	public shopScreen() {
+	public ShopScreen() {
+		
 		this.setLayout(new BorderLayout());
-	 pTitlebar = getTitleBar("Shop");
-		btAddOffer = getAddOfferButton();
-		btRefresh = getRefreshButton();
-		pEast = new JPanel(new GridLayout(1, 2));
-		pEast.add(btRefresh);
-		pEast.add(btAddOffer);
-		pTitlebar.add(pEast, BorderLayout.EAST);
-		this.add(pTitlebar, BorderLayout.NORTH);
+		panelTitlebar = getTitleBar("Shop");
+		buttonAddOffer = getAddOfferButton();
+		buttonRefresh = getRefreshButton();
+		
+		// AddOfferButton only exists for farmers (scope)
+		if (Util.isUserFarmer()) {
+			panelEast = new JPanel(new GridLayout(1, 2));
+			panelEast.add(buttonRefresh);
+			panelEast.add(buttonAddOffer);
+		} else {
+			panelEast = new JPanel();
+			panelEast.add(buttonRefresh);
+		}
+		panelTitlebar.add(panelEast, BorderLayout.EAST);
+		this.add(panelTitlebar, BorderLayout.NORTH);
 
 		offerList = new ArrayList<Offer>();
 
@@ -45,6 +50,7 @@ public class shopScreen extends Screen {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		showCurrentOffers();
 	}
 
@@ -52,16 +58,16 @@ public class shopScreen extends Screen {
 	public void showCurrentOffers() {
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
-		if (pOffer != null) {
-			this.remove(pOffer);
-			pOffer = null;
+		if (panelOffer != null) {
+			this.remove(panelOffer);
+			panelOffer = null;
 		}
 		readOffers();
-		pOffer = new JPanel(new GridLayout(offerList.size(), 1));
+		panelOffer = new JPanel(new GridLayout(offerList.size(), 1));
 		for (int i = 0; i < offerList.size(); i++) {
-			pOffer.add(getOfferPanel(offerList.get(i)));
+			panelOffer.add(getOfferPanel(offerList.get(i)));
 		}
-		this.add(pOffer, BorderLayout.CENTER);
+		this.add(panelOffer, BorderLayout.CENTER);
 	}
 
 	// reads the current offers in the database and adds them to the offer list
@@ -69,16 +75,16 @@ public class shopScreen extends Screen {
 		offerList.clear();
 		try {
 			String today = Util.returnDateAsString();
-			Statement stmt = connection.createStatement();
-			String queryOffers = "SELECT * FROM offers WHERE exp_date > '"+ today +"' ORDER BY distance";
-			ResultSet resOffers = stmt.executeQuery(queryOffers);
-			while (!resOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")) {
-				if (resOffers.next()) {
-					int offerID = resOffers.getInt(1);
-					String userID = resOffers.getString(2);
-					int distance = resOffers.getInt(3);
-					String expDate = resOffers.getString(4);
-					double price = resOffers.getDouble(5);
+			Statement statement = connection.createStatement();
+			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
+			ResultSet resultOffers = statement.executeQuery(queryOffers);
+			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")) {
+				if (resultOffers.next()) {
+					int offerID = resultOffers.getInt(1);
+					String userID = resultOffers.getString(2);
+					int distance = resultOffers.getInt(3);
+					String expDate = resultOffers.getString(4);
+					double price = resultOffers.getDouble(5);
 					offerList.add(new Offer(offerID, userID, distance, expDate, price));
 				}
 			}
@@ -89,25 +95,25 @@ public class shopScreen extends Screen {
 
 	// returns a panel for each offer in order to display them on the shopScreen
 	public JPanel getOfferPanel(Offer offer) {
-		JPanel pOffer = new JPanel(new BorderLayout());
-		JLabel pFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
-		pOffer.setBackground(new Color(255,237,203));
-		JButton btIcon = Util.getCustomButton(offer.getProductList().get(0));
+		JPanel panelOffer = new JPanel(new BorderLayout());
+		JLabel panelFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
+		panelOffer.setBackground(new Color(255, 237, 203));
+		JButton buttonIcon = Util.getCustomButton(offer.getProductList().get(0));
 		ActionListener offerListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new GetOfferDialog(offer);
 			}
 		};
-		btIcon.addActionListener(offerListener);
-		pOffer.add(pFooter, BorderLayout.SOUTH);
-		pOffer.add(btIcon, BorderLayout.CENTER);
-		return pOffer;
+		buttonIcon.addActionListener(offerListener);
+		panelOffer.add(panelFooter, BorderLayout.SOUTH);
+		panelOffer.add(buttonIcon, BorderLayout.CENTER);
+		return panelOffer;
 	}
 
 	// returns a button to add an offer
 	public JButton getAddOfferButton() {
-		JButton btAdd = Util.getCustomButton("add");
+		JButton buttonAdd = Util.getCustomButton("add");
 		// Function which is called when the add offer button is pressed
 		ActionListener addListener = new ActionListener() {
 			@Override
@@ -115,21 +121,21 @@ public class shopScreen extends Screen {
 				new AddOfferDialog();
 			}
 		};
-		btAdd.addActionListener(addListener);
-		return btAdd;
+		buttonAdd.addActionListener(addListener);
+		return buttonAdd;
 	}
 
 	// returns a button to refresh the shopScreen
 	public JButton getRefreshButton() {
-		JButton btRefresh = Util.getCustomButton("refresh");
+		JButton buttonRefresh = Util.getCustomButton("refresh");
 		ActionListener refreshListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				showCurrentOffers();
 			}
 		};
-		btRefresh.addActionListener(refreshListener);
-		return btRefresh;
+		buttonRefresh.addActionListener(refreshListener);
+		return buttonRefresh;
 	}
 
 }

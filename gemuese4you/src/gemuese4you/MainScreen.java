@@ -8,26 +8,26 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class mainScreen extends JFrame {
+public class MainScreen extends JFrame {
 	private Container c;
 	public static JTabbedPane tabPane;
 	private JPanel pHome, pShop,  pJob, pProfile, pTitleBar;
 	private JLabel lTitle;
 	private static Connection connection;
 
-	public mainScreen() {
+	public MainScreen() {
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
 		c.setBackground(Util.orange);
 
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		pHome = new HomeScreen();
-		pShop = new shopScreen();
+		pShop = new ShopScreen();
 
 		pShop.setBackground(Util.orange);
 		pJob = new JPanel();
 		pJob.setBackground(Util.orange);
-		pProfile = new profileScreen();
+		pProfile = new ProfileScreen();
 		pProfile.setBackground(Util.orange);
 
 		tabPane.addTab("Home", new ImageIcon("images/home.png"), pHome);

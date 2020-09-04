@@ -8,11 +8,12 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-public class loginScreen extends JFrame implements ActionListener{
+public class LoginScreen extends JFrame implements ActionListener{
 	
 	 private static Util connection;
+	 public static String userID;
 
-	mainScreen ms;
+	MainScreen ms;
     Container c;
     JPanel pLogin, pButtons;
     JLabel lUser, lPassword, lLoginTitle, lEmpty, lTitle;
@@ -20,7 +21,7 @@ public class loginScreen extends JFrame implements ActionListener{
     JPasswordField tPassword;
     JTextField tUser;
 
-	public loginScreen() {
+	public LoginScreen() {
 		connection = new Util();
 		if(connection == null) {
 			JOptionPane.showMessageDialog(this, "No connection to data base available!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -72,7 +73,7 @@ public class loginScreen extends JFrame implements ActionListener{
 
 
 	public static void main(String[] args) {
-		loginScreen log = new loginScreen();
+		LoginScreen log = new LoginScreen();
 		log.setVisible(true);
 		log.setSize(500, 500);
 		log.setTitle("Gemüse 4 You");
@@ -104,7 +105,8 @@ public class loginScreen extends JFrame implements ActionListener{
 				
 				if(rs.next()) {
 					JOptionPane.showMessageDialog(null, "Welcome");
-					ms = new mainScreen();
+					this.userID = user;
+					ms = new MainScreen();
 					this.dispose();
 				}else {
 					JOptionPane.showMessageDialog(this, "Username or password wrong!", "Error", JOptionPane.ERROR_MESSAGE);

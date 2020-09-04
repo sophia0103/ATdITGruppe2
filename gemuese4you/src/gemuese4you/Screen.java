@@ -31,7 +31,7 @@ public abstract class Screen extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loginScreen log = new loginScreen();
+				LoginScreen log = new LoginScreen();
 				log.setVisible(true);
 				log.setSize(500, 500);
 				log.setTitle("Gemüse 4 You");

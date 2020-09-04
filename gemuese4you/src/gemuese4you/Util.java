@@ -13,12 +13,12 @@ import javax.swing.JButton;
 public class Util {
 	private static Connection connection;
 	public static Color orange = new Color(255, 229, 204);
-	
+
 	public Util() {
-		
+
 	}
 
-	//returns a connection to our database
+	// returns a connection to our database
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -27,49 +27,55 @@ public class Util {
 		return connection;
 	}
 
-	//returns the current date as a String
+	// returns the current date as a String
 	public static String returnDateAsString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(System.currentTimeMillis());
 		return formatter.format(date);
-		}
+	}
 
-	//parses a String to Date
-	public static Date returnStringAsDate(String sDate) throws ParseException {
+	// parses a String to Date
+	public static Date returnStringAsDate(String sDate) {
+		try {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = formatter.parse(sDate);
+		Date date;
+		date = formatter.parse(sDate);
 		return date;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
 		}
-	
-	//returns the current date as Date
+	}
+
+	// returns the current date as Date
 	public static Date returnDate() {
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(System.currentTimeMillis());
 		return date;
 	}
 
-	//returns a custom button with an image
+	// returns a custom button with an image
 	public static JButton getCustomButton(String iconName) {
 		JButton customButton = new JButton();
 		customButton = new JButton();
 		customButton.setBackground(orange);
-		customButton.setIcon(new ImageIcon("images/"+iconName+".png"));
+		customButton.setIcon(new ImageIcon("images/" + iconName + ".png"));
 		customButton.setMargin(new Insets(0, 0, 0, 0));
 		customButton.setBorder(null);
 		return customButton;
 	}
-	
-	//check if there are existing entries in the database table
-	//otherwise program is stuck in an endless loop
+
+	// check if there are existing entries in the database table
+	// otherwise program is stuck in an endless loop
 	public static boolean checkDatabaseEntries(String attributeName, String dbTableName) {
 		try {
 			connection = getConnection();
-			Statement stmt = connection.createStatement();
-			String queryEmpty = "SELECT COUNT("+attributeName+")FROM "+dbTableName;
-			ResultSet rsEmpty = stmt.executeQuery(queryEmpty);
-			rsEmpty.next();
-			int queryLength = rsEmpty.getInt(1);
-			if(queryLength>0) {
+			Statement statement = connection.createStatement();
+			String queryEmpty = "SELECT COUNT(" + attributeName + ")FROM " + dbTableName;
+			ResultSet resultEmpty = statement.executeQuery(queryEmpty);
+			resultEmpty.next();
+			int queryLength = resultEmpty.getInt(1);
+			if (queryLength > 0) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -78,5 +84,27 @@ public class Util {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	
+	//check if the user is registered as a farmer
+	public static boolean isUserFarmer() {
+		try {
+			connection = getConnection();
+			Statement statement = connection.createStatement();
+			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreen.userID + "'";
+			ResultSet resultIsUserFarmer = statement.executeQuery(queryIsUserFarmer);
+			resultIsUserFarmer.next();
+			if (resultIsUserFarmer.getInt(1) == 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

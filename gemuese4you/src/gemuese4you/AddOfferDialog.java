@@ -3,6 +3,7 @@ package gemuese4you;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -22,15 +24,72 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class AddOfferDialog extends JFrame implements ActionListener {
-	private JTextField tName, tDist, tProducts, tPrice, tExpDate;
-	private JLabel lName, lDist, lProducts, lPrice, lExpDate, lProdInfo, lDateInfo;
-	private JPanel pInput;
-	private JButton btSave;
-	JPanel pProd, pDate;
+	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
+	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
+			labelEmpty;
+	private JPanel panelInput, panelProduct, panelDate;
+	private JButton buttonSave;
+	private String[] productArray;
+	private ArrayList<String> productList;
 	static Connection connection;
 
 	public AddOfferDialog() {
-		Container c = getContentPane();
+		Container container = getContentPane();
+		container.setBackground(Util.orange);
+		container.setLayout(new BorderLayout());
+		labelEmpty = new JLabel();
+		panelInput = new JPanel(new GridLayout(8, 1));
+
+		textFieldDistance = new JTextField();
+		textFieldProducts = new JTextField();
+		textFieldPrice = new JTextField();
+		textFieldDate = new JTextField();
+
+		labelDistance = new JLabel("Distance: ");
+
+		panelProduct = new JPanel(new GridLayout(1, 6));
+		panelProduct.setBackground(Util.orange);
+		labelProducts = new JLabel("Products: ");
+		labelProductInfo = new JLabel();
+		labelProductInfo.setIcon(new ImageIcon("images/info.png"));
+		labelProductInfo.setToolTipText("You can enter values as follows: apple,pear,...");
+		panelProduct.add(labelProducts);
+		panelProduct.add(labelProductInfo);
+		panelProduct.add(labelEmpty);
+		panelProduct.add(labelEmpty);
+		panelProduct.add(labelEmpty);
+		panelProduct.add(labelEmpty);
+
+		labelPrice = new JLabel("Price: ");
+
+		panelDate = new JPanel(new GridLayout(1, 6));
+		panelDate.setBackground(Util.orange);
+		labelExpirationDate = new JLabel("Expiration Date: ");
+		labelDateInfo = new JLabel();
+		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
+		labelDateInfo.setToolTipText("This is the date when your offer expires. Please use the format yyyy-mm-dd.");
+		panelDate.add(labelExpirationDate);
+		panelDate.add(labelDateInfo);
+		panelDate.add(labelEmpty);
+		panelDate.add(labelEmpty);
+		panelDate.add(labelEmpty);
+		panelDate.add(labelEmpty);
+
+		panelInput.add(labelDistance);
+		panelInput.add(textFieldDistance);
+		panelInput.add(panelProduct);
+		panelInput.add(textFieldProducts);
+		panelInput.add(labelPrice);
+		panelInput.add(textFieldPrice);
+		panelInput.add(panelDate);
+		panelInput.add(textFieldDate);
+		panelInput.setBackground(Util.orange);
+		buttonSave = Util.getCustomButton("save");
+		container.add(panelInput, BorderLayout.CENTER);
+		container.add(buttonSave, BorderLayout.SOUTH);
+		this.setVisible(true);
+		this.setSize(500, 500);
+
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
@@ -38,128 +97,119 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		c.setBackground(Util.orange);
-		c.setLayout(new BorderLayout());
-		pInput = new JPanel(new GridLayout(10, 1));
-		tName = new JTextField();
-		tDist = new JTextField();
-		tProducts = new JTextField();
-		tPrice = new JTextField();
-		tExpDate = new JTextField();
-		lName = new JLabel("Name: ");
-		lDist = new JLabel("Distance: ");
-		pProd = new JPanel(new GridLayout(1,2));
-		pProd.setBackground(Util.orange);
-		lProducts = new JLabel("Products: ");
-		lProdInfo = new JLabel();
-		lProdInfo.setIcon(new ImageIcon("images/info.png"));
-		lProdInfo.setToolTipText("You can enter values as follows: apple,pear,...");
-		pProd.add(lProducts);
-		pProd.add(lProdInfo);
-		lPrice = new JLabel("Price: ");
-		pDate = new JPanel(new GridLayout(1,2)); 
-		pDate.setBackground(Util.orange);
-		lExpDate = new JLabel("Expiration Date: ");
-		lDateInfo = new JLabel();
-		lDateInfo.setIcon(new ImageIcon("images/info.png"));
-		lDateInfo.setToolTipText("This is the date when your offer expires. Please use the format yyyy-mm-dd.");
-		pDate.add(lExpDate);
-		pDate.add(lDateInfo);
-		pInput.add(lName);
-		pInput.add(tName);
-		pInput.add(lDist);
-		pInput.add(tDist);
-		pInput.add(pProd);
-		pInput.add(tProducts);
-		pInput.add(lPrice);
-		pInput.add(tPrice);
-		pInput.add(pDate);
-		pInput.add(tExpDate);
-		pInput.setBackground(Util.orange);
-		btSave = Util.getCustomButton("save");
-		c.add(pInput, BorderLayout.CENTER);
-		c.add(btSave, BorderLayout.SOUTH);
-		this.setVisible(true);
-		this.setSize(500, 500);
 
-		shopScreen.lastOfferID = getLastOfferID();
+		ShopScreen.lastOfferID = Offer.getLastOfferID();
 
-		btSave.addActionListener(this);
+		buttonSave.addActionListener(this);
 	}
 
-	// Reads the values of the Add Offer Dialog and saves the new offer in the
-	// database
+	// add a valid offer and its products to the database
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		try {
-			Statement stmt = connection.createStatement();
-			// create productList
-			String[] productArray = tProducts.getText().split(",");
-			ArrayList<String> productList = new ArrayList<String>();
-			for (int i = 0; i < productArray.length; i++) {
-				productList.add(productArray[i]);
+		if (inputIsValid()) {
+			try {
+				addOffer();
+				readProducts();
+				addProductListOfOffer();
+				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
+				this.dispose();
+			} catch (SQLException sqlException) {
+				// Can´t check for wrong data type in inputIsValid method
+				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			// if one of the products doesn´t yet exist in the database, add it
-			for (int i = 0; i < productList.size(); i++) {
-				String checkQuery = "SELECT COUNT(productName) FROM products WHERE productName = '" + productList.get(i)
-						+ "'";
-				ResultSet rsCheck = stmt.executeQuery(checkQuery);
-				rsCheck.next();
-				int queryLength = rsCheck.getInt(1);
-				if (queryLength == 0) {
-					String prodQuery = "INSERT INTO products(productName) VALUES ('" + productList.get(i) + "')";
-					stmt.executeQuery(prodQuery);
-				}
-			}
-			// Insert new offer into the offers database table
-			
-			//check if the expiration date is before the current date
-			if(Util.returnStringAsDate(tExpDate.getText()).compareTo(Util.returnDate())<0) {
-				throw new Exception();
-			}
-			shopScreen.lastOfferID++;
-			String saveOffer = "INSERT INTO offers VALUES (" + shopScreen.lastOfferID + ",'" + tName.getText() + "',"
-					+ tDist.getText() + ",'" + tExpDate.getText() + "',"+tPrice.getText()+")";
-			stmt.execute(saveOffer);
-			for (int i = 0; i < productList.size(); i++) {
-				String productOffer = "INSERT INTO productsinoffer VALUES (" + shopScreen.lastOfferID
-						+ ",(SELECT productID FROM products WHERE products.productName ='" + productList.get(i) + "'))";
-				stmt.execute(productOffer);
-			}
-			JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
-			this.dispose();
-		}
-		catch(SQLIntegrityConstraintViolationException e1) {
-			JOptionPane.showMessageDialog(null, "Check for wrong data type or empty field", "Error", JOptionPane.ERROR_MESSAGE);
-		}catch(SQLSyntaxErrorException e2) {
-			JOptionPane.showMessageDialog(null, "Check for wrong data type or empty field", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		catch (SQLException e3) {
-			e3.printStackTrace();
-		} catch (Exception e4) {
-			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error", JOptionPane.ERROR_MESSAGE);
-			e4.printStackTrace();
 		}
 	}
 
-	
-	//get the ID of the last offer in the database table
-	public static int getLastOfferID() {
-		int lastOfferID;
+	// get the products from the product text field
+	public void readProducts() {
+		productArray = textFieldProducts.getText().split(",");
+		productList = new ArrayList<String>();
+		for (int i = 0; i < productArray.length; i++) {
+			productList.add(productArray[i]);
+			checkIfProductExists(productArray[i]);
+		}
+	}
+
+	// if one of the products doesn´t yet exist in the database, add it to the
+	// products database table
+	public void checkIfProductExists(String productName) {
 		try {
-			Statement stmt = connection.createStatement();
-			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
-			ResultSet rsLast = stmt.executeQuery(lastOfferIDQuery);
-			rsLast.next();
-			lastOfferID = rsLast.getInt(1);
+			Statement statementProducts = connection.createStatement();
+			int numberOfExistingProducts;
+			for (int i = 0; i < productList.size(); i++) {
+				String checkProductExists = "SELECT COUNT(productName) FROM products WHERE productName = '"
+						+ productName + "'";
+				ResultSet resultProductExists = statementProducts.executeQuery(checkProductExists);
+				resultProductExists.next();
+				numberOfExistingProducts = resultProductExists.getInt(1);
+				if (numberOfExistingProducts == 0) {
+					addNonExistingProduct(productName);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -1;
 		}
-		return lastOfferID;
 	}
-	
-	public boolean isUserAuthorized(String userID) {
-		return true;
+
+	// adds a non existing product to the product database table
+	public void addNonExistingProduct(String productName) {
+		try {
+			Statement statementNonExistingProduct = connection.createStatement();
+			String queryNonExistingProduct = "INSERT INTO products(productName) VALUES ('" + productName + "')";
+			statementNonExistingProduct.executeQuery(queryNonExistingProduct);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
+
+	public boolean inputIsValid() {
+		if (textFieldDistance.getText().equals("") || textFieldProducts.getText().equals("")
+				|| textFieldPrice.getText().equals("") || textFieldDate.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// check if the expiration date is before the current date
+		if (Util.returnStringAsDate(textFieldDate.getText()).compareTo(Util.returnDate()) < 0) {
+			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		try {
+			//Check if input for product is a number
+		Integer.parseInt(textFieldProducts.getText());
+		JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error",
+				JOptionPane.ERROR_MESSAGE);
+		return false;
+		}
+		catch(Exception e) {
+			return true;
+		}
+	}
+
+	// Insert new offer into the offers database table
+	public void addOffer() throws SQLException {
+		Statement statement = connection.createStatement();
+		// Auto increment in SQL doesn´t work properly, so we do it manually
+		ShopScreen.lastOfferID++;
+
+		String querySaveOffer = "INSERT INTO offers VALUES (" + ShopScreen.lastOfferID + ",'" + LoginScreen.userID
+				+ "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "'," + textFieldPrice.getText()
+				+ ")";
+		statement.execute(querySaveOffer);
+	}
+
+	// add products off an offer to database table productsInOffer
+	public void addProductListOfOffer() {
+		try {
+			Statement statementAddProductList = connection.createStatement();
+			for (int i = 0; i < productList.size(); i++) {
+				String productOffer = "INSERT INTO productsinoffer VALUES (" + ShopScreen.lastOfferID
+						+ ",(SELECT productID FROM products WHERE products.productName ='" + productList.get(i) + "'))";
+				statementAddProductList.execute(productOffer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
