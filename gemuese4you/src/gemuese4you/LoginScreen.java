@@ -2,6 +2,7 @@ package gemuese4you;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,28 +11,37 @@ import javax.swing.*;
 
 public class LoginScreen extends JFrame implements ActionListener{
 	
-	 private static Util connection;
+	 private Connection connection;
 	 public static String userID;
 
 	MainScreen ms;
     Container c;
-    JPanel pLogin, pButtons;
+    JPanel pLogin, pButtons, pFrame;
     JLabel lUser, lPassword, lLoginTitle, lEmpty, lTitle;
     JButton btLogin, btRegister;
     JPasswordField tPassword;
     JTextField tUser;
 
 	public LoginScreen() {
-		connection = new Util();
-		if(connection == null) {
-			JOptionPane.showMessageDialog(this, "No connection to data base available!", "Error", JOptionPane.ERROR_MESSAGE);
+		try {
+			connection = Util.getConnection();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+//		if(connection == null) {
+//			JOptionPane.showMessageDialog(this, "No connection to data base available!", "Error", JOptionPane.ERROR_MESSAGE);
+//		}
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
 		Color orange = new Color(255, 229, 204);
 		c.setBackground(orange);
 		
-		pLogin = new JPanel(new GridLayout(3, 2));
+		pFrame = new JPanel();
+		pFrame.setBackground(Util.orange);
+		
+		pLogin = new JPanel(new GridLayout(2, 2));
 		pLogin.setBackground(orange);
 		
 		pButtons = new JPanel(new GridLayout(1, 2));
@@ -39,24 +49,21 @@ public class LoginScreen extends JFrame implements ActionListener{
 		
 		lUser = new JLabel("Username: ");
 		lPassword = new JLabel("Password: ");
+		
 		lTitle = new JLabel("Log-In");
 		lTitle.setFont(new Font("Verdana", Font.BOLD, 20));
 		lEmpty = new JLabel("");
 		
 		tUser = new JTextField();
 		tUser.setPreferredSize(new Dimension(200, 50));
+		
 		tPassword = new JPasswordField();
 		
 		btLogin = new JButton("Log-In");
 		btLogin.addActionListener(this);
 		btRegister = new JButton("Register");
 		btRegister.addActionListener(this);
-		lLoginTitle = new JLabel("Gemüse4You");
-		lLoginTitle.setFont(new Font("Verdana", Font.ITALIC, 18));
-		lLoginTitle.setIcon(new ImageIcon("images/carrot.png"));
 		
-		pLogin.add(lLoginTitle);
-		pLogin.add(lEmpty);
 		pLogin.add(lUser);
 		pLogin.add(tUser);
 		pLogin.add(lPassword);
@@ -65,8 +72,11 @@ public class LoginScreen extends JFrame implements ActionListener{
 		pButtons.add(btLogin);
 		pButtons.add(btRegister);
 		
+		pFrame.add(pLogin);
+		pFrame.add(pButtons);
+		
 		c.add(lTitle, BorderLayout.NORTH);
-		c.add(pLogin, BorderLayout.CENTER);
+		c.add(pFrame, BorderLayout.CENTER);
 		c.add(pButtons, BorderLayout.SOUTH);
 		
 	}
@@ -75,7 +85,8 @@ public class LoginScreen extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		LoginScreen log = new LoginScreen();
 		log.setVisible(true);
-		log.setSize(500, 500);
+		log.pack();
+		log.setLocationRelativeTo(null);
 		log.setTitle("Gemüse 4 You");
 		log.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}

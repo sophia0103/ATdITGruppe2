@@ -38,8 +38,9 @@ public abstract class Screen extends JPanel {
 				JFrame parentFrame = (JFrame) parent;
 				parentFrame.dispose();
 				LoginScreen log = new LoginScreen();
+				log.pack();
+				log.setLocationRelativeTo(null);
 				log.setVisible(true);
-				log.setSize(500, 500);
 				log.setTitle("Gemüse 4 You");
 
 			}

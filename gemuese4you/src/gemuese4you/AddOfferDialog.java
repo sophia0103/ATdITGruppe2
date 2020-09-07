@@ -87,7 +87,9 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		container.add(panelInput, BorderLayout.CENTER);
 		container.add(buttonSave, BorderLayout.SOUTH);
 		this.setVisible(true);
+		this.setTitle("Create an offer");
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
 
 		try {
 			connection = Util.getConnection();

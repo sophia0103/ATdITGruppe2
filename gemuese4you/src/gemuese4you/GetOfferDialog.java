@@ -48,7 +48,9 @@ public class GetOfferDialog extends JFrame implements ActionListener {
 		container.add(buttonBuy, BorderLayout.SOUTH);
 		
 		this.setVisible(true);
+		this.setTitle("Details");
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
 	}
 
 	@Override

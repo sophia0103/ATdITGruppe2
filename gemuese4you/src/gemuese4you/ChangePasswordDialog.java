@@ -49,7 +49,10 @@ public class ChangePasswordDialog extends JFrame implements ActionListener {
 		container.add(buttonSave);
 		container.setBackground(Util.orange);
 		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
+		this.setTitle("Change your Password");
 	}
 
 	// Change the password in the user database table

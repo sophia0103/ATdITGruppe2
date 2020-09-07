@@ -38,6 +38,7 @@ public class MainScreen extends JFrame {
 
 		this.setVisible(true);
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
 		this.setTitle("Gemüse 4 You");
 	}
 

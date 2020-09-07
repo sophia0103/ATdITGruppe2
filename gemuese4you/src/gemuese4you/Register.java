@@ -55,6 +55,9 @@ public class Register extends JFrame implements ActionListener{
 		reg.add(lIsFarmer);
 		reg.add(tIsFarmer);
 		
+		reg.setBackground(Util.orange);
+		btn.setBackground(Util.orange);
+		
 		btCancel = new JButton("Cancel");
 		btReg = new JButton("Confirm Registration");
 		btn.add(btReg);
@@ -63,7 +66,9 @@ public class Register extends JFrame implements ActionListener{
 		c.add(reg, BorderLayout.CENTER);
 		c.add(btn, BorderLayout.SOUTH);
 		this.setVisible(true);
-		this.setSize(500, 500);
+		this.setSize(500,500);
+		this.setLocationRelativeTo(null);
+		this.setTitle("Register");
 
 		btCancel.addActionListener(this);
 		btReg.addActionListener(this);
