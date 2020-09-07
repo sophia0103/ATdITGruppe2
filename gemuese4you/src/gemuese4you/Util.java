@@ -107,4 +107,20 @@ public class Util {
 			return false;
 		}
 	}
+	
+	//get the current password of the user
+	public static String getPassword() {
+		Statement statementOldPassword;
+		try {
+			statementOldPassword = connection.createStatement();
+			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreen.userID+"'";
+			ResultSet resultOldPassword = statementOldPassword.executeQuery(queryOldPassword);
+			resultOldPassword.next();
+			String oldPassword = resultOldPassword.getString(1);
+			return oldPassword;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

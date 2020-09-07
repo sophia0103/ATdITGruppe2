@@ -55,25 +55,24 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		labelProductInfo.setToolTipText("You can enter values as follows: apple,pear,...");
 		panelProduct.add(labelProducts);
 		panelProduct.add(labelProductInfo);
-		panelProduct.add(labelEmpty);
-		panelProduct.add(labelEmpty);
-		panelProduct.add(labelEmpty);
-		panelProduct.add(labelEmpty);
+		panelProduct.add(getEmptyLabel());
+		panelProduct.add(getEmptyLabel());
+		panelProduct.add(getEmptyLabel());
+		panelProduct.add(getEmptyLabel());
 
 		labelPrice = new JLabel("Price: ");
 
-		panelDate = new JPanel(new GridLayout(1, 6));
+		panelDate = new JPanel(new GridLayout(1, 5));
 		panelDate.setBackground(Util.orange);
 		labelExpirationDate = new JLabel("Expiration Date: ");
 		labelDateInfo = new JLabel();
 		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
-		labelDateInfo.setToolTipText("This is the date when your offer expires. Please use the format yyyy-mm-dd.");
+		labelDateInfo.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
 		panelDate.add(labelExpirationDate);
 		panelDate.add(labelDateInfo);
-		panelDate.add(labelEmpty);
-		panelDate.add(labelEmpty);
-		panelDate.add(labelEmpty);
-		panelDate.add(labelEmpty);
+		panelDate.add(getEmptyLabel());
+		panelDate.add(getEmptyLabel());
+		panelDate.add(getEmptyLabel());
 
 		panelInput.add(labelDistance);
 		panelInput.add(textFieldDistance);
@@ -101,6 +100,12 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		ShopScreen.lastOfferID = Offer.getLastOfferID();
 
 		buttonSave.addActionListener(this);
+	}
+	
+	//returns an empty JLabel
+	//Java Swing Layouts are a bit odd, so I use it as a filler
+	public JLabel getEmptyLabel() {
+		return new JLabel("");
 	}
 
 	// add a valid offer and its products to the database

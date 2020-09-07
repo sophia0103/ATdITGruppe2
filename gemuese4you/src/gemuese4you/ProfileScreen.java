@@ -2,6 +2,7 @@ package gemuese4you;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,93 +21,100 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 public class ProfileScreen extends Screen {
-	private JButton btChangePassword, btDelete;
-	private JLabel lUserID, lUsername, lOffer, lExampleOffer, lJob, lExampleJob;
-	private JPanel pYourOffers, pUsername, pYourJobs, pJobFrame, pTitlebar, pUserInfo, pFrame, pOfferFrame, pCenter;
-	private Connection connection;
-	private Border line;
+	private JButton buttonChangePassword;
+	private JLabel labelUserID, labelUsername, labelJobOffer, labelOffer;
+	private JPanel panelTitlebar, panelUserInfo, panelFrame, panelCenter, panelExampleOffer, panelExampleJobOffer;
+	private static Border line  = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
 	public ProfileScreen() {
+		this.setLayout(new BorderLayout());
+		panelTitlebar = getTitleBar("Job");
+		panelTitlebar.setBackground(Util.orange);
 		
 		// show user information
-		this.setLayout(new BorderLayout());
-		pTitlebar = getTitleBar("Job");
-		pTitlebar.setBackground(Util.orange);
-		
-		lUsername = new JLabel("You are logged in as:   ");
-		lUserID = new JLabel(LoginScreen.userID);
-		pUsername = new JPanel(new GridLayout(1, 2));
-		pUsername.add(lUsername);
-		pUsername.add(lUserID);
-		pUsername.setBackground(Util.orange);
-		btChangePassword = new JButton("Change your password");
-		btChangePassword.addActionListener(new ChangePasswordListener());
-		pUserInfo = new JPanel(new GridLayout(2, 1));
-		pUserInfo.add(pUsername);
-		pUserInfo.add(btChangePassword);
-		pUserInfo.setBackground(Util.orange);
-		pUserInfo.repaint();
-
-		line = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		panelUserInfo = getUserInfoPanel();
 		
 		// show offers inserted by the user (mock data)
-		pOfferFrame = new JPanel(new GridLayout(2, 1));
 		
-		JPanel pExampleOffer = new JPanel(new BorderLayout());
-		pExampleOffer.setBorder(line);
-		pExampleOffer.setBackground(new Color(255, 237, 203));
-		lOffer = new JLabel("These are your current offers: ");
-		lExampleOffer = new JLabel("Your offer No.1");
-		lExampleOffer.setToolTipText(
-				"This function hasn´t been implemented. By pushing this you could e.g. change details of your offer.");
-		btDelete = Util.getCustomButton("delete");
-		btDelete.addActionListener(new DeleteListener());
-		btDelete.setBackground(new Color(255, 237, 203));
-		btDelete.setVisible(true);
+		labelOffer = new JLabel("These are your current offers: ");
+		panelExampleOffer = getExampleOffer();
 		
-		pExampleOffer.add(lExampleOffer, BorderLayout.WEST);
-		pExampleOffer.add(btDelete, BorderLayout.EAST);
-		pExampleOffer.repaint();
-		
-		pOfferFrame.add(lOffer);
-		pOfferFrame.add(pExampleOffer);
-		pOfferFrame.setBackground(Util.orange);
-
 		// show job offers inserted by the user (mock data)
-		pJobFrame = new JPanel(new GridLayout(2, 1));
-		JPanel pExampleJob = new JPanel(new BorderLayout());
-		pExampleJob.setBorder(line);
-		pExampleJob.setBackground(new Color(255, 237, 203));
-		lJob = new JLabel("These are your current job offers: ");
-		lExampleJob = new JLabel("Your job offer No.1");
-		lExampleJob.setToolTipText(
-				"This function hasn´t been implemented. By pushing this you could e.g. change details of your job offer.");
-		pExampleJob.add(lExampleJob, BorderLayout.WEST);
-		pExampleJob.add(btDelete, BorderLayout.EAST);
-		pExampleJob.repaint();
-		pJobFrame.add(lJob);
-		pJobFrame.add(pExampleJob);
-		pJobFrame.setBackground(Util.orange);
-
-		pFrame = new JPanel(new GridLayout(3, 1));
-		pCenter = new JPanel();
-		pCenter.add(pUserInfo);
-		pCenter.setBackground(Util.orange);
-		pFrame.add(pCenter);
-		pFrame.add(pOfferFrame);
-		pFrame.add(pJobFrame);
-		pFrame.setBackground(Util.orange);
-		this.add(pTitlebar, BorderLayout.NORTH);
-		this.add(pFrame, BorderLayout.CENTER);
-		try {
-			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		labelJobOffer = new JLabel("These are your current job offers: ");
+		panelExampleJobOffer = getExampleOffer();
+		
+		
+		panelFrame = new JPanel(new GridLayout(5, 1));
+		
+		panelCenter = new JPanel();
+		panelCenter.add(panelUserInfo);
+		panelCenter.setBackground(Util.orange);
+		panelFrame.add(panelCenter);
+		
+		panelFrame.add(labelOffer);
+		panelFrame.add(panelExampleOffer);
+		
+		panelFrame.add(labelJobOffer);
+		panelFrame.add(panelExampleJobOffer);
+		
+		panelFrame.setBackground(Util.orange);
+		this.add(panelTitlebar, BorderLayout.NORTH);
+		this.add(panelFrame, BorderLayout.CENTER);
+		panelFrame.revalidate();
 	}
 
+	//returns a JPanel with the user information
+	public JPanel getUserInfoPanel() {
+		JPanel panelUserInfo = new JPanel(new GridLayout(2, 1));
+		
+		labelUsername = new JLabel("You are logged in as:   ");
+		labelUserID = new JLabel(LoginScreen.userID);
+		
+		JPanel panelUsername = new JPanel(new GridLayout(1, 2));
+		panelUsername.add(labelUsername);
+		panelUsername.add(labelUserID);
+		panelUsername.setBackground(Util.orange);
+		
+		buttonChangePassword = new JButton("Change your password");
+		buttonChangePassword.addActionListener(new ChangePasswordListener());
+		
+		panelUserInfo.add(panelUsername);
+		panelUserInfo.add(buttonChangePassword);
+		panelUserInfo.setBackground(Util.orange);
+		panelUserInfo.repaint();	
+		
+		return panelUserInfo;
+	}
+	
+	
+	//returns a JPanel with an example offer
+	public JPanel getExampleOffer() {
+		JPanel panelExampleOffer = new JPanel(new BorderLayout());
+		
+		JLabel labelExampleOffer = new JLabel("Your offer No.1");
+		labelExampleOffer.setToolTipText(
+				"This function hasn´t been implemented. By pushing this you could e.g. change details of your job offer.");
+		
+		panelExampleOffer.setBorder(line);
+		panelExampleOffer.setBackground(new Color(255, 237, 203));
+		panelExampleOffer.add(labelExampleOffer, BorderLayout.WEST);
+		panelExampleOffer.add(getDeleteButton(), BorderLayout.EAST);
+		panelExampleOffer.repaint();
+		panelExampleOffer.revalidate();
+		
+		return panelExampleOffer;
+	}
+	
+	//returns a JButton to delete an offer
+	public JButton getDeleteButton() {
+		JButton buttonDelete;
+		buttonDelete = Util.getCustomButton("delete");
+		buttonDelete.addActionListener(new DeleteListener());
+		buttonDelete.setBackground(new Color(255, 237, 203));
+		buttonDelete.setVisible(true);
+		return buttonDelete;
+	}
+	
 }
 
 class ChangePasswordListener implements ActionListener{
@@ -124,4 +132,5 @@ class DeleteListener implements ActionListener{
 		JOptionPane.showMessageDialog(null,
 				"Are you sure you want to delete this item? (Hasn´t been implemented yet).");
 	}
+	
 }

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-public class ChangePasswordDialog extends JFrame implements ActionListener{
+public class ChangePasswordDialog extends JFrame implements ActionListener {
 	private Container container;
 	private Connection connection;
 	private JLabel labelOldPassword, labelNewPassword, labelNewPasswordRepeat;
@@ -51,27 +52,48 @@ public class ChangePasswordDialog extends JFrame implements ActionListener{
 		this.setSize(500, 500);
 	}
 
-
-	//Change the password in the user database table
+	// Change the password in the user database table
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
+			String oldPassword = String.valueOf(passwordFieldOldPassword.getPassword());
 			String newPassword = String.valueOf(passwordFieldNewPassword.getPassword());
 			String newPasswordRepeat = String.valueOf(passwordFieldNewPasswordRepeat.getPassword());
-			if (!newPassword.equals(newPasswordRepeat)) {
-				throw new Exception();
+
+			if (inputIsValid(oldPassword, newPassword, newPasswordRepeat)) {
+				Statement statement = connection.createStatement();
+				String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat + "' WHERE userID ='"
+						+ LoginScreen.userID + "'";
+				statement.execute(queryChangePassword);
+				JOptionPane.showMessageDialog(null, "Password changed.");
+				this.dispose();
 			}
-			Statement statement = connection.createStatement();
-			String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat + "' WHERE userID ='"+LoginScreen.userID+"'";
-			statement.execute(queryChangePassword);
-			JOptionPane.showMessageDialog(null, "Password changed.");
 		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Please enter the same values for the new password.", "Error",
-					JOptionPane.ERROR_MESSAGE);
 			e2.printStackTrace();
-			this.dispose();
 		}
 
+	}
+
+	public boolean inputIsValid(String oldPassword, String newPassword, String newPasswordRepeat) {
+		if(oldPassword.equals("") || newPassword.equals("") || newPasswordRepeat.equals("")) {
+			JOptionPane.showMessageDialog(null, "Input mustn´t be empty.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!newPassword.equals(newPasswordRepeat)) {
+			JOptionPane.showMessageDialog(null, "Please enter the same values for the new password.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!oldPassword.equals(Util.getPassword())) {
+			JOptionPane.showMessageDialog(null, "Old password is not correct.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if(oldPassword.equals(newPasswordRepeat)) {
+			JOptionPane.showMessageDialog(null, "New password can´t be the same as the old password.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
 	}
 
 }

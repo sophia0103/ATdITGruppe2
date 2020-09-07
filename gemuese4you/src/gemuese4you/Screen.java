@@ -15,12 +15,12 @@ public abstract class Screen extends JPanel {
 		lTitle.setFont(new Font("Verdana", Font.BOLD, 20));
 		pTitleBar.add(lTitle, BorderLayout.CENTER);
 		pTitleBar.setBackground(orange);
-		pTitleBar.add(getBackButton(this), BorderLayout.WEST);
+		pTitleBar.add(getBackButton(), BorderLayout.WEST);
 		return pTitleBar;
 	}
 
 	// returns a button to get back to the last Screen
-	public JButton getBackButton(Screen thisScreen) {
+	public JButton getBackButton() {
 		JButton btBack = new JButton();
 		btBack = new JButton();
 		btBack.setBackground(orange);
@@ -31,6 +31,12 @@ public abstract class Screen extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Component parent = MainScreen.tabPane.getParent();
+				do {
+					parent = parent.getParent();
+				}while(!(parent instanceof JFrame));
+				JFrame parentFrame = (JFrame) parent;
+				parentFrame.dispose();
 				LoginScreen log = new LoginScreen();
 				log.setVisible(true);
 				log.setSize(500, 500);
