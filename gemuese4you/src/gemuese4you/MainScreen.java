@@ -23,11 +23,11 @@ public class MainScreen extends JFrame {
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		pHome = new HomeScreen();
 		pShop = new ShopScreen();
+		pJob = new JobScreen();
+		pProfile = new ProfileScreen();
 
 		pShop.setBackground(Util.orange);
-		pJob = new JPanel();
 		pJob.setBackground(Util.orange);
-		pProfile = new ProfileScreen();
 		pProfile.setBackground(Util.orange);
 
 		tabPane.addTab("Home", new ImageIcon("images/home.png"), pHome);
@@ -39,7 +39,7 @@ public class MainScreen extends JFrame {
 		this.setVisible(true);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Gemüse 4 You");
+		this.setTitle("GemÃ¼se 4 You");
 	}
 
 
