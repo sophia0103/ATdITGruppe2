@@ -39,7 +39,7 @@ public class HomeScreen extends Screen implements ActionListener{
 
 		JLabel headlineShop= createHeadline("Neueste Angebote:");
 		
-		String[] contentShop = {"\n\u2022 Kartoffeln super gÃ¼nstig!", "\n\u2022 Spagel 500g bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
+		String[] contentShop = {"\n\u2022 Kartoffeln super günstig!", "\n\u2022 Spagel 500g bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
 		buttonShop = createButton(contentShop);
 		buttonShop.addActionListener(this);
 		
@@ -49,7 +49,7 @@ public class HomeScreen extends Screen implements ActionListener{
 		buttonNews = createButton(contentNews);
 		buttonNews.addActionListener(this);
 		
-		JLabel headlineAboutUs = createHeadline("Ãœber unsere App:");
+		JLabel headlineAboutUs = createHeadline("Über unsere App:");
 		
 		String[] contentAboutUs = {"\n\u2022 Das Ziel unserer App", "\n\u2022 Wer sind wir?", "\n\u2022 Wie kann man uns erreichen?"};
 		buttonAboutUs = createButton(contentAboutUs);

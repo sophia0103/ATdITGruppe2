@@ -15,11 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class jobScreen extends Screen{
+public class JobScreen extends Screen{
 
 	ArrayList<Job> jobs = new ArrayList();
 	
-	public jobScreen() {
+	public JobScreen() {
 		this.setBackground(orange);
 		this.setLayout(new BorderLayout());
 		this.add(this.getTitleBar("Jobs"), BorderLayout.NORTH);
