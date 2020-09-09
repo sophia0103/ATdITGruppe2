@@ -2,9 +2,13 @@ package gemuese4you;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -36,6 +40,9 @@ public class MainScreen extends JFrame {
 		tabPane.addTab("Profile", new ImageIcon("images/job.png"), pProfile);
 		c.add(tabPane);
 
+		ImageIcon frameIcon = new ImageIcon("images/carrotMain.png");
+		this.setIconImage(frameIcon.getImage());
+		
 		this.setVisible(true);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);

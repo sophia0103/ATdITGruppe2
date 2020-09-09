@@ -28,7 +28,7 @@ public class ProfileScreen extends Screen {
 
 	public ProfileScreen() {
 		this.setLayout(new BorderLayout());
-		panelTitlebar = getTitleBar("Job");
+		panelTitlebar = getTitleBar("Profile");
 		panelTitlebar.setBackground(Util.orange);
 		
 		// show user information
@@ -91,7 +91,7 @@ public class ProfileScreen extends Screen {
 	public JPanel getExampleOffer() {
 		JPanel panelExampleOffer = new JPanel(new BorderLayout());
 		
-		JLabel labelExampleOffer = new JLabel("Your offer No.1");
+		JLabel labelExampleOffer = new JLabel("Example offer");
 		labelExampleOffer.setToolTipText(
 				"This function hasn´t been implemented. By pushing this you could e.g. change details of your job offer.");
 		
@@ -130,7 +130,7 @@ class DeleteListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(null,
-				"Are you sure you want to delete this item? (Hasn´t been implemented yet).");
+				"Are you sure you want to delete this offer? (Hasn´t been implemented yet).");
 	}
 	
 }

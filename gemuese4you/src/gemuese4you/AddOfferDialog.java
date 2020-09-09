@@ -26,9 +26,9 @@ import javax.swing.JTextField;
 public class AddOfferDialog extends JFrame implements ActionListener {
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
-			labelEmpty;
-	private JPanel panelInput, panelProduct, panelDate;
-	private JButton buttonSave;
+			labelDistanceMeters, labelPriceEuro;
+	private JPanel panelInput, panelProduct, panelDate, panelDistance, panelPrice, panelButton;
+	private JButton buttonSave, buttonCancel;
 	private String[] productArray;
 	private ArrayList<String> productList;
 	static Connection connection;
@@ -37,7 +37,6 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		Container container = getContentPane();
 		container.setBackground(Util.orange);
 		container.setLayout(new BorderLayout());
-		labelEmpty = new JLabel();
 		panelInput = new JPanel(new GridLayout(8, 1));
 
 		textFieldDistance = new JTextField();
@@ -46,6 +45,11 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		textFieldDate = new JTextField();
 
 		labelDistance = new JLabel("Distance: ");
+		panelDistance = new JPanel(new BorderLayout());
+		labelDistanceMeters = new JLabel(" meters   ");
+		panelDistance.add(textFieldDistance, BorderLayout.CENTER);
+		panelDistance.add(labelDistanceMeters, BorderLayout.EAST);
+		panelDistance.setBackground(Util.orange);
 
 		panelProduct = new JPanel(new GridLayout(1, 6));
 		panelProduct.setBackground(Util.orange);
@@ -61,13 +65,19 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		panelProduct.add(getEmptyLabel());
 
 		labelPrice = new JLabel("Price: ");
+		panelPrice = new JPanel(new BorderLayout());
+		labelPriceEuro = new JLabel(" €    ");
+		panelPrice.add(textFieldPrice, BorderLayout.CENTER);
+		panelPrice.add(labelPriceEuro, BorderLayout.EAST);
+		panelPrice.setBackground(Util.orange);
 
 		panelDate = new JPanel(new GridLayout(1, 5));
 		panelDate.setBackground(Util.orange);
 		labelExpirationDate = new JLabel("Expiration Date: ");
 		labelDateInfo = new JLabel();
 		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
-		labelDateInfo.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
+		labelDateInfo
+				.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
 		panelDate.add(labelExpirationDate);
 		panelDate.add(labelDateInfo);
 		panelDate.add(getEmptyLabel());
@@ -75,17 +85,26 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 		panelDate.add(getEmptyLabel());
 
 		panelInput.add(labelDistance);
-		panelInput.add(textFieldDistance);
+		panelInput.add(panelDistance);
 		panelInput.add(panelProduct);
 		panelInput.add(textFieldProducts);
 		panelInput.add(labelPrice);
-		panelInput.add(textFieldPrice);
+		panelInput.add(panelPrice);
 		panelInput.add(panelDate);
 		panelInput.add(textFieldDate);
 		panelInput.setBackground(Util.orange);
-		buttonSave = Util.getCustomButton("save");
+
+		buttonCancel = new JButton("Cancel");
+		buttonCancel.addActionListener(this);
+
+		buttonSave = new JButton("Save");
+		buttonSave.addActionListener(this);
+		panelButton = new JPanel(new GridLayout(1, 2));
+		panelButton.add(buttonSave);
+		panelButton.add(buttonCancel);
+
 		container.add(panelInput, BorderLayout.CENTER);
-		container.add(buttonSave, BorderLayout.SOUTH);
+		container.add(panelButton, BorderLayout.SOUTH);
 		this.setVisible(true);
 		this.setTitle("Create an offer");
 		this.setSize(500, 500);
@@ -101,11 +120,10 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 
 		ShopScreen.lastOfferID = Offer.getLastOfferID();
 
-		buttonSave.addActionListener(this);
 	}
-	
-	//returns an empty JLabel
-	//Java Swing Layouts are a bit odd, so I use it as a filler
+
+	// returns an empty JLabel
+	// Java Swing Layouts are a bit odd, so I use it as a filler
 	public JLabel getEmptyLabel() {
 		return new JLabel("");
 	}
@@ -113,17 +131,22 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 	// add a valid offer and its products to the database
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (inputIsValid()) {
-			try {
-				addOffer();
-				readProducts();
-				addProductListOfOffer();
-				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
-				this.dispose();
-			} catch (SQLException sqlException) {
-				// Can´t check for wrong data type in inputIsValid method
-				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error", JOptionPane.ERROR_MESSAGE);
+		if (e.getSource() == buttonSave) {
+			if (inputIsValid()) {
+				try {
+					addOffer();
+					readProducts();
+					addProductListOfOffer();
+					JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
+					this.dispose();
+				} catch (SQLException sqlException) {
+					// Can´t check for wrong data type in inputIsValid method
+					JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
+		} else {
+			this.dispose();
 		}
 	}
 
@@ -182,13 +205,11 @@ public class AddOfferDialog extends JFrame implements ActionListener {
 			return false;
 		}
 		try {
-			//Check if input for product is a number
-		Integer.parseInt(textFieldProducts.getText());
-		JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error",
-				JOptionPane.ERROR_MESSAGE);
-		return false;
-		}
-		catch(Exception e) {
+			// Check if input for product is a number
+			Integer.parseInt(textFieldProducts.getText());
+			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e) {
 			return true;
 		}
 	}

@@ -57,12 +57,15 @@ public class Offer {
 	public static int getLastOfferID() {
 		int lastOfferID;
 		try {
+			if(connection==null) {
+				connection=Util.getConnection();
+			}
 			Statement statement = connection.createStatement();
 			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
 			ResultSet resultLastOfferID = statement.executeQuery(lastOfferIDQuery);
 			resultLastOfferID.next();
 			lastOfferID = resultLastOfferID.getInt(1);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return -1;
 		}

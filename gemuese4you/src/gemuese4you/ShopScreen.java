@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-public class ShopScreen extends Screen {
+public class ShopScreen extends Screen implements ActionListener{
 	private static ArrayList<Offer> offerList;
 	private static Connection connection;
 	private JPanel panelOffer, panelEast, panelTitlebar;
@@ -64,6 +65,7 @@ public class ShopScreen extends Screen {
 		}
 		readOffers();
 		panelOffer = new JPanel(new GridLayout(offerList.size(), 1));
+		panelOffer.setBackground(Util.orange);
 		for (int i = 0; i < offerList.size(); i++) {
 			panelOffer.add(getOfferPanel(offerList.get(i)));
 		}
@@ -78,7 +80,7 @@ public class ShopScreen extends Screen {
 			Statement statement = connection.createStatement();
 			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultOffers = statement.executeQuery(queryOffers);
-			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")) {
+			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers") && resultOffers!=null) {
 				if (resultOffers.next()) {
 					int offerID = resultOffers.getInt(1);
 					String userID = resultOffers.getString(2);
@@ -128,14 +130,21 @@ public class ShopScreen extends Screen {
 	// returns a button to refresh the shopScreen
 	public JButton getRefreshButton() {
 		JButton buttonRefresh = Util.getCustomButton("refresh");
-		ActionListener refreshListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showCurrentOffers();
-			}
-		};
-		buttonRefresh.addActionListener(refreshListener);
+//		ActionListener refreshListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				showCurrentOffers();
+//			}
+//		};
+		buttonRefresh.addActionListener(this);
 		return buttonRefresh;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		showCurrentOffers();
+		SwingUtilities.updateComponentTreeUI(this);
+		
 	}
 
 }

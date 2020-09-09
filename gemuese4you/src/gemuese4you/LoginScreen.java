@@ -79,6 +79,9 @@ public class LoginScreen extends JFrame implements ActionListener{
 		c.add(pFrame, BorderLayout.CENTER);
 		c.add(pButtons, BorderLayout.SOUTH);
 		
+		ImageIcon frameIcon = new ImageIcon("images/carrotMain.png");
+		this.setIconImage(frameIcon.getImage());
+		
 	}
 
 
