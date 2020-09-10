@@ -12,6 +12,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import view.ProfileScreenView;
+import view.ShopScreenView;
+
 public class MainScreen extends JFrame {
 	private Container c;
 	public static JTabbedPane tabPane;
@@ -26,9 +29,9 @@ public class MainScreen extends JFrame {
 
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		pHome = new HomeScreen();
-		pShop = new ShopScreen();
+		pShop = new ShopScreenView();
 		pJob = new JobScreen();
-		pProfile = new ProfileScreen();
+		pProfile = new ProfileScreenView();
 
 		pShop.setBackground(Util.orange);
 		pJob.setBackground(Util.orange);

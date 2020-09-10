@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import model.Job;
+
 public class JobScreen extends Screen{
 
 	ArrayList<Job> jobs = new ArrayList();

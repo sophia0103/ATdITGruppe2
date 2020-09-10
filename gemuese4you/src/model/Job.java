@@ -1,4 +1,4 @@
-package gemuese4you;
+package model;
 
 import java.util.Date;
 
