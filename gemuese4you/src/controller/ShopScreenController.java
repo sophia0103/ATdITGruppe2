@@ -1,4 +1,4 @@
-package gemuese4you;
+package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,33 +16,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class ShopScreen extends Screen implements ActionListener{
-	private static ArrayList<Offer> offerList;
-	private static Connection connection;
-	private JPanel panelOffer, panelEast, panelTitlebar;
-	private JButton buttonAddOffer, buttonRefresh;
+import gemuese4you.Util;
+import model.Offer;
+import view.AddOfferDialogView;
+import view.GetOfferDialogView;
+
+public class ShopScreenController{
+	private JPanel panelOffer;
+	private ArrayList<Offer> offerList;
+	private JPanel shopScreenUI;
+	private Connection connection;
 	public static int lastOfferID;
 
-	public ShopScreen() {
-		
-		this.setLayout(new BorderLayout());
-		panelTitlebar = getTitleBar("Shop");
-		buttonAddOffer = getAddOfferButton();
-		buttonRefresh = getRefreshButton();
-		
-		// AddOfferButton only exists for farmers (scope)
-		if (Util.isUserFarmer()) {
-			panelEast = new JPanel(new GridLayout(1, 2));
-			panelEast.add(buttonRefresh);
-			panelEast.add(buttonAddOffer);
-		} else {
-			panelEast = new JPanel();
-			panelEast.add(buttonRefresh);
-		}
-		panelTitlebar.add(panelEast, BorderLayout.EAST);
-		this.add(panelTitlebar, BorderLayout.NORTH);
-
+	public ShopScreenController(JPanel shopScreenUI) {
+		panelOffer = new JPanel();
 		offerList = new ArrayList<Offer>();
+		this.shopScreenUI = shopScreenUI;
 
 		try {
 			connection = Util.getConnection();
@@ -52,7 +41,12 @@ public class ShopScreen extends Screen implements ActionListener{
 			e.printStackTrace();
 		}
 
+	}
+	
+	//refresh the UI
+	public void refresh() {
 		showCurrentOffers();
+		SwingUtilities.updateComponentTreeUI(shopScreenUI);	
 	}
 
 	// display existing offers
@@ -60,7 +54,7 @@ public class ShopScreen extends Screen implements ActionListener{
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
 		if (panelOffer != null) {
-			this.remove(panelOffer);
+			shopScreenUI.remove(panelOffer);
 			panelOffer = null;
 		}
 		readOffers();
@@ -69,7 +63,7 @@ public class ShopScreen extends Screen implements ActionListener{
 		for (int i = 0; i < offerList.size(); i++) {
 			panelOffer.add(getOfferPanel(offerList.get(i)));
 		}
-		this.add(panelOffer, BorderLayout.CENTER);
+		shopScreenUI.add(panelOffer, BorderLayout.CENTER);
 	}
 
 	// reads the current offers in the database and adds them to the offer list
@@ -80,7 +74,8 @@ public class ShopScreen extends Screen implements ActionListener{
 			Statement statement = connection.createStatement();
 			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultOffers = statement.executeQuery(queryOffers);
-			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers") && resultOffers!=null) {
+			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")
+					&& resultOffers != null) {
 				if (resultOffers.next()) {
 					int offerID = resultOffers.getInt(1);
 					String userID = resultOffers.getString(2);
@@ -104,7 +99,7 @@ public class ShopScreen extends Screen implements ActionListener{
 		ActionListener offerListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new GetOfferDialog(offer);
+				new GetOfferDialogView(offer);
 			}
 		};
 		buttonIcon.addActionListener(offerListener);
@@ -113,38 +108,25 @@ public class ShopScreen extends Screen implements ActionListener{
 		return panelOffer;
 	}
 
-	// returns a button to add an offer
-	public JButton getAddOfferButton() {
-		JButton buttonAdd = Util.getCustomButton("add");
-		// Function which is called when the add offer button is pressed
-		ActionListener addListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddOfferDialog();
-			}
-		};
-		buttonAdd.addActionListener(addListener);
-		return buttonAdd;
-	}
+	// returns a listener for the add offer button
+		public ActionListener getAddListener() {
+			ActionListener addListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new AddOfferDialogView();
+				}
+			};
+			return addListener;
+		}
 
-	// returns a button to refresh the shopScreen
-	public JButton getRefreshButton() {
-		JButton buttonRefresh = Util.getCustomButton("refresh");
-//		ActionListener refreshListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				showCurrentOffers();
-//			}
-//		};
-		buttonRefresh.addActionListener(this);
-		return buttonRefresh;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		showCurrentOffers();
-		SwingUtilities.updateComponentTreeUI(this);
-		
-	}
-
+		//returns a listener for the refresh button
+		public ActionListener getRefreshListener() {
+			ActionListener refreshListener = new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					refresh();		
+				}
+			};
+			return refreshListener;
+		}
 }

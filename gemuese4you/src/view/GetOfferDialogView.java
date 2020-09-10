@@ -1,4 +1,4 @@
-package gemuese4you;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -14,30 +14,29 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class GetOfferDialog extends JFrame implements ActionListener {
+import controller.GetOfferDialogController;
+import gemuese4you.Util;
+import model.Offer;
+
+public class GetOfferDialogView extends JFrame {
 	private Container container;
 	private JButton buttonBuy, buttonCancel;
 	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
 	private JPanel panelDescription, panelFrame, panelImage, panelButton;
+	private GetOfferDialogController getOfferDialogController;
 
-	public GetOfferDialog(Offer offer) {
+	public GetOfferDialogView(Offer offer) {
+		getOfferDialogController = new GetOfferDialogController(this);
+		
 		container = getContentPane();
 		this.setBackground(Util.orange);
 		
-		JButton buttonBuy = new JButton("Buy");
-		ActionListener buyListener = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"By pushing this button you can add this offer to your shopping cart (function hasn´t been implemented yet).");
-			}
-			
-		};
-		buttonBuy.addActionListener(buyListener);
+		buttonBuy = new JButton("Buy");
+		buttonBuy.addActionListener(getOfferDialogController.getBuyListener());
 		
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(this);
+		buttonCancel.addActionListener(getOfferDialogController.getCancelListener());
+		
 		panelButton = new JPanel(new GridLayout(1,2));
 		panelButton.add(buttonBuy);
 		panelButton.add(buttonCancel);
@@ -50,7 +49,7 @@ public class GetOfferDialog extends JFrame implements ActionListener {
 		labelExpirationDate = new JLabel("Offer expires on: " + offer.getDate());
 		labelPrice = new JLabel("Price: " + offer.getPrice() + "€");
 		labelDistance = new JLabel("Distance: " + offer.getDistance() + " meters");
-		labelProducts = new JLabel("Products included: " + getFormattedProductList(offer));
+		labelProducts = new JLabel("Products included: " + getOfferDialogController.getFormattedProductList(offer));
 		
 		panelFrame = new JPanel(new BorderLayout());
 		
@@ -79,18 +78,4 @@ public class GetOfferDialog extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.dispose();
-	}
-
-	//formats the productList into a readable String
-	public String getFormattedProductList(Offer offer) {
-		String products = "";
-		for (int i = 0; i < offer.getProductList().size(); i++) {
-			products = products + offer.getProductList().get(i) + ", ";
-		}
-		products = products.substring(0, products.length() - 2);
-		return products;
-	}
 }

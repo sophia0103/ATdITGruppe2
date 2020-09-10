@@ -1,4 +1,4 @@
-package gemuese4you;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,17 +20,23 @@ import javax.swing.JPasswordField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-public class ProfileScreen extends Screen {
-	private JButton buttonChangePassword;
+import controller.ProfileScreenController;
+import gemuese4you.LoginScreen;
+import gemuese4you.Screen;
+import gemuese4you.Util;
+
+public class ProfileScreenView extends Screen {
+	private JButton buttonChangePassword, buttonDelete;
 	private JLabel labelUserID, labelUsername, labelJobOffer, labelOffer;
 	private JPanel panelTitlebar, panelUserInfo, panelFrame, panelCenter, panelExampleOffer, panelExampleJobOffer;
 	private static Border line  = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-
-	public ProfileScreen() {
+	private ProfileScreenController profileScreenController;
+	
+	public ProfileScreenView() {
 		this.setLayout(new BorderLayout());
 		panelTitlebar = getTitleBar("Profile");
 		panelTitlebar.setBackground(Util.orange);
-		
+		profileScreenController = new ProfileScreenController(this);
 		// show user information
 		panelUserInfo = getUserInfoPanel();
 		
@@ -61,6 +67,7 @@ public class ProfileScreen extends Screen {
 		this.add(panelTitlebar, BorderLayout.NORTH);
 		this.add(panelFrame, BorderLayout.CENTER);
 		panelFrame.revalidate();
+		
 	}
 
 	//returns a JPanel with the user information
@@ -75,8 +82,8 @@ public class ProfileScreen extends Screen {
 		panelUsername.add(labelUserID);
 		panelUsername.setBackground(Util.orange);
 		
-		buttonChangePassword = new JButton("Change your password");
-		buttonChangePassword.addActionListener(new ChangePasswordListener());
+		buttonChangePassword = new JButton("Change password");
+		buttonChangePassword.addActionListener(profileScreenController.getChangePasswordListener());
 		
 		panelUserInfo.add(panelUsername);
 		panelUserInfo.add(buttonChangePassword);
@@ -89,6 +96,9 @@ public class ProfileScreen extends Screen {
 	
 	//returns a JPanel with an example offer
 	public JPanel getExampleOffer() {
+		buttonDelete = Util.getCustomButton("delete");
+		buttonDelete.addActionListener(profileScreenController.getDeleteListener());
+		
 		JPanel panelExampleOffer = new JPanel(new BorderLayout());
 		
 		JLabel labelExampleOffer = new JLabel("Example offer");
@@ -98,39 +108,12 @@ public class ProfileScreen extends Screen {
 		panelExampleOffer.setBorder(line);
 		panelExampleOffer.setBackground(new Color(255, 237, 203));
 		panelExampleOffer.add(labelExampleOffer, BorderLayout.WEST);
-		panelExampleOffer.add(getDeleteButton(), BorderLayout.EAST);
+		panelExampleOffer.add(buttonDelete, BorderLayout.EAST);
 		panelExampleOffer.repaint();
 		panelExampleOffer.revalidate();
 		
 		return panelExampleOffer;
 	}
 	
-	//returns a JButton to delete an offer
-	public JButton getDeleteButton() {
-		JButton buttonDelete;
-		buttonDelete = Util.getCustomButton("delete");
-		buttonDelete.addActionListener(new DeleteListener());
-		buttonDelete.setBackground(new Color(255, 237, 203));
-		buttonDelete.setVisible(true);
-		return buttonDelete;
-	}
-	
 }
 
-class ChangePasswordListener implements ActionListener{
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		new ChangePasswordDialog();
-	}
-	
-}
-
-class DeleteListener implements ActionListener{
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(null,
-				"Are you sure you want to delete this offer? (Hasn´t been implemented yet).");
-	}
-	
-}
