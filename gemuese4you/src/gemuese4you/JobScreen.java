@@ -115,7 +115,7 @@ public class JobScreen extends Screen implements ActionListener{
 			jobScreenContent.setLayout(new BoxLayout(jobScreenContent, BoxLayout.Y_AXIS));
 			jobScreenContent.setBackground(orange);
 			
-			JLabel headlineJobs = createHeadline("Neueste Stellenangebote in deiner Nähe:");
+			JLabel headlineJobs = createHeadline("Neueste Stellenangebote in deiner NÃ¤he:");
 			jobScreenContent.add(headlineJobs);
 			jobScreenContent.setBorder(BorderFactory.createEmptyBorder(10, 30, 5, 30));
 			
