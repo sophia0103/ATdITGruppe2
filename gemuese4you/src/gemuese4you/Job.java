@@ -1,20 +1,20 @@
-package model;
+package gemuese4you;
 
 import java.util.Date;
 
 public class Job {
 	private String title;
-	private String creatorName;
+	private String creator;
 	private int distance;
 	private int duration;
 	private String exp_date;
 	private String employmentType;
-	private int salary;
+	private double salary;
 	private String description;
 	
-	public Job(String title, String creatorName, int duration, int distance, String exp_date, String employmentType, int salary, String description) {
+	public Job(String title, String creator, int duration, int distance, String exp_date, String employmentType, double salary, String description) {
 		this.title = title;
-		this.creatorName = creatorName;
+		this.creator = creator;
 		this.duration = duration;
 		this.distance = distance;
 		this.exp_date = exp_date;
@@ -23,8 +23,8 @@ public class Job {
 		this.description = description;
 	}
 
-	public String getCreatorName() {
-		return creatorName;
+	public String getCreator() {
+		return creator;
 	}
 	
 	public int getDistance() {
@@ -39,7 +39,7 @@ public class Job {
 		return employmentType;
 	}
 	
-	public int getSalary() {
+	public double getSalary() {
 		return salary;
 	}
 	
