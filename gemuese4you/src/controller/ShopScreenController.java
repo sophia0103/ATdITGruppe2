@@ -74,16 +74,16 @@ public class ShopScreenController{
 			Statement statement = connection.createStatement();
 			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultOffers = statement.executeQuery(queryOffers);
+			resultOffers.next();
 			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")
-					&& resultOffers != null) {
-				if (resultOffers.next()) {
+					&& resultOffers != null && resultOffers.getString(2)!=null) {
 					int offerID = resultOffers.getInt(1);
 					String userID = resultOffers.getString(2);
 					int distance = resultOffers.getInt(3);
 					String expDate = resultOffers.getString(4);
 					double price = resultOffers.getDouble(5);
 					offerList.add(new Offer(offerID, userID, distance, expDate, price));
-				}
+					resultOffers.next();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
