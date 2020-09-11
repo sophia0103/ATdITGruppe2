@@ -54,13 +54,13 @@ public class Offer {
 		}
 
 	}
-	
-	//get the ID of the last offer in the database table
+
+	// get the ID of the last offer in the database table
 	public static int getLastOfferID() {
 		int lastOfferID;
 		try {
-			if(connection==null) {
-				connection=Util.getConnection();
+			if (connection == null) {
+				connection = Util.getConnection();
 			}
 			Statement statement = connection.createStatement();
 			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";

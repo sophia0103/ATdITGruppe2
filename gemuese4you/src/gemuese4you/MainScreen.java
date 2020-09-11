@@ -1,16 +1,14 @@
 package gemuese4you;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.sql.Connection;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import view.ProfileScreenView;
 import view.ShopScreenView;
@@ -18,9 +16,7 @@ import view.ShopScreenView;
 public class MainScreen extends JFrame {
 	private Container c;
 	public static JTabbedPane tabPane;
-	private JPanel pHome, pShop,  pJob, pProfile, pTitleBar;
-	private JLabel lTitle;
-	private static Connection connection;
+	private JPanel pHome, pShop, pJob, pProfile;
 
 	public MainScreen() {
 		c = getContentPane();
@@ -45,12 +41,11 @@ public class MainScreen extends JFrame {
 
 		ImageIcon frameIcon = new ImageIcon("images/carrotMain.png");
 		this.setIconImage(frameIcon.getImage());
-		
+
 		this.setVisible(true);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Gemüse 4 You");
 	}
-
 
 }

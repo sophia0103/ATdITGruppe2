@@ -3,7 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.sql.Connection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

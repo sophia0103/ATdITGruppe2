@@ -4,14 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.GetOfferDialogController;
@@ -22,7 +19,7 @@ public class GetOfferDialogView extends JFrame {
 	private Container container;
 	private JButton buttonBuy, buttonCancel;
 	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
-	private JPanel panelDescription, panelFrame, panelImage, panelButton;
+	private JPanel panelDescription, panelFrame, panelButton;
 	private GetOfferDialogController getOfferDialogController;
 
 	public GetOfferDialogView(Offer offer) {
