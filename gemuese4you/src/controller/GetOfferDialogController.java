@@ -3,20 +3,19 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import model.Offer;
 import view.GetOfferDialogView;
 
 public class GetOfferDialogController {
-	GetOfferDialogView getOfferDialogView;
+	private GetOfferDialogView getOfferDialogView;
 
 	public GetOfferDialogController(GetOfferDialogView getOfferDialogView) {
 		this.getOfferDialogView = getOfferDialogView;
 	}
 
-	//returns a listener for the buy button
+	// returns a listener for the buy button
 	public ActionListener getBuyListener() {
 		ActionListener buyListener = new ActionListener() {
 
@@ -30,7 +29,7 @@ public class GetOfferDialogController {
 		return buyListener;
 	}
 
-	//returns a listener for the cancel button
+	// returns a listener for the cancel button
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -42,8 +41,8 @@ public class GetOfferDialogController {
 		};
 		return cancelListener;
 	}
-	
-	//formats the productList into a readable String
+
+	// formats the productList into a readable String
 	public String getFormattedProductList(Offer offer) {
 		String products = "";
 		for (int i = 0; i < offer.getProductList().size(); i++) {

@@ -1,17 +1,15 @@
 package controller;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import view.ChangePasswordDialogView;
 import view.ProfileScreenView;
 
 public class ProfileScreenController {
-	ProfileScreenView profileScreenView;
+	private ProfileScreenView profileScreenView;
 
 	public ProfileScreenController(ProfileScreenView profileScreenView) {
 		this.profileScreenView = profileScreenView;

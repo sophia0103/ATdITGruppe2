@@ -3,23 +3,13 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLSyntaxErrorException;
-import java.sql.Statement;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -100,13 +90,13 @@ public class AddOfferDialogView extends JFrame {
 		panelInput.setBackground(Util.orange);
 
 		addOfferDialogController = new AddOfferDialogController(this);
-		
+
 		buttonCancel = new JButton("Cancel");
 		buttonCancel.addActionListener(addOfferDialogController.getCancelListener());
-		
-		buttonSave =  new JButton("Save");
+
+		buttonSave = new JButton("Save");
 		buttonSave.addActionListener(addOfferDialogController.getSaveListener());
-		
+
 		panelButton = new JPanel(new GridLayout(1, 2));
 		panelButton.add(buttonSave);
 		panelButton.add(buttonCancel);

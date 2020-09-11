@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -19,14 +17,13 @@ import model.Offer;
 import view.AddOfferDialogView;
 
 public class AddOfferDialogController {
-	AddOfferDialogView addOfferDialogView;
+	private AddOfferDialogView addOfferDialogView;
 	private Connection connection;
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private String[] productArray;
 	public ArrayList<String> productList;
 
 	public AddOfferDialogController(AddOfferDialogView addOfferDialogView) {
-		ShopScreenController.lastOfferID = Offer.getLastOfferID();
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
@@ -34,6 +31,7 @@ public class AddOfferDialogController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		ShopScreenController.lastOfferID = Offer.getLastOfferID();
 		this.addOfferDialogView = addOfferDialogView;
 		textFieldProducts = addOfferDialogView.getTextFieldProducts();
 		textFieldDistance = addOfferDialogView.getTextFieldDistance();
@@ -101,7 +99,7 @@ public class AddOfferDialogController {
 			return false;
 		}
 		try {
-			// Check if input for product is a number
+			// Check if input for product is a number (invalid)
 			Integer.parseInt(textFieldProducts.getText());
 			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -112,17 +110,17 @@ public class AddOfferDialogController {
 
 	// Insert new offer into the offers database table
 	public void addOffer() throws SQLException {
-		Statement statement = connection.createStatement();
+		Statement statementAddOffer = connection.createStatement();
 		// Auto increment in SQL doesn´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
 
-		String querySaveOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'" + LoginScreen.userID
-				+ "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "'," + textFieldPrice.getText()
-				+ ")";
-		statement.execute(querySaveOffer);
+		String queryAddOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'"
+				+ LoginScreen.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
+				+ textFieldPrice.getText() + ")";
+		statementAddOffer.execute(queryAddOffer);
 	}
 
-	// add products off an offer to database table productsInOffer
+	// add products of an offer to database table productsInOffer
 	public void addProductListOfOffer() {
 		try {
 			Statement statementAddProductList = connection.createStatement();
@@ -136,7 +134,7 @@ public class AddOfferDialogController {
 		}
 	}
 
-	//returns a listener to cancel the operation
+	// returns a listener to cancel the operation
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -149,8 +147,7 @@ public class AddOfferDialogController {
 		return cancelListener;
 	}
 
-	
-	//returns a listener to save a new offer
+	// returns a listener to save a new offer
 	public ActionListener getSaveListener() {
 		ActionListener saveListener = new ActionListener() {
 

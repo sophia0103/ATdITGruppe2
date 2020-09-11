@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
@@ -15,17 +14,17 @@ import gemuese4you.Util;
 import view.ChangePasswordDialogView;
 
 public class ChangePasswordDialogController {
-	ChangePasswordDialogView changePasswordDialogView;
+	private ChangePasswordDialogView changePasswordDialogView;
 	private Connection connection;
 	private JPasswordField passwordFieldOldPassword, passwordFieldNewPassword, passwordFieldNewPasswordRepeat;
 
 	public ChangePasswordDialogController(ChangePasswordDialogView changePasswordDialogView) {
 		this.changePasswordDialogView = changePasswordDialogView;
-		
+
 		passwordFieldOldPassword = changePasswordDialogView.getPasswordFieldOldPassword();
 		passwordFieldNewPassword = changePasswordDialogView.getPasswordFieldNewPassword();
 		passwordFieldNewPasswordRepeat = changePasswordDialogView.getPasswordFieldNewPasswordRepeat();
-	
+
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
@@ -35,7 +34,7 @@ public class ChangePasswordDialogController {
 		}
 	}
 
-	//returns a listener for the cancel button
+	// returns a listener for the cancel button
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -48,7 +47,7 @@ public class ChangePasswordDialogController {
 		return cancelListener;
 	}
 
-	//returns a button for the save button
+	// returns a button for the save button
 	public ActionListener getSaveListener() {
 
 		ActionListener saveListener = new ActionListener() {
@@ -62,8 +61,8 @@ public class ChangePasswordDialogController {
 
 					if (inputIsValid(oldPassword, newPassword, newPasswordRepeat)) {
 						Statement statement = connection.createStatement();
-						String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat + "' WHERE userID ='"
-								+ LoginScreen.userID + "'";
+						String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat
+								+ "' WHERE userID ='" + LoginScreen.userID + "'";
 						statement.execute(queryChangePassword);
 						JOptionPane.showMessageDialog(null, "Password changed.");
 						changePasswordDialogView.dispose();
@@ -72,10 +71,12 @@ public class ChangePasswordDialogController {
 					e2.printStackTrace();
 				}
 
-			}};
+			}
+		};
 		return saveListener;
 	}
 
+	//checks if the input values are valid
 	public boolean inputIsValid(String oldPassword, String newPassword, String newPasswordRepeat) {
 		if (oldPassword.equals("") || newPassword.equals("") || newPasswordRepeat.equals("")) {
 			JOptionPane.showMessageDialog(null, "Input mustn´t be empty.", "Error", JOptionPane.ERROR_MESSAGE);

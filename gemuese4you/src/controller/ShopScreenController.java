@@ -21,7 +21,7 @@ import model.Offer;
 import view.AddOfferDialogView;
 import view.GetOfferDialogView;
 
-public class ShopScreenController{
+public class ShopScreenController {
 	private JPanel panelOffer;
 	private ArrayList<Offer> offerList;
 	private JPanel shopScreenUI;
@@ -42,11 +42,11 @@ public class ShopScreenController{
 		}
 
 	}
-	
-	//refresh the UI
+
+	// refresh the UI
 	public void refresh() {
 		showCurrentOffers();
-		SwingUtilities.updateComponentTreeUI(shopScreenUI);	
+		SwingUtilities.updateComponentTreeUI(shopScreenUI);
 	}
 
 	// display existing offers
@@ -75,15 +75,15 @@ public class ShopScreenController{
 			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultOffers = statement.executeQuery(queryOffers);
 			resultOffers.next();
-			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers")
-					&& resultOffers != null && resultOffers.getString(2)!=null) {
-					int offerID = resultOffers.getInt(1);
-					String userID = resultOffers.getString(2);
-					int distance = resultOffers.getInt(3);
-					String expDate = resultOffers.getString(4);
-					double price = resultOffers.getDouble(5);
-					offerList.add(new Offer(offerID, userID, distance, expDate, price));
-					resultOffers.next();
+			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers") && resultOffers != null
+					&& resultOffers.getString(2) != null) {
+				int offerID = resultOffers.getInt(1);
+				String userID = resultOffers.getString(2);
+				int distance = resultOffers.getInt(3);
+				String expDate = resultOffers.getString(4);
+				double price = resultOffers.getDouble(5);
+				offerList.add(new Offer(offerID, userID, distance, expDate, price));
+				resultOffers.next();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,24 +109,24 @@ public class ShopScreenController{
 	}
 
 	// returns a listener for the add offer button
-		public ActionListener getAddListener() {
-			ActionListener addListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					new AddOfferDialogView();
-				}
-			};
-			return addListener;
-		}
+	public ActionListener getAddListener() {
+		ActionListener addListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddOfferDialogView();
+			}
+		};
+		return addListener;
+	}
 
-		//returns a listener for the refresh button
-		public ActionListener getRefreshListener() {
-			ActionListener refreshListener = new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					refresh();		
-				}
-			};
-			return refreshListener;
-		}
+	// returns a listener for the refresh button
+	public ActionListener getRefreshListener() {
+		ActionListener refreshListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refresh();
+			}
+		};
+		return refreshListener;
+	}
 }
