@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
+import view.AddOfferDialogView;
+
 public class JobScreen extends Screen implements ActionListener{
 
 	ArrayList<Job> jobs = new ArrayList();
@@ -159,7 +161,7 @@ public class JobScreen extends Screen implements ActionListener{
 			ActionListener addListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new AddOfferDialog();
+					new AddOfferDialogView();
 				}
 			};
 			buttonAdd.addActionListener(addListener);
