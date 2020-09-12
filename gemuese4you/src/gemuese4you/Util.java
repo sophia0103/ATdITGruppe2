@@ -14,14 +14,22 @@ import view.LoginScreenView;
 
 /**
  * @author I518189
- * Helper class with methods which don´t belong to a specific class.
+ * Helper class with methods which donÂ´t belong to a specific class.
  */
 public class Util {
 	private static Connection connection;
 	public static Color orange = new Color(255, 229, 204);
 
 	public Util() {
-
+		try {
+			connection = getConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
