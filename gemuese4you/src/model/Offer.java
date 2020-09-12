@@ -37,18 +37,6 @@ public class Offer {
 		this.productList = this.getProductList();
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public String getExpDate() {
-		return expDate;
-	}
-
-	public void setExpDate(String expDate) {
-		this.expDate = expDate;
-	}
-
 	/**
 	 * @return Returns a ArrayList with all the products in an offer as Strings.
 	 */
@@ -94,14 +82,22 @@ public class Offer {
 	}
 
 	/**
+	 * @param productList Changes the product List of the offer to the value of this parameter.
+	 */
+	public void setProductList(ArrayList<String> productList) {
+		this.productList = productList;
+	}
+
+	/**
 	 * @return Returns the offerID of an offer.
 	 */
 	public int getOfferID() {
 		return offerID;
 	}
 
+
 	/**
-	 * Changes the offerID of an offer.
+	 * @param offerID Changes the offer ID of the offer to the value of this parameter.
 	 */
 	public void setOfferID(int offerID) {
 		this.offerID = offerID;
@@ -115,7 +111,7 @@ public class Offer {
 	}
 
 	/**
-	 * Changes the userID of an offer.
+	 * @param userID Changes the user ID of the offer to the value of this parameter.
 	 */
 	public void setUserID(String userID) {
 		this.userID = userID;
@@ -129,7 +125,7 @@ public class Offer {
 	}
 
 	/**
-	 * Changes the distance of an offer.
+	 * @param distance Changes the distance of the offer to the value of this parameter.
 	 */
 	public void setDistance(int distance) {
 		this.distance = distance;
@@ -141,32 +137,25 @@ public class Offer {
 	public double getPrice() {
 		return price;
 	}
-
 	/**
-	 * Changes the price of an offer.
+	 * @param price Changes the price of an offer to the value of this parameter.
 	 */
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
 	/**
-	 * @return Returns the expiration date of an offer.
+	 * @return Returns the expiration date of the offer.
 	 */
-	public String getDate() {
+	public String getExpDate() {
 		return expDate;
 	}
 
 	/**
-	 * Changes the expiration date of an offer.
+	 * @param expDate Changes the expiration date of the offer to the value of this parameter.
 	 */
-	public void setDate(String expDate) {
+	public void setExpDate(String expDate) {
 		this.expDate = expDate;
 	}
 
-	/**
-	 * Changes the productList of an offer.
-	 */
-	public void setProductList(ArrayList<String> productList) {
-		this.productList = productList;
-	}
 }

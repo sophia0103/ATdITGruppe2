@@ -47,7 +47,7 @@ public class GetOfferDialogView extends JFrame {
 		
 		labelOfferTitle = new JLabel(offer.getUserID() + "´s offer: ");
 		labelOfferTitle.setFont(new Font("Verdana", Font.BOLD, 20));
-		labelExpirationDate = new JLabel("Offer expires on: " + offer.getDate());
+		labelExpirationDate = new JLabel("Offer expires on: " + offer.getExpDate());
 		labelPrice = new JLabel("Price: " + offer.getPrice() + "€");
 		labelDistance = new JLabel("Distance: " + offer.getDistance() + " meters");
 		labelProducts = new JLabel("Products included: " + getOfferDialogController.getFormattedProductList(offer));

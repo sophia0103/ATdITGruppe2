@@ -11,7 +11,7 @@ import view.ProfileScreenView;
 
 /**
  * @author I518189
- *Represents the logic behind the profile Screen UI.
+ * Represents the logic behind the profile Screen UI.
  */
 public class ProfileScreenController {
 	private ProfileScreenView profileScreenView;

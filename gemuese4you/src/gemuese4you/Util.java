@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import view.LoginScreenView;
+
 /**
  * @author I518189
  * Helper class with methods which don´t belong to a specific class.
@@ -25,12 +27,12 @@ public class Util {
 	/**
 	 * @return Returns a connection to the Heidi SQL database.
 	 * @throws ClassNotFoundException Throws an exception if the class is not found.
-	 * @throws SQLException Thwrows an exception if the SQL syntax is incorrect.
+	 * @throws SQLException Throws an exception if the SQL syntax is incorrect.
 	 */
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "root");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Praktikum");
 		}
 		return connection;
 	}
@@ -70,7 +72,7 @@ public class Util {
 	}
 
 	/**
-	 * @param iconName Image which should be displayed on the JButton.
+	 * @param iconName Image which is displayed on the JButton.
 	 * @return Returns a custom JButton with an image.
 	 */
 	public static JButton getCustomButton(String iconName) {
@@ -118,7 +120,7 @@ public class Util {
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreen.userID + "'";
+			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreenView.userID + "'";
 			ResultSet resultIsUserFarmer = statement.executeQuery(queryIsUserFarmer);
 			resultIsUserFarmer.next();
 			if (resultIsUserFarmer.getInt(1) == 1) {
@@ -141,7 +143,7 @@ public class Util {
 		Statement statementOldPassword;
 		try {
 			statementOldPassword = connection.createStatement();
-			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreen.userID+"'";
+			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreenView.userID+"'";
 			ResultSet resultOldPassword = statementOldPassword.executeQuery(queryOldPassword);
 			resultOldPassword.next();
 			String oldPassword = resultOldPassword.getString(1);

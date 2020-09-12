@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import model.Offer;
 import view.AddOfferDialogView;
+import view.LoginScreenView;
 
 /**
  * @author I518189
- * Represents the logic of a dialog which opens when the user wants to create an offer
+ * Represents the logic of a dialog which opens when the user wants to create an offer.
  */
 public class AddOfferDialogController {
 	private AddOfferDialogView addOfferDialogView;
@@ -49,8 +49,8 @@ public class AddOfferDialogController {
 
 	
 	/**
-	 * add a valid offer and its products to the database
-	 * get the products from the product text field
+	 * Adds a valid offer and its products to the database. 
+	 * Gets the products from the product text field.
 	 */
 	public void readProducts() {
 		productArray = textFieldProducts.getText().split(",");
@@ -63,7 +63,7 @@ public class AddOfferDialogController {
 
 	
 	/**
-	 * if one of the products doesn´t yet exist in the database, add it to the products database table
+	 * If one of the products doesn´t yet exist in the database, add it to the products database table.
 	 * @param productName Name of the product which is checked upon.
 	 */
 	public void checkIfProductExists(String productName) {
@@ -85,8 +85,8 @@ public class AddOfferDialogController {
 		}
 	}
 
-	/** adds a non existing product to the product database table
-	 * @param productName Name of the product which should be added in the database table
+	/** Adds a non existing product to the product database table.
+	 * @param productName Name of the product which should be added in the database table.
 	 */
 	public void addNonExistingProduct(String productName) {
 		try {
@@ -98,7 +98,7 @@ public class AddOfferDialogController {
 		}
 	}
 
-	/** Checks if the input values of the input fields are valid
+	/** Checks if the input values of the input fields are valid.
 	 * @return Returns true if the input is valid, otherwise false.
 	 */
 	public boolean inputIsValid() {
@@ -133,7 +133,7 @@ public class AddOfferDialogController {
 		ShopScreenController.lastOfferID++;
 
 		String queryAddOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'"
-				+ LoginScreen.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
+				+ LoginScreenView.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
 				+ textFieldPrice.getText() + ")";
 		statementAddOffer.execute(queryAddOffer);
 	}
@@ -156,7 +156,7 @@ public class AddOfferDialogController {
 
 	
 	/** Action which is performed if the cancel button is clicked.
-	 * @return returns a listener for the cancel button.
+	 * @return Returns a listener for the cancel button.
 	 */
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
@@ -171,7 +171,7 @@ public class AddOfferDialogController {
 	}
 
 	/**Action which is performed if the save button is clicked.
-	 * @return returns a listener for the safe button.
+	 * @return Returns a listener for the safe button.
 	 */
 	public ActionListener getSaveListener() {
 		ActionListener saveListener = new ActionListener() {

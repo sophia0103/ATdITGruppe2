@@ -10,7 +10,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import gemuese4you.LoginScreen;
+import view.LoginScreenView;
+
 
 /**
  * @author I518189
@@ -21,7 +22,15 @@ public class Util {
 	public static Color orange = new Color(255, 229, 204);
 
 	public Util() {
-
+		try {
+			connection = getConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -120,7 +129,7 @@ public class Util {
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreen.userID + "'";
+			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreenView.userID + "'";
 			ResultSet resultIsUserFarmer = statement.executeQuery(queryIsUserFarmer);
 			resultIsUserFarmer.next();
 			if (resultIsUserFarmer.getInt(1) == 1) {
@@ -143,7 +152,7 @@ public class Util {
 		Statement statementOldPassword;
 		try {
 			statementOldPassword = connection.createStatement();
-			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreen.userID+"'";
+			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreenView.userID+"'";
 			ResultSet resultOldPassword = statementOldPassword.executeQuery(queryOldPassword);
 			resultOldPassword.next();
 			String oldPassword = resultOldPassword.getString(1);

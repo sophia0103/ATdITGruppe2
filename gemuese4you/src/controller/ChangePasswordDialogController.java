@@ -9,9 +9,9 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import view.ChangePasswordDialogView;
+import view.LoginScreenView;
 
 /**
  * @author I518189
@@ -54,7 +54,7 @@ public class ChangePasswordDialogController {
 	}
 
 	/** Action which should be performed when the save button is clicked.
-	 * @return returns a listener for the save button.
+	 * @return Returns a listener for the save button.
 	 */
 	public ActionListener getSaveListener() {
 
@@ -70,7 +70,7 @@ public class ChangePasswordDialogController {
 					if (inputIsValid(oldPassword, newPassword, newPasswordRepeat)) {
 						Statement statement = connection.createStatement();
 						String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat
-								+ "' WHERE userID ='" + LoginScreen.userID + "'";
+								+ "' WHERE userID ='" + LoginScreenView.userID + "'";
 						statement.execute(queryChangePassword);
 						JOptionPane.showMessageDialog(null, "Password changed.");
 						changePasswordDialogView.dispose();
@@ -86,10 +86,10 @@ public class ChangePasswordDialogController {
 
 	/**
 	 * Checks if the input values of the input fields are valid.
-	 * @param oldPassword input value of the password field in which the user enters his old password.
-	 * @param newPassword input value of the password field in which the user enters his new password.
-	 * @param newPasswordRepeat input value of the password field in which the user enters his new password again.
-	 * @return returns true if the input values are valid, otherwise false.
+	 * @param oldPassword Input value of the password field in which the user enters his old password.
+	 * @param newPassword Input value of the password field in which the user enters his new password.
+	 * @param newPasswordRepeat Input value of the password field in which the user enters his new password again.
+	 * @return Returns true if the input values are valid, otherwise false.
 	 */
 	public boolean inputIsValid(String oldPassword, String newPassword, String newPasswordRepeat) {
 		if (oldPassword.equals("") || newPassword.equals("") || newPasswordRepeat.equals("")) {

@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import view.LoginScreenView;
+
 
 /**
  * @author I518189
@@ -46,7 +48,7 @@ public abstract class Screen extends JPanel {
 				} while (!(parent instanceof JFrame));
 				JFrame parentFrame = (JFrame) parent;
 				parentFrame.dispose();
-				LoginScreen log = new LoginScreen();
+				LoginScreenView log = new LoginScreenView();
 				log.pack();
 				log.setLocationRelativeTo(null);
 				log.setVisible(true);
