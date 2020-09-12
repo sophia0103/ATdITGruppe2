@@ -8,6 +8,7 @@ import controller.ChangePasswordDialogController;
 import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import view.ChangePasswordDialogView;
+import view.LoginScreenView;
 
 /**
  * @author I518189
@@ -23,7 +24,7 @@ class UnitTestsChangePassword {
 		ChangePasswordDialogView changePasswordDialogView = new ChangePasswordDialogView();
 		ChangePasswordDialogController changePasswordDialogController = new ChangePasswordDialogController(
 				changePasswordDialogView);
-		LoginScreen.userID = "sophia";
+		LoginScreenView.userID = "sophia";
 		Util util = new Util();
 		String password = Util.getPassword();
 		assertFalse(changePasswordDialogController.inputIsValid(password, "def", "defg"));
@@ -38,7 +39,7 @@ class UnitTestsChangePassword {
 		ChangePasswordDialogView changePasswordDialogView = new ChangePasswordDialogView();
 		ChangePasswordDialogController changePasswordDialogController = new ChangePasswordDialogController(
 				changePasswordDialogView);
-		LoginScreen.userID = "sophia";
+		LoginScreenView.userID = "sophia";
 		Util util = new Util();
 		String password = Util.getPassword();
 
@@ -54,7 +55,7 @@ class UnitTestsChangePassword {
 		ChangePasswordDialogView changePasswordDialogView = new ChangePasswordDialogView();
 		ChangePasswordDialogController changePasswordDialogController = new ChangePasswordDialogController(
 				changePasswordDialogView);
-		LoginScreen.userID = "sophia";
+		LoginScreenView.userID = "sophia";
 		Util util = new Util();
 		String password = Util.getPassword();
 
@@ -70,7 +71,7 @@ class UnitTestsChangePassword {
 		ChangePasswordDialogView changePasswordDialogView = new ChangePasswordDialogView();
 		ChangePasswordDialogController changePasswordDialogController = new ChangePasswordDialogController(
 				changePasswordDialogView);
-		LoginScreen.userID = "sophia";
+		LoginScreenView.userID = "sophia";
 		Util util = new Util();
 		String password = Util.getPassword();
 

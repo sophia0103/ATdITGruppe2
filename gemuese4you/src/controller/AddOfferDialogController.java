@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import model.Offer;
 import view.AddOfferDialogView;
+import view.LoginScreenView;
 
 /**
  * @author I518189
@@ -133,7 +133,7 @@ public class AddOfferDialogController {
 		ShopScreenController.lastOfferID++;
 
 		String queryAddOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'"
-				+ LoginScreen.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
+				+ LoginScreenView.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
 				+ textFieldPrice.getText() + ")";
 		statementAddOffer.execute(queryAddOffer);
 	}

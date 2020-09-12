@@ -9,9 +9,9 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import view.ChangePasswordDialogView;
+import view.LoginScreenView;
 
 /**
  * @author I518189
@@ -70,7 +70,7 @@ public class ChangePasswordDialogController {
 					if (inputIsValid(oldPassword, newPassword, newPasswordRepeat)) {
 						Statement statement = connection.createStatement();
 						String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat
-								+ "' WHERE userID ='" + LoginScreen.userID + "'";
+								+ "' WHERE userID ='" + LoginScreenView.userID + "'";
 						statement.execute(queryChangePassword);
 						JOptionPane.showMessageDialog(null, "Password changed.");
 						changePasswordDialogView.dispose();

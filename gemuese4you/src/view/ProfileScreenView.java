@@ -12,7 +12,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 import controller.ProfileScreenController;
-import gemuese4you.LoginScreen;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 
@@ -68,7 +67,7 @@ public class ProfileScreenView extends Screen {
 		JPanel panelUserInfo = new JPanel(new GridLayout(2, 1));
 
 		labelUsername = new JLabel("You are logged in as:   ");
-		labelUserID = new JLabel(LoginScreen.userID);
+		labelUserID = new JLabel(LoginScreenView.userID);
 
 		JPanel panelUsername = new JPanel(new GridLayout(1, 2));
 		panelUsername.add(labelUsername);
