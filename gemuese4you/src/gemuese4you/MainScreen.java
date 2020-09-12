@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import view.HomeScreenView;
+import view.JobScreenView;
 import view.ProfileScreenView;
 import view.ShopScreenView;
 
@@ -29,9 +31,9 @@ public class MainScreen extends JFrame {
 		c.setBackground(Util.orange);
 
 		tabPane = new JTabbedPane(JTabbedPane.BOTTOM);
-		pHome = new HomeScreen();
+		pHome = new HomeScreenView();
 		pShop = new ShopScreenView();
-		pJob = new JobScreen();
+		pJob = new JobScreenView();
 		pProfile = new ProfileScreenView();
 
 		pShop.setBackground(Util.orange);
