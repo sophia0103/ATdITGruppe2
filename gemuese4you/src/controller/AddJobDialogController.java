@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import model.Offer;
 import view.AddJobDialogView;
 import view.AddOfferDialogView;
+import view.LoginScreenView;
 
 /**
  * @author Luis
@@ -54,7 +54,7 @@ public class AddJobDialogController {
 	public boolean inputIsValid() {
 		if (textFieldDistance.getText().equals("") || textFieldTitle.getText().equals("")
 				|| textFieldSalary.getText().equals("") || textFieldDate.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Input mustnÂ´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// check if the expiration date is before the current date
@@ -74,11 +74,11 @@ public class AddJobDialogController {
 	 */
 	public void addJob() throws SQLException {
 		Statement statementAddOffer = connection.createStatement();
-		// Auto increment in SQL doesn´t work properly, so we do it manually
+		// Auto increment in SQL doesnÂ´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
 
 		String queryAddOffer = "INSERT INTO job VALUES (" + textFieldTitle.getText() + ",'" + textFieldDuration.getText() + ",'" + textFieldDistance.getText() + ",'" + textFieldDate.getText() +
-				"'," + LoginScreen.userID + "'," + textFieldEmploymentType.getText() + ",'" + textFieldSalary.getText() + "',"
+				"'," + LoginScreenView.userID + "'," + textFieldEmploymentType.getText() + ",'" + textFieldSalary.getText() + "',"
 				+ textFieldDescription.getText() + ")";
 		statementAddOffer.execute(queryAddOffer);
 	}
@@ -114,7 +114,7 @@ public class AddJobDialogController {
 						JOptionPane.showMessageDialog(null, "Job offer was successfully created! :)");
 						addJobDialogView.dispose();
 					} catch (SQLException sqlException) {
-						// Can´t check for wrong data type in inputIsValid method
+						// CanÂ´t check for wrong data type in inputIsValid method
 						JOptionPane.showMessageDialog(null, "Check for wrong data type or if the job offer already exists", "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
