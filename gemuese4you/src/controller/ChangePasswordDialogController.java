@@ -13,6 +13,10 @@ import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import view.ChangePasswordDialogView;
 
+/**
+ * @author I518189
+ * Represents the logic of a dialog which opens when the user wants to change the password.
+ */
 public class ChangePasswordDialogController {
 	private ChangePasswordDialogView changePasswordDialogView;
 	private Connection connection;
@@ -34,7 +38,9 @@ public class ChangePasswordDialogController {
 		}
 	}
 
-	// returns a listener for the cancel button
+	/** Action which should be performed when the cancel button is clicked.
+	 * @return returns a listener for the cancel button.
+	 */
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -47,7 +53,9 @@ public class ChangePasswordDialogController {
 		return cancelListener;
 	}
 
-	// returns a button for the save button
+	/** Action which should be performed when the save button is clicked.
+	 * @return returns a listener for the save button.
+	 */
 	public ActionListener getSaveListener() {
 
 		ActionListener saveListener = new ActionListener() {
@@ -76,7 +84,13 @@ public class ChangePasswordDialogController {
 		return saveListener;
 	}
 
-	//checks if the input values are valid
+	/**
+	 * Checks if the input values of the input fields are valid.
+	 * @param oldPassword input value of the password field in which the user enters his old password.
+	 * @param newPassword input value of the password field in which the user enters his new password.
+	 * @param newPasswordRepeat input value of the password field in which the user enters his new password again.
+	 * @return returns true if the input values are valid, otherwise false.
+	 */
 	public boolean inputIsValid(String oldPassword, String newPassword, String newPasswordRepeat) {
 		if (oldPassword.equals("") || newPassword.equals("") || newPasswordRepeat.equals("")) {
 			JOptionPane.showMessageDialog(null, "Input mustn´t be empty.", "Error", JOptionPane.ERROR_MESSAGE);

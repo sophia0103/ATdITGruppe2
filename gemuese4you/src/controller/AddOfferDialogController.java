@@ -16,6 +16,10 @@ import gemuese4you.Util;
 import model.Offer;
 import view.AddOfferDialogView;
 
+/**
+ * @author I518189
+ * Represents the logic of a dialog which opens when the user wants to create an offer
+ */
 public class AddOfferDialogController {
 	private AddOfferDialogView addOfferDialogView;
 	private Connection connection;
@@ -43,8 +47,11 @@ public class AddOfferDialogController {
 
 	}
 
-	// add a valid offer and its products to the database
-	// get the products from the product text field
+	
+	/**
+	 * add a valid offer and its products to the database
+	 * get the products from the product text field
+	 */
 	public void readProducts() {
 		productArray = textFieldProducts.getText().split(",");
 		productList = new ArrayList<String>();
@@ -54,8 +61,11 @@ public class AddOfferDialogController {
 		}
 	}
 
-	// if one of the products doesn´t yet exist in the database, add it to the
-	// products database table
+	
+	/**
+	 * if one of the products doesn´t yet exist in the database, add it to the products database table
+	 * @param productName Name of the product which is checked upon.
+	 */
 	public void checkIfProductExists(String productName) {
 		try {
 			Statement statementProducts = connection.createStatement();
@@ -75,7 +85,9 @@ public class AddOfferDialogController {
 		}
 	}
 
-	// adds a non existing product to the product database table
+	/** adds a non existing product to the product database table
+	 * @param productName Name of the product which should be added in the database table
+	 */
 	public void addNonExistingProduct(String productName) {
 		try {
 			Statement statementNonExistingProduct = connection.createStatement();
@@ -86,6 +98,9 @@ public class AddOfferDialogController {
 		}
 	}
 
+	/** Checks if the input values of the input fields are valid
+	 * @return Returns true if the input is valid, otherwise false.
+	 */
 	public boolean inputIsValid() {
 		if (textFieldDistance.getText().equals("") || textFieldProducts.getText().equals("")
 				|| textFieldPrice.getText().equals("") || textFieldDate.getText().equals("")) {
@@ -108,7 +123,10 @@ public class AddOfferDialogController {
 		}
 	}
 
-	// Insert new offer into the offers database table
+	
+	/**Inserts a new offer into the offers database table.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
+	 */
 	public void addOffer() throws SQLException {
 		Statement statementAddOffer = connection.createStatement();
 		// Auto increment in SQL doesn´t work properly, so we do it manually
@@ -120,7 +138,9 @@ public class AddOfferDialogController {
 		statementAddOffer.execute(queryAddOffer);
 	}
 
-	// add products of an offer to database table productsInOffer
+	/**
+	 * Adds products of an offer to the database table productsInOffer.
+	 */
 	public void addProductListOfOffer() {
 		try {
 			Statement statementAddProductList = connection.createStatement();
@@ -134,7 +154,10 @@ public class AddOfferDialogController {
 		}
 	}
 
-	// returns a listener to cancel the operation
+	
+	/** Action which is performed if the cancel button is clicked.
+	 * @return returns a listener for the cancel button.
+	 */
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -147,7 +170,9 @@ public class AddOfferDialogController {
 		return cancelListener;
 	}
 
-	// returns a listener to save a new offer
+	/**Action which is performed if the save button is clicked.
+	 * @return returns a listener for the safe button.
+	 */
 	public ActionListener getSaveListener() {
 		ActionListener saveListener = new ActionListener() {
 

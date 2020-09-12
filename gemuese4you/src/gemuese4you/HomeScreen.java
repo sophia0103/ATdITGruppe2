@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * @author Luis
+ * Represents the home screen.
+ */
 public class HomeScreen extends Screen implements ActionListener{
 
 	private JButton buttonJobs;
@@ -72,6 +76,10 @@ public class HomeScreen extends Screen implements ActionListener{
 		this.add(scrollable, BorderLayout.CENTER);
 	}
 
+	/**
+	 * @param content Content which  is displayed in the JButton.
+	 * @return Returns a custom JButton which displays the information specified in 'content'.
+	 */
 	private JButton createButton(String[] content) {
 		JButton button = new JButton();
 		button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
@@ -88,6 +96,10 @@ public class HomeScreen extends Screen implements ActionListener{
 		return button;
 	}
 	
+	/**
+	 * @param content Content which is displayed in the headline.
+	 * @return Returns a JLabel with the headline.
+	 */
 	private JLabel createHeadline(String content) {
 		JLabel headline = new JLabel(content);
 		headline.setFont(new Font("Arial", Font.BOLD, 16));
@@ -95,6 +107,9 @@ public class HomeScreen extends Screen implements ActionListener{
 		return headline;
 	}
 
+	/**
+	 * Method to switch between screens by clicking the individual buttons.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonJobs) {

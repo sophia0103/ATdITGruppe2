@@ -2,6 +2,10 @@ package gemuese4you;
 
 import java.util.Date;
 
+/**
+ * @author Luis
+ * Represents an object from the database entity 'jobs'.
+ */
 public class Job {
 	private String title;
 	private String creator;
@@ -23,34 +27,58 @@ public class Job {
 		this.description = description;
 	}
 
+	/**
+	 * @return Returns the creator of the job offer.
+	 */
 	public String getCreator() {
 		return creator;
 	}
 	
+	/**
+	 * @return Returns the distance of the job offer.
+	 */
 	public int getDistance() {
 		return distance;
 	}
 	
+	/**
+	 * @return Returns the expiration date of the offer.
+	 */
 	public String getExpDate() {
 		return exp_date;
 	}
 	
+	/**
+	 * @return Returns the employment type of the job offer.
+	 */
 	public String getEmplyomentType() {
 		return employmentType;
 	}
 	
+	/**
+	 * @return Returns the salary of the job offer.
+	 */
 	public double getSalary() {
 		return salary;
 	}
 	
+	/**
+	 * @return Returns the description of the job offer.
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @return Returns the title of the job offer.
+	 */
 	public String getTitle() {
 		return title;
 	}
 	
+	/**
+	 * @return Returns the duration of the job offer.
+	 */
 	public int getDuration() {
 		return duration;
 	}

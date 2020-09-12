@@ -25,6 +25,11 @@ import javax.swing.SwingUtilities;
 
 import view.AddOfferDialogView;
 
+/**
+ * @author Luis
+ * Represents a screen which displays all job offers.
+ */
+
 public class JobScreen extends Screen implements ActionListener{
 
 	ArrayList<Job> jobs = new ArrayList();
@@ -68,6 +73,10 @@ public class JobScreen extends Screen implements ActionListener{
 		this.add(scrollable, BorderLayout.CENTER);
 	}
 
+	/**
+	 * @param job Specifies the job offer which the details are shown to.
+	 * @return Returns a JButton with the details of the job offer.
+	 */
 	private JButton createJobButton(Job job) {
 		JButton button = new JButton();
 		button.setLayout(new BoxLayout(button, BoxLayout.Y_AXIS));
@@ -98,6 +107,10 @@ public class JobScreen extends Screen implements ActionListener{
 		return button;
 	}
 	
+	/**
+	 * @param content Content which is displayed in the headline.
+	 * @return Returns a JLabel with the headline.
+	 */
 	private JLabel createHeadline(String content) {
 		JLabel headline = new JLabel(content);
 		headline.setFont(new Font("Arial", Font.BOLD, 16));
@@ -128,7 +141,9 @@ public class JobScreen extends Screen implements ActionListener{
 			this.jobScreenContent = jobScreenContent;
 		}
 
-		// reads the current offers in the database and adds them to the offer list
+		/**
+		 * Reads the current job offers from the job database table.
+		 */
 		public void readOffers() {
 			jobs.clear();
 			try {
@@ -154,7 +169,9 @@ public class JobScreen extends Screen implements ActionListener{
 			}
 		}
 
-		// returns a button to add an offer
+		/**
+		 * @return Returns a JButton to add an offer.
+		 */
 		public JButton getAddOfferButton() {
 			JButton buttonAdd = Util.getCustomButton("add");
 			// Function which is called when the add offer button is pressed
@@ -168,7 +185,9 @@ public class JobScreen extends Screen implements ActionListener{
 			return buttonAdd;
 		}
 		
-		// returns a button to refresh the shopScreen
+		/**
+		 * @return Returns a JButton to refresh the Job Screen.
+		 */
 		public JButton getRefreshButton() {
 			JButton buttonRefresh = Util.getCustomButton("refresh");
 //			ActionListener refreshListener = new ActionListener() {
@@ -181,6 +200,10 @@ public class JobScreen extends Screen implements ActionListener{
 			return buttonRefresh;
 		}
 
+		
+		/**
+		 *Action which is performed when the refresh button is clicked.
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			showCurrentJobs();

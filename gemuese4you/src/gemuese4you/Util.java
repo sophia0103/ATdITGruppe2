@@ -10,6 +10,10 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * @author I518189
+ * Helper class with methods which don´t belong to a specific class.
+ */
 public class Util {
 	private static Connection connection;
 	public static Color orange = new Color(255, 229, 204);
@@ -18,7 +22,11 @@ public class Util {
 
 	}
 
-	// returns a connection to our database
+	/**
+	 * @return Returns a connection to the Heidi SQL database.
+	 * @throws ClassNotFoundException Throws an exception if the class is not found.
+	 * @throws SQLException Thwrows an exception if the SQL syntax is incorrect.
+	 */
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -27,14 +35,19 @@ public class Util {
 		return connection;
 	}
 
-	// returns the current date as a String
+	/**
+	 * @return Returns the current date as a String.
+	 */
 	public static String returnDateAsString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(System.currentTimeMillis());
 		return formatter.format(date);
 	}
 
-	// parses a String to Date
+	/**
+	 * @param sDate Date as a string which should be converted into the datatype Date.
+	 * @return Returns a date with the datatype Date.
+	 */
 	public static Date returnStringAsDate(String sDate) {
 		try {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,14 +60,19 @@ public class Util {
 		}
 	}
 
-	// returns the current date as Date
+	/**
+	 * @return Returns the current date as a Date.
+	 */
 	public static Date returnDate() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(System.currentTimeMillis());
 		return date;
 	}
 
-	// returns a custom button with an image
+	/**
+	 * @param iconName Image which should be displayed on the JButton.
+	 * @return Returns a custom JButton with an image.
+	 */
 	public static JButton getCustomButton(String iconName) {
 		JButton customButton = new JButton();
 		customButton = new JButton();
@@ -65,8 +83,14 @@ public class Util {
 		return customButton;
 	}
 
-	// check if there are existing entries in the database table
-	// otherwise program is stuck in an endless loop
+	
+	/**
+	 * Check if there are existing entries in the database table.
+	 * Otherwise program is stuck in an endless loop.
+	 * @param attributeName Name of the attribute which is counted.
+	 * @param dbTableName Name of the database table in which the attribute exists.
+	 * @return Returns true if there are more than zero entries, otherwise false.
+	 */
 	public static boolean checkDatabaseEntries(String attributeName, String dbTableName) {
 		try {
 			connection = getConnection();
@@ -87,7 +111,9 @@ public class Util {
 	}
 
 	
-	//check if the user is registered as a farmer
+	/**
+	 * @return Returns true if the logged in user is a farmer, otherwise false.
+	 */
 	public static boolean isUserFarmer() {
 		try {
 			connection = getConnection();
@@ -108,7 +134,9 @@ public class Util {
 		}
 	}
 	
-	//get the current password of the user
+	/**
+	 * @return Returns the password of the logged in user.
+	 */
 	public static String getPassword() {
 		Statement statementOldPassword;
 		try {

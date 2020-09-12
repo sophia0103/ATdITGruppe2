@@ -21,6 +21,10 @@ import model.Offer;
 import view.AddOfferDialogView;
 import view.GetOfferDialogView;
 
+/**
+ * @author I518189
+ *Represents the logic behind the shop screen UI.
+ */
 public class ShopScreenController {
 	private JPanel panelOffer;
 	private ArrayList<Offer> offerList;
@@ -43,13 +47,18 @@ public class ShopScreenController {
 
 	}
 
-	// refresh the UI
+	/**
+	 * Refreshes the UI.
+	 */
 	public void refresh() {
 		showCurrentOffers();
 		SwingUtilities.updateComponentTreeUI(shopScreenUI);
 	}
 
-	// display existing offers
+	
+	/**
+	 * Displays existing offers.
+	 */
 	public void showCurrentOffers() {
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
@@ -66,7 +75,9 @@ public class ShopScreenController {
 		shopScreenUI.add(panelOffer, BorderLayout.CENTER);
 	}
 
-	// reads the current offers in the database and adds them to the offer list
+	/**
+	 * Reads the current offers in the database and adds them to the offer list.
+	 */
 	public void readOffers() {
 		offerList.clear();
 		try {
@@ -90,7 +101,11 @@ public class ShopScreenController {
 		}
 	}
 
-	// returns a panel for each offer in order to display them on the shopScreen
+	/**
+	 * Returns a panel for each offer in order to display them on the shopScreen.
+	 * @param offer Specifies the offer for which a JPanel is created.
+	 * @return Returns a JPanel with the information of the offer.
+	 */
 	public JPanel getOfferPanel(Offer offer) {
 		JPanel panelOffer = new JPanel(new BorderLayout());
 		JLabel panelFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
@@ -108,7 +123,10 @@ public class ShopScreenController {
 		return panelOffer;
 	}
 
-	// returns a listener for the add offer button
+	/**
+	 * Action which is performed when the add offer button is clicked.
+	 * @return Returns a listener for the add offer button.
+	 */
 	public ActionListener getAddListener() {
 		ActionListener addListener = new ActionListener() {
 			@Override
@@ -119,7 +137,10 @@ public class ShopScreenController {
 		return addListener;
 	}
 
-	// returns a listener for the refresh button
+	/**
+	 * Action which is performed when the refresh button is clicked.
+	 * @return Returns a listener for the refresh button.
+	 */
 	public ActionListener getRefreshListener() {
 		ActionListener refreshListener = new ActionListener() {
 			@Override

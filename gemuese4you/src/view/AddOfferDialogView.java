@@ -16,6 +16,10 @@ import javax.swing.JTextField;
 import controller.AddOfferDialogController;
 import gemuese4you.Util;
 
+/**
+ * @author I518189
+ *Represents the UI  of the dialog which opens when the user wants to add an offer.
+ */
 public class AddOfferDialogView extends JFrame {
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
@@ -110,8 +114,10 @@ public class AddOfferDialogView extends JFrame {
 
 	}
 
-	// returns an empty JLabel
-	// Java Swing Layouts are a bit odd, so I use it as a filler
+	/**
+	 * Acts as a filler to work around the Java Swing Layouts.
+	 * @return Returns an empty JLabel.
+	 */
 	public JLabel getEmptyLabel() {
 		return new JLabel("");
 	}

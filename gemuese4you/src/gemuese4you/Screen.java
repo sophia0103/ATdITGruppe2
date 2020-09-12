@@ -12,6 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+/**
+ * @author I518189
+ * Structure for each screen class which implements a UI.
+ */
 public abstract class Screen extends JPanel {
 	static Color orange = new Color(255, 229, 204);;
 
@@ -26,7 +31,9 @@ public abstract class Screen extends JPanel {
 		return pTitleBar;
 	}
 
-	// returns a button to get back to the last Screen
+	/**
+	 * @return Returns a button to get back to the Login Screen.
+	 */
 	public JButton getBackButton() {
 		JButton btBack = Util.getCustomButton("arrow");
 		ActionListener buttonListener = new ActionListener() {

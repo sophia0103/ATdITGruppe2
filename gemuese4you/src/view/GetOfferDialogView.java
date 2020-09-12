@@ -15,6 +15,10 @@ import controller.GetOfferDialogController;
 import gemuese4you.Util;
 import model.Offer;
 
+/**
+ * @author I518189
+ * Represents the UI of the dialog which opens when the user wants to get the details of an offer.
+ */
 public class GetOfferDialogView extends JFrame {
 	private Container container;
 	private JButton buttonBuy, buttonCancel;

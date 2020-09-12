@@ -9,6 +9,11 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+
+/**
+ * @author Martin
+ * Represents the Login Screen in which the user can either login or register him-/herself.
+ */
 public class LoginScreen extends JFrame implements ActionListener{
 	
 	 private Connection connection;
@@ -96,6 +101,9 @@ public class LoginScreen extends JFrame implements ActionListener{
 	
 	
 	
+	/**
+	 * Action which is performed when the user clicks the login or register button.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btRegister) {

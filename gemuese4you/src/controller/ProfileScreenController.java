@@ -8,6 +8,11 @@ import javax.swing.JOptionPane;
 import view.ChangePasswordDialogView;
 import view.ProfileScreenView;
 
+
+/**
+ * @author I518189
+ *Represents the logic behind the profile Screen UI.
+ */
 public class ProfileScreenController {
 	private ProfileScreenView profileScreenView;
 
@@ -15,7 +20,10 @@ public class ProfileScreenController {
 		this.profileScreenView = profileScreenView;
 	}
 
-	// returns a listener for the delete button
+	/**
+	 * Action which is performed when the delete button is clicked.
+	 * @return Returns a listener for the delete button.
+	 */
 	public ActionListener getDeleteListener() {
 		ActionListener deleteListener = new ActionListener() {
 			@Override
@@ -27,7 +35,10 @@ public class ProfileScreenController {
 		return deleteListener;
 	}
 
-	// returns a listener for the change password button
+	/**
+	 * Action which is performed when the change password button is clicked.
+	 * @return Returns a listener for the delete button.
+	 */
 	public ActionListener getChangePasswordListener() {
 		ActionListener changePasswordListener = new ActionListener() {
 			@Override

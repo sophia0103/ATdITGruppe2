@@ -15,6 +15,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
+/**
+ * @author Martin
+ * Represents the frame which opens when a user wants to create an account
+ */
 public class Register extends JFrame implements ActionListener{
 	JTextField tUsername, tIsFarmer;
 	JPasswordField tPassword, tRePassword;
@@ -74,7 +78,11 @@ public class Register extends JFrame implements ActionListener{
 		btReg.addActionListener(this);
 	}
 	
-	//prüft, ob Username schonmal in Datenbank vorhanden ist
+	/**
+	 * Checks if the username is already in the users database table.
+	 * @param username Username for which is checked.
+	 * @return Returns true if the username is in the database, otherwise false.
+	 */
 	public boolean checkUsername(String username) {
 		
 		PreparedStatement stmt;
@@ -102,7 +110,10 @@ public class Register extends JFrame implements ActionListener{
 		return checkUser;
 	}
 	
-		//Button for register confirmation
+	
+		/**
+		 * Action which is performed when the user clicks the register button.
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == btReg) {

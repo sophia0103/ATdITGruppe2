@@ -10,6 +10,10 @@ import controller.ShopScreenController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 
+/**
+ * @author I518189
+ * Represents the UI of the Shop Screen.
+ */
 public class ShopScreenView extends Screen {
 
 	private ShopScreenController shopScreenController;

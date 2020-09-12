@@ -13,6 +13,11 @@ import javax.swing.JTabbedPane;
 import view.ProfileScreenView;
 import view.ShopScreenView;
 
+
+/**
+ * @author I518189
+ * Represents the Main Screen which includes the tabbed pane with each individual screen.
+ */
 public class MainScreen extends JFrame {
 	private Container c;
 	public static JTabbedPane tabPane;

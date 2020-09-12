@@ -8,6 +8,10 @@ import javax.swing.JOptionPane;
 import model.Offer;
 import view.GetOfferDialogView;
 
+/**
+ * @author I518189 Represents the logic of the dialog which opens when the user
+ *         clicks an offer to get the details.
+ */
 public class GetOfferDialogController {
 	private GetOfferDialogView getOfferDialogView;
 
@@ -15,7 +19,11 @@ public class GetOfferDialogController {
 		this.getOfferDialogView = getOfferDialogView;
 	}
 
-	// returns a listener for the buy button
+	/**
+	 * Action which is performed when the user clicks the buy button.
+	 * 
+	 * @return returns a listener for the buy button.
+	 */
 	public ActionListener getBuyListener() {
 		ActionListener buyListener = new ActionListener() {
 
@@ -29,7 +37,11 @@ public class GetOfferDialogController {
 		return buyListener;
 	}
 
-	// returns a listener for the cancel button
+	/**
+	 * Action which is performed when the user clicks the cancel button.
+	 * 
+	 * @return returns a listener for the cancel button.
+	 */
 	public ActionListener getCancelListener() {
 		ActionListener cancelListener = new ActionListener() {
 
@@ -42,7 +54,11 @@ public class GetOfferDialogController {
 		return cancelListener;
 	}
 
-	// formats the productList into a readable String
+	/**
+	 * formats the list productList into a readable String
+	 * @param offer Offer which the productList belongs to.
+	 * @return returns the productList as a String.
+	 */
 	public String getFormattedProductList(Offer offer) {
 		String products = "";
 		for (int i = 0; i < offer.getProductList().size(); i++) {

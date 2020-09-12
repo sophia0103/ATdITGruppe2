@@ -13,6 +13,10 @@ import javax.swing.JPasswordField;
 import controller.ChangePasswordDialogController;
 import gemuese4you.Util;
 
+/**
+ * @author I518189
+ * Represents the UI of the dialog which opens when the user wants to change the password.
+ */
 public class ChangePasswordDialogView extends JFrame {
 	private Container container;
 	private JLabel labelOldPassword, labelNewPassword, labelNewPasswordRepeat;
@@ -67,14 +71,23 @@ public class ChangePasswordDialogView extends JFrame {
 		this.setTitle("Change your Password");
 	}
 
+	/**
+	 * @return Returns the JPasswordField passwordFieldOldPassword.
+	 */
 	public JPasswordField getPasswordFieldOldPassword() {
 		return passwordFieldOldPassword;
 	}
 
+	/**
+	 * @return Returns the JPasswordField passwordFieldNewPassword.
+	 */
 	public JPasswordField getPasswordFieldNewPassword() {
 		return passwordFieldNewPassword;
 	}
 
+	/**
+	 * @return Returns the JPasswordField passwordFieldNewPasswordRepeat.
+	 */
 	public JPasswordField getPasswordFieldNewPasswordRepeat() {
 		return passwordFieldNewPasswordRepeat;
 	}

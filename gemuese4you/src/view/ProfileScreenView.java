@@ -16,6 +16,10 @@ import gemuese4you.LoginScreen;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 
+/**
+ * @author I518189
+ * Represents the UI of the Profile Screen.
+ */
 public class ProfileScreenView extends Screen {
 	private JButton buttonChangePassword, buttonDelete;
 	private JLabel labelUserID, labelUsername, labelJobOffer, labelOffer;
@@ -29,14 +33,11 @@ public class ProfileScreenView extends Screen {
 		panelTitlebar.setBackground(Util.orange);
 		profileScreenController = new ProfileScreenController(this);
 		
-		// show user information
 		panelUserInfo = getUserInfoPanel();
 
-		// show offers inserted by the user (mock data)
 		labelOffer = new JLabel("These are your current offers: ");
 		panelExampleOffer = getExampleOffer();
 
-		// show job offers inserted by the user (mock data)
 		labelJobOffer = new JLabel("These are your current job offers: ");
 		panelExampleJobOffer = getExampleOffer();
 
@@ -60,7 +61,9 @@ public class ProfileScreenView extends Screen {
 
 	}
 
-	// returns a JPanel with the user information
+	/**
+	 * @return Returns a JPanel with information about the user.
+	 */
 	public JPanel getUserInfoPanel() {
 		JPanel panelUserInfo = new JPanel(new GridLayout(2, 1));
 
@@ -83,7 +86,9 @@ public class ProfileScreenView extends Screen {
 		return panelUserInfo;
 	}
 
-	// returns a JPanel with an example offer
+	/**
+	 * @return Returns a JPanel which represents an example offer (mock data).
+	 */
 	public JPanel getExampleOffer() {
 		buttonDelete = Util.getCustomButton("delete");
 		buttonDelete.setBackground(new Color(255, 237, 203));
