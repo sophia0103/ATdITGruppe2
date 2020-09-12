@@ -70,7 +70,7 @@ public class Util {
 	}
 
 	/**
-	 * @param iconName Image which should be displayed on the JButton.
+	 * @param iconName Image which is displayed on the JButton.
 	 * @return Returns a custom JButton with an image.
 	 */
 	public static JButton getCustomButton(String iconName) {

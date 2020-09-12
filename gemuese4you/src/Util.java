@@ -21,7 +21,15 @@ public class Util {
 	public static Color orange = new Color(255, 229, 204);
 
 	public Util() {
-
+		try {
+			connection = getConnection();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -79,9 +79,9 @@ public class Register extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Checks if the username is already in the users database table.
-	 * @param username Username for which is checked.
-	 * @return Returns true if the username is in the database, otherwise false.
+	 * Checks if the username already exists in the users database table.
+	 * @param username Username which is checked for.
+	 * @return Returns true if the username exists in the database, otherwise false.
 	 */
 	public boolean checkUsername(String username) {
 		

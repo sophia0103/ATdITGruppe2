@@ -23,7 +23,7 @@ import view.GetOfferDialogView;
 
 /**
  * @author I518189
- *Represents the logic behind the shop screen UI.
+ * Represents the logic behind the shop screen UI.
  */
 public class ShopScreenController {
 	private JPanel panelOffer;
