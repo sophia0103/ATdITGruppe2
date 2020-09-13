@@ -75,7 +75,7 @@ public class LoginScreenController {
 				String pass = String.valueOf(textFieldPassword.getPassword());
 				// checks if user + password combination exists and logs in if the query was
 				// successful
-				String query = "SELECT * FROM user WHERE UserID = ? AND Password = ?";
+				String query = "SELECT * FROM users WHERE UserID = ? AND Password = ?";
 
 				try {
 					statement = Util.getConnection().prepareStatement(query);
