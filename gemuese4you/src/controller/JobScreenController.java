@@ -92,7 +92,7 @@ public class JobScreenController{
 			Statement statement = connection.createStatement();
 			String queryOffers = "SELECT * FROM jobs WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultJobs = statement.executeQuery(queryOffers);
-			while (!resultJobs.isAfterLast() && Util.checkDatabaseEntries("title", "job") && resultJobs!=null) {
+			while (!resultJobs.isAfterLast() && Util.checkDatabaseEntries("title", "jobs") && resultJobs!=null) {
 				if (resultJobs.next()) {
 					String title = resultJobs.getString(1);
 					int duration = resultJobs.getInt(2);

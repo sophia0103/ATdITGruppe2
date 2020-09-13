@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import controller.ChangePasswordDialogController;
-import gemuese4you.LoginScreen;
 import gemuese4you.Util;
 import view.ChangePasswordDialogView;
 import view.LoginScreenView;

@@ -40,7 +40,7 @@ public class Util {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Praktikum");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gemuese4you", "root", "root");
 		}
 		return connection;
 	}
@@ -128,7 +128,7 @@ public class Util {
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			String queryIsUserFarmer = "SELECT isFarmer FROM user WHERE userID = '" + LoginScreenView.userID + "'";
+			String queryIsUserFarmer = "SELECT isFarmer FROM users WHERE userID = '" + LoginScreenView.userID + "'";
 			ResultSet resultIsUserFarmer = statement.executeQuery(queryIsUserFarmer);
 			resultIsUserFarmer.next();
 			if (resultIsUserFarmer.getInt(1) == 1) {
@@ -151,7 +151,7 @@ public class Util {
 		Statement statementOldPassword;
 		try {
 			statementOldPassword = connection.createStatement();
-			String queryOldPassword = "SELECT password FROM user WHERE userID ='"+LoginScreenView.userID+"'";
+			String queryOldPassword = "SELECT password FROM users WHERE userID ='"+LoginScreenView.userID+"'";
 			ResultSet resultOldPassword = statementOldPassword.executeQuery(queryOldPassword);
 			resultOldPassword.next();
 			String oldPassword = resultOldPassword.getString(1);
