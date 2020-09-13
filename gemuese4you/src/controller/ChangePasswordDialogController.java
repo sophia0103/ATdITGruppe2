@@ -69,7 +69,7 @@ public class ChangePasswordDialogController {
 
 					if (inputIsValid(oldPassword, newPassword, newPasswordRepeat)) {
 						Statement statement = connection.createStatement();
-						String queryChangePassword = "UPDATE user SET password = '" + newPasswordRepeat
+						String queryChangePassword = "UPDATE users SET password = '" + newPasswordRepeat
 								+ "' WHERE userID ='" + LoginScreenView.userID + "'";
 						statement.execute(queryChangePassword);
 						JOptionPane.showMessageDialog(null, "Password changed.");
@@ -93,7 +93,7 @@ public class ChangePasswordDialogController {
 	 */
 	public boolean inputIsValid(String oldPassword, String newPassword, String newPasswordRepeat) {
 		if (oldPassword.equals("") || newPassword.equals("") || newPasswordRepeat.equals("")) {
-			JOptionPane.showMessageDialog(null, "Input mustn´t be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Input mustnÂ´t be empty.", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (!newPassword.equals(newPasswordRepeat)) {
@@ -106,7 +106,7 @@ public class ChangePasswordDialogController {
 			return false;
 		}
 		if (oldPassword.equals(newPasswordRepeat)) {
-			JOptionPane.showMessageDialog(null, "New password can´t be the same as the old password.", "Error",
+			JOptionPane.showMessageDialog(null, "New password canÂ´t be the same as the old password.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
