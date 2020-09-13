@@ -63,7 +63,7 @@ public class RegisterController {
 		ResultSet result;
 		boolean checkUser = false;
 
-		String query = "SELECT * FROM user WHERE UserID = ?";
+		String query = "SELECT * FROM users WHERE UserID = ?";
 
 		try {
 			statement = Util.getConnection().prepareStatement(query);
@@ -131,7 +131,7 @@ public class RegisterController {
 				} else {
 
 					PreparedStatement statement;
-					String query = "INSERT INTO USER (UserID, Password, isFarmer) VALUES (?, ?, ?)";
+					String query = "INSERT INTO users (UserID, Password, isFarmer) VALUES (?, ?, ?)";
 
 					try {
 						statement = Util.getConnection().prepareStatement(query);
