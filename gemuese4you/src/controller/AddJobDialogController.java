@@ -77,9 +77,9 @@ public class AddJobDialogController {
 		// Auto increment in SQL doesn´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
 
-		String queryAddOffer = "INSERT INTO job VALUES (" + textFieldTitle.getText() + ",'" + textFieldDuration.getText() + ",'" + textFieldDistance.getText() + ",'" + textFieldDate.getText() +
-				"'," + LoginScreenView.userID + "'," + textFieldEmploymentType.getText() + ",'" + textFieldSalary.getText() + "',"
-				+ textFieldDescription.getText() + ")";
+		String queryAddOffer = "INSERT INTO job VALUES ('" + textFieldTitle.getText() + "'," + textFieldDuration.getText() + "," + textFieldDistance.getText() + ",'" + textFieldDate.getText() +
+				"','" + LoginScreenView.userID + "', '" + textFieldEmploymentType.getText() + "'," + textFieldSalary.getText() + ",'"
+				+ textFieldDescription.getText() + "');";
 		statementAddOffer.execute(queryAddOffer);
 	}
 
