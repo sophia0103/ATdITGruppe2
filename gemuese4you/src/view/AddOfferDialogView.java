@@ -122,46 +122,13 @@ public class AddOfferDialogView extends JFrame {
 		return new JLabel("");
 	}
 
-	/**
-	 * @return Returns the product array.
-	 */
-	public String[] getProductArray() {
-		return productArray;
-	}
 
-	/**
-	 * @return Returns the product list.
-	 */
-	public ArrayList<String> getProductList() {
-		return productList;
-	}
-
-	/**
-	 * @return Returns the JTextField textFieldDistance.
-	 */
-	public JTextField getTextFieldDistance() {
-		return textFieldDistance;
-	}
-
-	/**
-	 * @return Returns the JTextField textFieldProducts.
-	 */
-	public JTextField getTextFieldProducts() {
-		return textFieldProducts;
-	}
-
-	/**
-	 * @return Returns the JTextField textFieldPrice.
-	 */
-	public JTextField getTextFieldPrice() {
-		return textFieldPrice;
-	}
-
-	/**
-	 * @return Returns the JTextField textFieldDate.
-	 */
-	public JTextField getTextFieldDate() {
-		return textFieldDate;
-	}
+//	@Override
+//	public <T> T getData() {
+////		int offerID = ;
+//		String userID = LoginScreenView.userID;
+//		int distance = Integer.parseInt(textFieldDistance.getText());
+//		String exp_date = textFieldDate.getText();
+//	}
 
 }

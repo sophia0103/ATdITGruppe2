@@ -19,24 +19,26 @@ import model.Offer;
  * @author I518189
  * Represents the UI of the dialog which opens when the user wants to get the details of an offer.
  */
-public class GetOfferDialogView extends JFrame {
+public class GetOfferDialogView extends JFrame implements View{
 	private Container container;
 	private JButton buttonBuy, buttonCancel;
 	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
 	private JPanel panelDescription, panelFrame, panelButton;
-	private GetOfferDialogController getOfferDialogController;
+	private GetOfferDialogController controller;
+	private Offer offer;
 
 	public GetOfferDialogView(Offer offer) {
-		getOfferDialogController = new GetOfferDialogController(this);
+		this.offer = offer;
+		controller = new GetOfferDialogController();
 		
 		container = getContentPane();
 		this.setBackground(Util.orange);
 		
 		buttonBuy = new JButton("Buy");
-		buttonBuy.addActionListener(getOfferDialogController.getBuyListener());
+		buttonBuy.addActionListener(e -> controller.startProcess(this));
 		
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(getOfferDialogController.getCancelListener());
+		buttonCancel.addActionListener(e -> this.dispose());
 		
 		panelButton = new JPanel(new GridLayout(1,2));
 		panelButton.add(buttonBuy);
@@ -50,7 +52,6 @@ public class GetOfferDialogView extends JFrame {
 		labelExpirationDate = new JLabel("Offer expires on: " + offer.getExpDate());
 		labelPrice = new JLabel("Price: " + offer.getPrice() + "€");
 		labelDistance = new JLabel("Distance: " + offer.getDistance() + " meters");
-		labelProducts = new JLabel("Products included: " + getOfferDialogController.getFormattedProductList(offer));
 		
 		panelFrame = new JPanel(new BorderLayout());
 		
@@ -77,6 +78,14 @@ public class GetOfferDialogView extends JFrame {
 		this.setTitle("Details");
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
+	}
+
+	public Offer getOffer() {
+		return offer;
+	}
+
+	public void setLabelProducts(JLabel labelProducts) {
+		this.labelProducts = labelProducts;
 	}
 
 }

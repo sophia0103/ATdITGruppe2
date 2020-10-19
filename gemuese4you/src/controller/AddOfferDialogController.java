@@ -15,12 +15,13 @@ import gemuese4you.Util;
 import model.Offer;
 import view.AddOfferDialogView;
 import view.LoginScreenView;
+import view.View;
 
 /**
  * @author I518189
  * Represents the logic of a dialog which opens when the user wants to create an offer.
  */
-public class AddOfferDialogController {
+public class AddOfferDialogController implements DataController {
 	private AddOfferDialogView addOfferDialogView;
 	private Connection connection;
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
@@ -36,14 +37,6 @@ public class AddOfferDialogController {
 			e.printStackTrace();
 		}
 		ShopScreenController.lastOfferID = Offer.getLastOfferID();
-		this.addOfferDialogView = addOfferDialogView;
-		textFieldProducts = addOfferDialogView.getTextFieldProducts();
-		textFieldDistance = addOfferDialogView.getTextFieldDistance();
-		textFieldPrice = addOfferDialogView.getTextFieldPrice();
-		textFieldProducts = addOfferDialogView.getTextFieldProducts();
-		textFieldDate = addOfferDialogView.getTextFieldDate();
-		productArray = addOfferDialogView.getProductArray();
-		productList = addOfferDialogView.getProductList();
 
 	}
 
@@ -196,6 +189,27 @@ public class AddOfferDialogController {
 
 		};
 		return saveListener;
+	}
+
+
+	@Override
+	public void setView(View view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void startProcess(View view) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean checkInputValidity() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

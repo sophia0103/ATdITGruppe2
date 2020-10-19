@@ -7,23 +7,26 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import controller.ChangePasswordDialogController;
+import controller.Controller;
 import gemuese4you.Util;
+import model.ChangePasswordCredentials;
 
 /**
  * @author I518189
  * Represents the UI of the dialog which opens when the user wants to change the password.
  */
-public class ChangePasswordDialogView extends JFrame {
+public class ChangePasswordDialogView extends JFrame implements DataView{
 	private Container container;
 	private JLabel labelOldPassword, labelNewPassword, labelNewPasswordRepeat;
 	private JPasswordField passwordFieldOldPassword, passwordFieldNewPassword, passwordFieldNewPasswordRepeat;
 	private JButton buttonSave, buttonCancel;
 	private JPanel panelButtons, panelInputFields;
-	private ChangePasswordDialogController changePasswordDialogController;
+	private ChangePasswordDialogController controller;
 
 	public ChangePasswordDialogView() {
 
@@ -50,13 +53,14 @@ public class ChangePasswordDialogView extends JFrame {
 
 		panelButtons = new JPanel(new GridLayout(1, 2));
 
-		changePasswordDialogController = new ChangePasswordDialogController(this);
+		controller = new ChangePasswordDialogController();
 
 		buttonSave = new JButton("Save");
-		buttonSave.addActionListener(changePasswordDialogController.getSaveListener());
+		
+		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(changePasswordDialogController.getCancelListener());
+		buttonCancel.addActionListener(e -> this.dispose());
 
 		panelButtons.add(buttonSave);
 		panelButtons.add(buttonCancel);
@@ -71,25 +75,15 @@ public class ChangePasswordDialogView extends JFrame {
 		this.setTitle("Change your Password");
 	}
 
-	/**
-	 * @return Returns the JPasswordField passwordFieldOldPassword.
-	 */
-	public JPasswordField getPasswordFieldOldPassword() {
-		return passwordFieldOldPassword;
+
+	@Override
+	public <T> T getData() {
+		String oldPassword = String.valueOf(passwordFieldOldPassword.getPassword());
+		String newPassword = String.valueOf(passwordFieldNewPassword.getPassword());
+		String newPasswordRepeat = String.valueOf(passwordFieldNewPasswordRepeat.getPassword());
+		ChangePasswordCredentials changePasswordCredentials = new ChangePasswordCredentials(oldPassword, newPassword, newPasswordRepeat);
+		return (T) changePasswordCredentials;
 	}
 
-	/**
-	 * @return Returns the JPasswordField passwordFieldNewPassword.
-	 */
-	public JPasswordField getPasswordFieldNewPassword() {
-		return passwordFieldNewPassword;
-	}
-
-	/**
-	 * @return Returns the JPasswordField passwordFieldNewPasswordRepeat.
-	 */
-	public JPasswordField getPasswordFieldNewPasswordRepeat() {
-		return passwordFieldNewPasswordRepeat;
-	}
-
+	
 }

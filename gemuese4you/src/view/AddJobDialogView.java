@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,23 +13,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.AddJobDialogController;
+import controller.Controller;
+import controller.LoginScreenController;
 import gemuese4you.Util;
-
+import model.Job;
 
 /**
- * @author I518189
- *Represents the UI  of the dialog which opens when the user wants to add an offer.
+ * @author I518189 Represents the UI of the dialog which opens when the user
+ *         wants to add an offer.
  */
-public class AddJobDialogView extends JFrame{
-	
-	private JTextField textFieldTitle, textFieldDuration, textFieldDistance, textFieldDate, textFieldEmploymentType, textFieldSalary, textFieldDescription;
-	private JLabel labelTitle, labelDuration, labelDistance, labelDate, labelEmploymentType, labelSalary, labelDescription, labelDateInfo,
-			labelDistanceMeters, labelSalaryEuroPerHour, labelDurationMonths;
+public class AddJobDialogView extends JFrame implements DataView {
+
+	private JTextField textFieldTitle, textFieldDuration, textFieldDistance, textFieldDate, textFieldEmploymentType,
+			textFieldSalary, textFieldDescription;
+	private JLabel labelTitle, labelDuration, labelDistance, labelDate, labelEmploymentType, labelSalary,
+			labelDescription, labelDateInfo, labelDistanceMeters, labelSalaryEuroPerHour, labelDurationMonths;
 	private JPanel panelInput, panelDuration, panelDistance, panelDate, panelSalary, panelButton;
 	private JButton buttonSave, buttonCancel;
-	private AddJobDialogController addJobDialogController;
+	private AddJobDialogController controller;
 	static Connection connection;
-
+	
 	public AddJobDialogView() {
 
 		Container container = getContentPane();
@@ -44,10 +46,10 @@ public class AddJobDialogView extends JFrame{
 		textFieldDate = new JTextField();
 		textFieldEmploymentType = new JTextField();
 		textFieldSalary = new JTextField();
-		textFieldDescription  = new JTextField();
-		
-		labelTitle = new JLabel ("Title: ");
-		
+		textFieldDescription = new JTextField();
+
+		labelTitle = new JLabel("Title: ");
+
 		labelDistance = new JLabel("Distance: ");
 		panelDistance = new JPanel(new BorderLayout());
 		labelDistanceMeters = new JLabel(" meters   ");
@@ -81,11 +83,11 @@ public class AddJobDialogView extends JFrame{
 		panelDate.add(getEmptyLabel());
 		panelDate.add(getEmptyLabel());
 		panelDate.add(getEmptyLabel());
-		
+
 		labelEmploymentType = new JLabel("Employment Type: ");
-		
+
 		labelDescription = new JLabel("Description: ");
-		
+
 		panelInput.add(labelTitle);
 		panelInput.add(textFieldTitle);
 		panelInput.add(labelDistance);
@@ -100,16 +102,15 @@ public class AddJobDialogView extends JFrame{
 		panelInput.add(textFieldEmploymentType);
 		panelInput.add(labelDescription);
 		panelInput.add(textFieldDescription);
-		
+
 		panelInput.setBackground(Util.orange);
 
-		addJobDialogController = new AddJobDialogController(this);
-
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(addJobDialogController.getCancelListener());
+		buttonCancel.addActionListener(e -> this.dispose());
 
 		buttonSave = new JButton("Save");
-		buttonSave.addActionListener(addJobDialogController.getSaveListener());
+		controller = new AddJobDialogController();
+		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
 		panelButton = new JPanel(new GridLayout(1, 2));
 		panelButton.add(buttonSave);
@@ -123,48 +124,29 @@ public class AddJobDialogView extends JFrame{
 		this.setLocationRelativeTo(null);
 
 	}
-	
-	
+
 	/**
 	 * Acts as a filler to work around the Java Swing Layouts.
+	 * 
 	 * @return Returns an empty JLabel.
 	 */
 	public JLabel getEmptyLabel() {
 		return new JLabel("");
 	}
 
+	@Override
+	public <T> T getData() {
+		String title = textFieldTitle.getText();
+		String creator = LoginScreenView.userID;
+		int duration = Integer.parseInt(textFieldDuration.getText());
+		int distance = Integer.parseInt(textFieldDistance.getText());
+		String exp_date = textFieldDate.getText();
+		String employmentType = textFieldEmploymentType.getText();
+		double salary = Double.parseDouble(textFieldSalary.getText());
+		String description = textFieldDescription.getText();
+		Job job = new Job(title, creator, duration, distance, exp_date, employmentType, salary, description);
+		return (T) job;
 
-	public JTextField getTextFieldTitle() {
-		return textFieldTitle;
 	}
 
-
-	public JTextField getTextFieldDistance() {
-		return textFieldDistance;
-	}
-
-
-	public JTextField getTextFieldDuration() {
-		return textFieldDuration;
-	}
-
-
-	public JTextField getTextFieldEmploymentType() {
-		return textFieldEmploymentType;
-	}
-
-
-	public JTextField getTextFieldDate() {
-		return textFieldDate;
-	}
-
-
-	public JTextField getTextFieldSalary() {
-		return textFieldSalary;
-	}
-
-
-	public JTextField getTextFieldDescription() {
-		return textFieldDescription;
-	}
 }

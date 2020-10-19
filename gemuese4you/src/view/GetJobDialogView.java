@@ -24,7 +24,7 @@ import model.Offer;
  * Represents the UI of the dialog which opens when the user wants to get the details of a job.
  */
 
-public class GetJobDialogView extends JFrame{
+public class GetJobDialogView extends JFrame implements View{
 	private Container container;
 	private JButton buttonApply, buttonCancel;
 	private JLabel labelTitle, labelDuration, labelExpirationDate, labelSalary, labelDistance, labelCreator, labelEmploymentType, labelDescription;
