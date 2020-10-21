@@ -14,8 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import controller.Controller;
 import controller.HomeScreenController;
 import controller.ProfileScreenController;
+import controller.SwitchToJobScreenController;
+import controller.SwitchToShopScreenController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 
@@ -23,20 +26,24 @@ import gemuese4you.Util;
  * @author Luis
  * Represents the UI of the home screen.
  */
-public class HomeScreenView extends Screen{
+public class HomeScreenView extends Screen implements View{
 
 	private JButton buttonJobs;
 	private JButton buttonShop;
 	private JButton buttonNews;
 	private JButton buttonAboutUs;
-	private HomeScreenController homeScreenController;
+	private Controller switchToJobScreenController;
+	private Controller switchToShopScreenController;
 	
 	public HomeScreenView() {
 		this.setBackground(Util.orange);
 		this.setLayout(new BorderLayout());
 		this.add(this.getTitleBar("Home"), BorderLayout.NORTH);
 		
-		homeScreenController = new HomeScreenController(this);
+		switchToJobScreenController = new SwitchToJobScreenController();
+		switchToShopScreenController = new SwitchToShopScreenController();
+		switchToJobScreenController.setView(this);
+		switchToShopScreenController.setView(this);
 		
 		JPanel homeScreenContent = new JPanel();
 		homeScreenContent.setLayout(new BoxLayout(homeScreenContent, BoxLayout.Y_AXIS));
@@ -46,13 +53,13 @@ public class HomeScreenView extends Screen{
 		
 		String[] contentJobs = {"\n\u2022 Erntehelfer/in Ludwigshafen", "\n\u2022 Ernteleiter/in Kaiserslautern", "\n\u2022 Kassierer/in Hofladen Juergens in Walldorf"}; 
 		buttonJobs = createButton(contentJobs);
-		buttonJobs.addActionListener(homeScreenController.getSwitchToJobScreenListener());
+		buttonJobs.addActionListener(e -> switchToJobScreenController.startProcess(this));
 
 		JLabel headlineShop= createHeadline("Neueste Angebote:");
 		
 		String[] contentShop = {"\n\u2022 Kartoffeln super günstig!", "\n\u2022 Spagel 500g bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
 		buttonShop = createButton(contentShop);
-		buttonShop.addActionListener(homeScreenController.getSwitchToShopScreenListener());
+		buttonShop.addActionListener(e -> switchToShopScreenController.startProcess(this));
 		
 		JLabel headlineNews = createHeadline("Neuigkeiten:");
 		
