@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.Controller;
 import controller.ShopScreenController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
@@ -14,25 +15,24 @@ import gemuese4you.Util;
  * @author I518189
  * Represents the UI of the Shop Screen.
  */
-public class ShopScreenView extends Screen {
-
-	private ShopScreenController shopScreenController;
+public class ShopScreenView extends Screen implements View {
 
 	private JPanel panelEast, panelTitlebar;
 	private JButton buttonAddOffer, buttonRefresh;
+	private Controller controller;
 
 	public ShopScreenView() {
 
-		shopScreenController = new ShopScreenController(this);
 
 		this.setLayout(new BorderLayout());
 		panelTitlebar = getTitleBar("Shop");
 
 		buttonAddOffer = Util.getCustomButton("add");
-		buttonAddOffer.addActionListener(shopScreenController.getAddListener());
+		buttonAddOffer.addActionListener(e -> new AddOfferDialogView());
 
 		buttonRefresh = Util.getCustomButton("refresh");
-		buttonRefresh.addActionListener(shopScreenController.getRefreshListener());
+		controller = new ShopScreenController();
+		buttonRefresh.addActionListener(e -> controller.startProcess(this));
 
 		// AddOfferButton only exists for farmers (scope)
 		if (Util.isUserFarmer()) {
@@ -46,7 +46,6 @@ public class ShopScreenView extends Screen {
 		panelTitlebar.add(panelEast, BorderLayout.EAST);
 		this.add(panelTitlebar, BorderLayout.NORTH);
 
-		shopScreenController.refresh();
 	}
 
 }

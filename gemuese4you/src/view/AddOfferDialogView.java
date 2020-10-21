@@ -13,14 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.AddJobDialogController;
 import controller.AddOfferDialogController;
+import controller.Controller;
+import controller.ShopScreenController;
 import gemuese4you.Util;
+import model.Offer;
 
 /**
  * @author I518189
  *Represents the UI  of the dialog which opens when the user wants to add an offer.
  */
-public class AddOfferDialogView extends JFrame {
+public class AddOfferDialogView extends JFrame implements DataView{
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
 			labelDistanceMeters, labelPriceEuro;
@@ -30,6 +34,7 @@ public class AddOfferDialogView extends JFrame {
 	public ArrayList<String> productList;
 	private AddOfferDialogController addOfferDialogController;
 	static Connection connection;
+	private Controller controller;
 
 	public AddOfferDialogView() {
 
@@ -96,10 +101,11 @@ public class AddOfferDialogView extends JFrame {
 		addOfferDialogController = new AddOfferDialogController(this);
 
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(addOfferDialogController.getCancelListener());
+		buttonCancel.addActionListener(e -> this.dispose());
 
 		buttonSave = new JButton("Save");
-		buttonSave.addActionListener(addOfferDialogController.getSaveListener());
+		controller = new AddJobDialogController();
+		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
 		panelButton = new JPanel(new GridLayout(1, 2));
 		panelButton.add(buttonSave);
@@ -123,12 +129,15 @@ public class AddOfferDialogView extends JFrame {
 	}
 
 
-//	@Override
-//	public <T> T getData() {
-////		int offerID = ;
-//		String userID = LoginScreenView.userID;
-//		int distance = Integer.parseInt(textFieldDistance.getText());
-//		String exp_date = textFieldDate.getText();
-//	}
+	@Override
+	public <T> T getData() {
+		int offerID = ShopScreenController.lastOfferID;
+		String userID = LoginScreenView.userID;
+		int price = Integer.parseInt(textFieldPrice.getText());
+		int distance = Integer.parseInt(textFieldDistance.getText());
+		String exp_date = textFieldDate.getText();
+		Offer offer = new Offer(offerID, userID, distance, exp_date, price);
+		return (T) offer;
+	}
 
 }

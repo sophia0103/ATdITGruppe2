@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import controller.Controller;
 import controller.ProfileScreenController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
@@ -19,18 +20,17 @@ import gemuese4you.Util;
  * @author I518189
  * Represents the UI of the Profile Screen.
  */
-public class ProfileScreenView extends Screen {
+public class ProfileScreenView extends Screen implements View{
 	private JButton buttonChangePassword, buttonDelete;
 	private JLabel labelUserID, labelUsername, labelJobOffer, labelOffer;
 	private JPanel panelTitlebar, panelUserInfo, panelFrame, panelCenter, panelExampleOffer, panelExampleJobOffer;
 	private static Border line = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-	private ProfileScreenController profileScreenController;
+	private Controller controller;
 
 	public ProfileScreenView() {
 		this.setLayout(new BorderLayout());
 		panelTitlebar = getTitleBar("Profile");
 		panelTitlebar.setBackground(Util.orange);
-		profileScreenController = new ProfileScreenController(this);
 		
 		panelUserInfo = getUserInfoPanel();
 
@@ -75,7 +75,7 @@ public class ProfileScreenView extends Screen {
 		panelUsername.setBackground(Util.orange);
 
 		buttonChangePassword = new JButton("Change password");
-		buttonChangePassword.addActionListener(profileScreenController.getChangePasswordListener());
+		buttonChangePassword.addActionListener(e -> new ChangePasswordDialogView());
 
 		panelUserInfo.add(panelUsername);
 		panelUserInfo.add(buttonChangePassword);
@@ -91,7 +91,8 @@ public class ProfileScreenView extends Screen {
 	public JPanel getExampleOffer() {
 		buttonDelete = Util.getCustomButton("delete");
 		buttonDelete.setBackground(new Color(255, 237, 203));
-		buttonDelete.addActionListener(profileScreenController.getDeleteListener());
+		controller = new ProfileScreenController();
+		buttonDelete.addActionListener(e -> this.controller.startProcess(this));
 
 		JPanel panelExampleOffer = new JPanel(new BorderLayout());
 

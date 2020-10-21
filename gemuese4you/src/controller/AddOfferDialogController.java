@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -22,11 +23,11 @@ import view.View;
  * Represents the logic of a dialog which opens when the user wants to create an offer.
  */
 public class AddOfferDialogController implements DataController {
-	private AddOfferDialogView addOfferDialogView;
 	private Connection connection;
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private String[] productArray;
 	public ArrayList<String> productList;
+	private View view;
 
 	public AddOfferDialogController(AddOfferDialogView addOfferDialogView) {
 		try {
@@ -40,7 +41,32 @@ public class AddOfferDialogController implements DataController {
 
 	}
 
-	
+
+	@Override
+	public void setView(View view) {
+		this.view = view;
+	}
+
+
+	@Override
+	public void startProcess(View view) {
+		setView(view);
+		if (checkInputValidity()) {
+			try {
+				addOffer();
+				readProducts();
+				addProductListOfOffer();
+				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
+				((AddOfferDialogView) view).dispose();
+			} catch (SQLException sqlException) {
+				// Can´t check for wrong data type in inputIsValid method
+				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+	}
+
 	/**
 	 * Adds a valid offer and its products to the database. 
 	 * Gets the products from the product text field.
@@ -91,31 +117,6 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	/** Checks if the input values of the input fields are valid.
-	 * @return Returns true if the input is valid, otherwise false.
-	 */
-	public boolean inputIsValid() {
-		if (textFieldDistance.getText().equals("") || textFieldProducts.getText().equals("")
-				|| textFieldPrice.getText().equals("") || textFieldDate.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		// check if the expiration date is before the current date
-		if (Util.returnStringAsDate(textFieldDate.getText()).compareTo(Util.returnDate()) < 0) {
-			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		try {
-			// Check if input for product is a number (invalid)
-			Integer.parseInt(textFieldProducts.getText());
-			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
-			return false;
-		} catch (Exception e) {
-			return true;
-		}
-	}
-
 	
 	/**Inserts a new offer into the offers database table.
 	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
@@ -148,68 +149,31 @@ public class AddOfferDialogController implements DataController {
 	}
 
 	
-	/** Action which is performed if the cancel button is clicked.
-	 * @return Returns a listener for the cancel button.
+
+	/** Checks if the input values of the input fields are valid.
+	 * @return Returns true if the input is valid, otherwise false.
 	 */
-	public ActionListener getCancelListener() {
-		ActionListener cancelListener = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addOfferDialogView.dispose();
-			}
-
-		};
-		return cancelListener;
-	}
-
-	/**Action which is performed if the save button is clicked.
-	 * @return Returns a listener for the safe button.
-	 */
-	public ActionListener getSaveListener() {
-		ActionListener saveListener = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (inputIsValid()) {
-					try {
-						addOffer();
-						readProducts();
-						addProductListOfOffer();
-						JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
-						addOfferDialogView.dispose();
-					} catch (SQLException sqlException) {
-						// Can´t check for wrong data type in inputIsValid method
-						JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
-				}
-			}
-
-		};
-		return saveListener;
-	}
-
-
-	@Override
-	public void setView(View view) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void startProcess(View view) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	@Override
 	public boolean checkInputValidity() {
-		// TODO Auto-generated method stub
-		return false;
+		if (textFieldDistance.getText().equals("") || textFieldProducts.getText().equals("")
+				|| textFieldPrice.getText().equals("") || textFieldDate.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		// check if the expiration date is before the current date
+		if (Util.returnStringAsDate(textFieldDate.getText()).compareTo(Util.returnDate()) < 0) {
+			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		try {
+			// Check if input for product is a number (invalid)
+			Integer.parseInt(textFieldProducts.getText());
+			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e) {
+			return true;
+		}
 	}
 
 }

@@ -20,22 +20,23 @@ import gemuese4you.Util;
 import model.Offer;
 import view.AddOfferDialogView;
 import view.GetOfferDialogView;
+import view.View;
 
 /**
  * @author I518189
  * Represents the logic behind the shop screen UI.
  */
-public class ShopScreenController {
+public class ShopScreenController implements Controller{
 	private JPanel panelOffer;
 	private ArrayList<Offer> offerList;
 	private JPanel shopScreenUI;
 	private Connection connection;
 	public static int lastOfferID;
+	private View view;
 
-	public ShopScreenController(JPanel shopScreenUI) {
+	public ShopScreenController() {
 		panelOffer = new JPanel();
 		offerList = new ArrayList<Offer>();
-		this.shopScreenUI = shopScreenUI;
 
 		try {
 			connection = Util.getConnection();
@@ -45,14 +46,20 @@ public class ShopScreenController {
 			e.printStackTrace();
 		}
 
+		this.startProcess(view);
+		
 	}
 
-	/**
-	 * Refreshes the UI.
-	 */
-	public void refresh() {
+	@Override
+	public void startProcess(View view) {
+		setView(view);
 		showCurrentOffers();
 		SwingUtilities.updateComponentTreeUI(shopScreenUI);
+	}
+	
+	@Override
+	public void setView(View view) {
+		this.view = view;
 	}
 
 	
@@ -123,31 +130,4 @@ public class ShopScreenController {
 		return panelOffer;
 	}
 
-	/**
-	 * Action which is performed when the add offer button is clicked.
-	 * @return Returns a listener for the add offer button.
-	 */
-	public ActionListener getAddListener() {
-		ActionListener addListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddOfferDialogView();
-			}
-		};
-		return addListener;
-	}
-
-	/**
-	 * Action which is performed when the refresh button is clicked.
-	 * @return Returns a listener for the refresh button.
-	 */
-	public ActionListener getRefreshListener() {
-		ActionListener refreshListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				refresh();
-			}
-		};
-		return refreshListener;
-	}
 }
