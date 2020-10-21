@@ -13,8 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import gemuese4you.Util;
+import model.Job;
 import model.Offer;
 import view.AddOfferDialogView;
+import view.DataView;
 import view.LoginScreenView;
 import view.View;
 
@@ -24,10 +26,12 @@ import view.View;
  */
 public class AddOfferDialogController implements DataController {
 	private Connection connection;
-	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private String[] productArray;
 	public ArrayList<String> productList;
 	private View view;
+	private int offerID, distance;
+	private double price;
+	private String userID, expDate;
 
 	public AddOfferDialogController(AddOfferDialogView addOfferDialogView) {
 		try {
@@ -50,6 +54,14 @@ public class AddOfferDialogController implements DataController {
 
 	@Override
 	public void startProcess(View view) {
+		
+		Offer data = ((DataView) view).getData();
+		offerID = data.getOfferID();
+		userID = data.getUserID();
+		price = data.getPrice();
+		distance = data.getDistance();
+		expDate = data.getExpDate();
+		
 		setView(view);
 		if (checkInputValidity()) {
 			try {
@@ -72,7 +84,7 @@ public class AddOfferDialogController implements DataController {
 	 * Gets the products from the product text field.
 	 */
 	public void readProducts() {
-		productArray = textFieldProducts.getText().split(",");
+		productArray = ((AddOfferDialogView) view).getProducts().split(",");
 		productList = new ArrayList<String>();
 		for (int i = 0; i < productArray.length; i++) {
 			productList.add(productArray[i]);
@@ -127,8 +139,8 @@ public class AddOfferDialogController implements DataController {
 		ShopScreenController.lastOfferID++;
 
 		String queryAddOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'"
-				+ LoginScreenView.userID + "'," + textFieldDistance.getText() + ",'" + textFieldDate.getText() + "',"
-				+ textFieldPrice.getText() + ")";
+				+ userID + "'," + distance + ",'" + expDate + "',"
+				+ price + ")";
 		statementAddOffer.execute(queryAddOffer);
 	}
 
@@ -155,20 +167,20 @@ public class AddOfferDialogController implements DataController {
 	 */
 	@Override
 	public boolean checkInputValidity() {
-		if (textFieldDistance.getText().equals("") || textFieldProducts.getText().equals("")
-				|| textFieldPrice.getText().equals("") || textFieldDate.getText().equals("")) {
+		if (((AddOfferDialogView) view).getProducts().equals("")
+			 || expDate.equals("")) {
 			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		// check if the expiration date is before the current date
-		if (Util.returnStringAsDate(textFieldDate.getText()).compareTo(Util.returnDate()) < 0) {
+		if (Util.returnStringAsDate(expDate).compareTo(Util.returnDate()) < 0) {
 			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		try {
 			// Check if input for product is a number (invalid)
-			Integer.parseInt(textFieldProducts.getText());
+			Integer.parseInt(((AddOfferDialogView) view).getProducts());
 			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e) {

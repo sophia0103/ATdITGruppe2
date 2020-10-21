@@ -23,7 +23,6 @@ public class ShopScreenView extends Screen implements View {
 
 	public ShopScreenView() {
 
-
 		this.setLayout(new BorderLayout());
 		panelTitlebar = getTitleBar("Shop");
 
@@ -46,6 +45,7 @@ public class ShopScreenView extends Screen implements View {
 		panelTitlebar.add(panelEast, BorderLayout.EAST);
 		this.add(panelTitlebar, BorderLayout.NORTH);
 
+		controller.startProcess(this);
 	}
 
 }

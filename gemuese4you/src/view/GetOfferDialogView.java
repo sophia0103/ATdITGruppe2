@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.Controller;
 import controller.GetOfferDialogController;
 import gemuese4you.Util;
 import model.Offer;
@@ -24,17 +25,17 @@ public class GetOfferDialogView extends JFrame implements View{
 	private JButton buttonBuy, buttonCancel;
 	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
 	private JPanel panelDescription, panelFrame, panelButton;
-	private GetOfferDialogController controller;
+	private Controller controller;
 	private Offer offer;
 
 	public GetOfferDialogView(Offer offer) {
 		this.offer = offer;
-		controller = new GetOfferDialogController();
 		
 		container = getContentPane();
 		this.setBackground(Util.orange);
 		
 		buttonBuy = new JButton("Buy");
+		controller = new GetOfferDialogController();
 		buttonBuy.addActionListener(e -> controller.startProcess(this));
 		
 		buttonCancel = new JButton("Cancel");
@@ -61,6 +62,8 @@ public class GetOfferDialogView extends JFrame implements View{
 		panelImage.setBackground(Util.orange);
 
 		
+		setFormattedProductList();
+		
 		panelDescription.add(labelOfferTitle);
 		panelDescription.add(labelProducts);
 		panelDescription.add(labelExpirationDate);
@@ -80,12 +83,20 @@ public class GetOfferDialogView extends JFrame implements View{
 		this.setLocationRelativeTo(null);
 	}
 
-	public Offer getOffer() {
-		return offer;
-	}
-
-	public void setLabelProducts(JLabel labelProducts) {
-		this.labelProducts = labelProducts;
+	/**
+	 * Formats the list productList into a readable String
+	 * 
+	 * @param offer Offer which the productList belongs to.
+	 * @return Returns the productList as a String.
+	 */
+	
+	public void setFormattedProductList() {
+		String products = "";
+		for (int i = 0; i < offer.getProductList().size(); i++) {
+			products = products + offer.getProductList().get(i) + ", ";
+		}
+		products = products.substring(0, products.length() - 2);
+		labelProducts = new JLabel("Products included: " + products);
 	}
 
 }

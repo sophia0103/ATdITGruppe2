@@ -32,7 +32,6 @@ public class AddOfferDialogView extends JFrame implements DataView{
 	private JButton buttonSave, buttonCancel;
 	private String[] productArray;
 	public ArrayList<String> productList;
-	private AddOfferDialogController addOfferDialogController;
 	static Connection connection;
 	private Controller controller;
 
@@ -98,13 +97,12 @@ public class AddOfferDialogView extends JFrame implements DataView{
 		panelInput.add(textFieldDate);
 		panelInput.setBackground(Util.orange);
 
-		addOfferDialogController = new AddOfferDialogController(this);
 
 		buttonCancel = new JButton("Cancel");
 		buttonCancel.addActionListener(e -> this.dispose());
 
 		buttonSave = new JButton("Save");
-		controller = new AddJobDialogController();
+		controller = new AddOfferDialogController(this);
 		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
 		panelButton = new JPanel(new GridLayout(1, 2));
@@ -138,6 +136,10 @@ public class AddOfferDialogView extends JFrame implements DataView{
 		String exp_date = textFieldDate.getText();
 		Offer offer = new Offer(offerID, userID, distance, exp_date, price);
 		return (T) offer;
+	}
+	
+	public String getProducts() {
+		return textFieldProducts.getText();
 	}
 
 }

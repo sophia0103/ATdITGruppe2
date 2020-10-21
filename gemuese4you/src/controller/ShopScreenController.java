@@ -29,7 +29,6 @@ import view.View;
 public class ShopScreenController implements Controller{
 	private JPanel panelOffer;
 	private ArrayList<Offer> offerList;
-	private JPanel shopScreenUI;
 	private Connection connection;
 	public static int lastOfferID;
 	private View view;
@@ -46,15 +45,13 @@ public class ShopScreenController implements Controller{
 			e.printStackTrace();
 		}
 
-		this.startProcess(view);
-		
 	}
 
 	@Override
 	public void startProcess(View view) {
 		setView(view);
 		showCurrentOffers();
-		SwingUtilities.updateComponentTreeUI(shopScreenUI);
+		SwingUtilities.updateComponentTreeUI((JPanel)view);
 	}
 	
 	@Override
@@ -70,7 +67,7 @@ public class ShopScreenController implements Controller{
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
 		if (panelOffer != null) {
-			shopScreenUI.remove(panelOffer);
+			((JPanel)view).remove(panelOffer);
 			panelOffer = null;
 		}
 		readOffers();
@@ -79,7 +76,7 @@ public class ShopScreenController implements Controller{
 		for (int i = 0; i < offerList.size(); i++) {
 			panelOffer.add(getOfferPanel(offerList.get(i)));
 		}
-		shopScreenUI.add(panelOffer, BorderLayout.CENTER);
+		((JPanel)view).add(panelOffer, BorderLayout.CENTER);
 	}
 
 	/**
