@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import gemuese4you.Util;
+import gemuese4you.Validator;
 import model.Job;
 import model.Offer;
 import view.AddOfferDialogView;
@@ -21,8 +22,8 @@ import view.LoginScreenView;
 import view.View;
 
 /**
- * @author I518189
- * Represents the logic of a dialog which opens when the user wants to create an offer.
+ * @author I518189 Represents the logic of a dialog which opens when the user
+ *         wants to create an offer.
  */
 public class AddOfferDialogController implements DataController {
 	private Connection connection;
@@ -45,43 +46,34 @@ public class AddOfferDialogController implements DataController {
 
 	}
 
-
 	@Override
 	public void setView(View view) {
 		this.view = view;
 	}
 
-
 	@Override
 	public void startProcess(View view) {
-		
-		Offer data = ((DataView) view).getData();
-		offerID = data.getOfferID();
-		userID = data.getUserID();
-		price = data.getPrice();
-		distance = data.getDistance();
-		expDate = data.getExpDate();
-		
+		String[] inputArray = ((DataView) view).getData();
 		setView(view);
-		if (checkInputValidity()) {
+		if (Validator.isValidOffer(inputArray)) {
 			try {
-				addOffer();
+				Offer offer = createOffer(inputArray);
 				readProducts();
-				addProductListOfOffer();
+				addOffer(offer);
+				addProductListOfOffer(offer);
 				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
 				((AddOfferDialogView) view).dispose();
 			} catch (SQLException sqlException) {
 				// Can´t check for wrong data type in inputIsValid method
-				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
 	}
 
 	/**
-	 * Adds a valid offer and its products to the database. 
-	 * Gets the products from the product text field.
+	 * Adds a valid offer and its products to the database. Gets the products from
+	 * the product text field.
 	 */
 	public void readProducts() {
 		productArray = ((AddOfferDialogView) view).getProducts().split(",");
@@ -92,9 +84,10 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	
 	/**
-	 * If one of the products doesn´t yet exist in the database, add it to the products database table.
+	 * If one of the products doesn´t yet exist in the database, add it to the
+	 * products database table.
+	 * 
 	 * @param productName Name of the product which is checked upon.
 	 */
 	public void checkIfProductExists(String productName) {
@@ -116,8 +109,11 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	/** Adds a non existing product to the product database table.
-	 * @param productName Name of the product which should be added in the database table.
+	/**
+	 * Adds a non existing product to the product database table.
+	 * 
+	 * @param productName Name of the product which should be added in the database
+	 *                    table.
 	 */
 	public void addNonExistingProduct(String productName) {
 		try {
@@ -129,29 +125,27 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	
-	/**Inserts a new offer into the offers database table.
+	/**
+	 * Inserts a new offer into the offers database table.
+	 * 
 	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
-	public void addOffer() throws SQLException {
+	public void addOffer(Offer offer) throws SQLException {
 		Statement statementAddOffer = connection.createStatement();
-		// Auto increment in SQL doesn´t work properly, so we do it manually
-		ShopScreenController.lastOfferID++;
 
-		String queryAddOffer = "INSERT INTO offers VALUES (" + ShopScreenController.lastOfferID + ",'"
-				+ userID + "'," + distance + ",'" + expDate + "',"
-				+ price + ")";
+		String queryAddOffer = "INSERT INTO offers VALUES (" + offer.getOfferID() + ",'" + offer.getUserID() + "',"
+				+ offer.getDistance() + ",'" + offer.getExpDate() + "'," + offer.getPrice() + ")";
 		statementAddOffer.execute(queryAddOffer);
 	}
 
 	/**
 	 * Adds products of an offer to the database table productsInOffer.
 	 */
-	public void addProductListOfOffer() {
+	public void addProductListOfOffer(Offer offer) {
 		try {
 			Statement statementAddProductList = connection.createStatement();
 			for (int i = 0; i < productList.size(); i++) {
-				String productOffer = "INSERT INTO productsinoffer VALUES (" + ShopScreenController.lastOfferID
+				String productOffer = "INSERT INTO productsinoffer VALUES (" + offer.getOfferID()
 						+ ",(SELECT productID FROM products WHERE products.productName ='" + productList.get(i) + "'))";
 				statementAddProductList.execute(productOffer);
 			}
@@ -160,32 +154,17 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	
-
-	/** Checks if the input values of the input fields are valid.
-	 * @return Returns true if the input is valid, otherwise false.
-	 */
-	@Override
-	public boolean checkInputValidity() {
-		if (((AddOfferDialogView) view).getProducts().equals("")
-			 || expDate.equals("")) {
-			JOptionPane.showMessageDialog(null, "Input mustn´t be empty", "Error", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		// check if the expiration date is before the current date
-		if (Util.returnStringAsDate(expDate).compareTo(Util.returnDate()) < 0) {
-			JOptionPane.showMessageDialog(null, "Expiration date has to be later than current date.", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		try {
-			// Check if input for product is a number (invalid)
-			Integer.parseInt(((AddOfferDialogView) view).getProducts());
-			JOptionPane.showMessageDialog(null, "Check for wrong datatype", "Error", JOptionPane.ERROR_MESSAGE);
-			return false;
-		} catch (Exception e) {
-			return true;
-		}
+	public Offer createOffer(String[] inputArray) {
+		// Auto increment in SQL doesn´t work properly, so we do it manually
+		int offerID = ShopScreenController.lastOfferID;
+		String userID = LoginScreenView.userID;
+		int price = Integer.parseInt(inputArray[0]);
+		int distance = Integer.parseInt(inputArray[1]);
+		String exp_date = inputArray[2];
+		Offer offer = new Offer(offerID, userID, distance, exp_date, price);
+//		ShopScreenController.offerList.add(offer);
+		ShopScreenController.lastOfferID++;
+		return offer;
 	}
 
 }

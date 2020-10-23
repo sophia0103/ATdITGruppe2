@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 
 import view.HomeScreenView;
 import view.JobScreenView;
+import view.LoginScreenView;
 import view.ProfileScreenView;
 import view.ShopScreenView;
 
@@ -54,5 +55,6 @@ public class MainScreen extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setTitle("Gemüse 4 You");
 	}
+	
 
 }

@@ -97,10 +97,5 @@ public class LoginScreenView extends JFrame {
 		return textFieldUser;
 	}
 
-	// start of the program
-	public static void main(String[] args) {
-		LoginScreenView log = new LoginScreenView();
-
-	}
 
 }

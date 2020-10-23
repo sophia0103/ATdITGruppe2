@@ -34,7 +34,7 @@ public class Offer {
 			e.printStackTrace();
 		}
 
-		this.productList = this.getProductList();
+//		this.productList = this.getProductList();
 	}
 
 	/**

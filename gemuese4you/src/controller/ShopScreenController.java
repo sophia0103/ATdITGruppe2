@@ -28,7 +28,7 @@ import view.View;
  */
 public class ShopScreenController implements Controller{
 	private JPanel panelOffer;
-	private ArrayList<Offer> offerList;
+	public static ArrayList<Offer> offerList;
 	private Connection connection;
 	public static int lastOfferID;
 	private View view;

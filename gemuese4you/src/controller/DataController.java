@@ -1,7 +1,5 @@
 package controller;
 
-public interface DataController extends Controller {
-
-	boolean checkInputValidity();
-	
+public interface DataController extends Controller{
+//	public void validateData();
 }

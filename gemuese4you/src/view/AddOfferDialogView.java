@@ -13,18 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.AddJobDialogController;
 import controller.AddOfferDialogController;
 import controller.Controller;
-import controller.ShopScreenController;
 import gemuese4you.Util;
-import model.Offer;
 
 /**
- * @author I518189
- *Represents the UI  of the dialog which opens when the user wants to add an offer.
+ * @author I518189 Represents the UI of the dialog which opens when the user
+ *         wants to add an offer.
  */
-public class AddOfferDialogView extends JFrame implements DataView{
+public class AddOfferDialogView extends JFrame implements DataView {
 	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
 	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
 			labelDistanceMeters, labelPriceEuro;
@@ -97,7 +94,6 @@ public class AddOfferDialogView extends JFrame implements DataView{
 		panelInput.add(textFieldDate);
 		panelInput.setBackground(Util.orange);
 
-
 		buttonCancel = new JButton("Cancel");
 		buttonCancel.addActionListener(e -> this.dispose());
 
@@ -120,24 +116,22 @@ public class AddOfferDialogView extends JFrame implements DataView{
 
 	/**
 	 * Acts as a filler to work around the Java Swing Layouts.
+	 * 
 	 * @return Returns an empty JLabel.
 	 */
 	public JLabel getEmptyLabel() {
 		return new JLabel("");
 	}
 
-
 	@Override
-	public <T> T getData() {
-		int offerID = ShopScreenController.lastOfferID;
-		String userID = LoginScreenView.userID;
-		int price = Integer.parseInt(textFieldPrice.getText());
-		int distance = Integer.parseInt(textFieldDistance.getText());
-		String exp_date = textFieldDate.getText();
-		Offer offer = new Offer(offerID, userID, distance, exp_date, price);
-		return (T) offer;
+	public String[] getData() {
+		String[] inputArray = new String[3];
+		inputArray[0] = textFieldPrice.getText();
+		inputArray[1] = textFieldDistance.getText();
+		inputArray[2] = textFieldDate.getText();
+		return inputArray;
 	}
-	
+
 	public String getProducts() {
 		return textFieldProducts.getText();
 	}
