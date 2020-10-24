@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.AddOfferDialogController;
+import controller.CancelController;
 import controller.Controller;
 import gemuese4you.Util;
 
@@ -31,6 +32,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 	public ArrayList<String> productList;
 	static Connection connection;
 	private Controller controller;
+	private Controller cancelController;
 
 	public AddOfferDialogView() {
 
@@ -95,7 +97,8 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelInput.setBackground(Util.orange);
 
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e -> this.dispose());
+		cancelController = new CancelController();
+		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
 		buttonSave = new JButton("Save");
 		controller = new AddOfferDialogController(this);
