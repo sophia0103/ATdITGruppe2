@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.CancelController;
+import controller.Controller;
 import controller.GetJobDialogController;
 import controller.GetOfferDialogController;
 import gemuese4you.Screen;
@@ -29,19 +31,21 @@ public class GetJobDialogView extends JFrame implements View{
 	private JButton buttonApply, buttonCancel;
 	private JLabel labelTitle, labelDuration, labelExpirationDate, labelSalary, labelDistance, labelCreator, labelEmploymentType, labelDescription;
 	private JPanel panelDescription, panelFrame, panelButton;
-	private GetJobDialogController getJobDialogController;
+	private Controller getJobDialogController;
+	private Controller cancelController;
 	
 	public GetJobDialogView(Job job) {
-		getJobDialogController = new GetJobDialogController(this);
+		getJobDialogController = new GetJobDialogController();
+		cancelController = new CancelController();
 		
 		container = getContentPane();
 		this.setBackground(Util.orange);
 		
 		buttonApply = new JButton("Apply");
-		buttonApply.addActionListener(getJobDialogController.getApplyListener());
+		buttonApply.addActionListener(e -> getJobDialogController.startProcess(this));
 		
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(getJobDialogController.getCancelListener());
+		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 		
 		panelButton = new JPanel(new GridLayout(1,2));
 		panelButton.add(buttonApply);

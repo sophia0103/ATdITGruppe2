@@ -25,7 +25,6 @@ public class SwitchToJobScreenController implements Controller {
 	}
 	@Override
 	public void startProcess(View view) {
-		MainScreen.tabPane.setSelectedIndex(2);
-		
+		MainScreen.tabPane.setSelectedIndex(2);		
 	}
 }

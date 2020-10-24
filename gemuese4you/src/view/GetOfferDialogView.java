@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.CancelController;
 import controller.Controller;
 import controller.GetOfferDialogController;
 import gemuese4you.Util;
@@ -26,6 +27,7 @@ public class GetOfferDialogView extends JFrame implements View{
 	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
 	private JPanel panelDescription, panelFrame, panelButton;
 	private Controller controller;
+	private Controller cancelController;
 	private Offer offer;
 
 	public GetOfferDialogView(Offer offer) {
@@ -39,7 +41,8 @@ public class GetOfferDialogView extends JFrame implements View{
 		buttonBuy.addActionListener(e -> controller.startProcess(this));
 		
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e -> this.dispose());
+		cancelController = new CancelController();
+		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 		
 		panelButton = new JPanel(new GridLayout(1,2));
 		panelButton.add(buttonBuy);

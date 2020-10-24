@@ -15,10 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import controller.Controller;
+import controller.RegisterCancelController;
 import controller.RegisterController;
 import gemuese4you.Util;
 
-public class RegisterView extends JFrame {
+public class RegisterView extends JFrame implements View{
 
 	
 	//declaring variables
@@ -31,6 +33,7 @@ public class RegisterView extends JFrame {
 	private JPanel panelRegister, panelButton;
 	private JButton buttonCancel, buttonRegister;
 	private RegisterController registerController;
+	private Controller registerCancelController;
 
 	
 	//constructor to create a Screen with below components
@@ -62,11 +65,12 @@ public class RegisterView extends JFrame {
 		panelButton.setBackground(Util.orange);
 		
 		registerController = new RegisterController(this);
+		registerCancelController = new RegisterCancelController();
 		
 		buttonRegister = new JButton("Confirm Registration");
 		buttonRegister.addActionListener(registerController.getRegistrationListener());
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(registerController.getCancelListener());
+		buttonCancel.addActionListener(e -> registerCancelController.startProcess(this));
 		
 		panelButton.add(buttonRegister);
 		panelButton.add(buttonCancel);

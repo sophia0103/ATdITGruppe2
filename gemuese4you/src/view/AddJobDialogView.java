@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.AddJobDialogController;
+import controller.CancelController;
 import controller.Controller;
 import controller.LoginScreenController;
 import gemuese4you.Util;
@@ -30,7 +31,8 @@ public class AddJobDialogView extends JFrame implements DataView {
 			labelDescription, labelDateInfo, labelDistanceMeters, labelSalaryEuroPerHour, labelDurationMonths;
 	private JPanel panelInput, panelDuration, panelDistance, panelDate, panelSalary, panelButton;
 	private JButton buttonSave, buttonCancel;
-	private AddJobDialogController controller;
+	private Controller controller;
+	private Controller cancelController;
 	static Connection connection;
 	
 	public AddJobDialogView() {
@@ -106,11 +108,12 @@ public class AddJobDialogView extends JFrame implements DataView {
 		panelInput.setBackground(Util.orange);
 
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e -> this.dispose());
+		cancelController = new CancelController();
+		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
 		buttonSave = new JButton("Save");
 		controller = new AddJobDialogController();
-		buttonSave.addActionListener(e -> this.controller.startProcess(this));
+		buttonSave.addActionListener(e -> controller.startProcess(this));
 
 		panelButton = new JPanel(new GridLayout(1, 2));
 		panelButton.add(buttonSave);

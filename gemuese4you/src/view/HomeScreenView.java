@@ -42,8 +42,6 @@ public class HomeScreenView extends Screen implements View{
 		
 		switchToJobScreenController = new SwitchToJobScreenController();
 		switchToShopScreenController = new SwitchToShopScreenController();
-		switchToJobScreenController.setView(this);
-		switchToShopScreenController.setView(this);
 		
 		JPanel homeScreenContent = new JPanel();
 		homeScreenContent.setLayout(new BoxLayout(homeScreenContent, BoxLayout.Y_AXIS));
