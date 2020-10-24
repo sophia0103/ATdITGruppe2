@@ -1,10 +1,7 @@
 package controller;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import model.Offer;
-import view.GetOfferDialogView;
 import view.View;
 
 /**
@@ -25,5 +22,5 @@ public class GetOfferDialogController implements Controller {
 		JOptionPane.showMessageDialog(null,
 				"By pushing this button you can add this offer to your shopping cart (function hasn´t been implemented yet).");
 	}
-	
+
 }

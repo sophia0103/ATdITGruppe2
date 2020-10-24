@@ -23,9 +23,16 @@ import model.Offer;
  */
 public class GetOfferDialogView extends JFrame implements View{
 	private Container container;
-	private JButton buttonBuy, buttonCancel;
-	private JLabel labelOfferTitle, labelExpirationDate, labelPrice, labelDistance, labelProducts;
-	private JPanel panelDescription, panelFrame, panelButton;
+	private JButton buttonBuy;
+	private JButton buttonCancel;
+	private JLabel labelOfferTitle;
+	private JLabel labelExpirationDate;
+	private JLabel labelPrice;
+	private JLabel labelDistance;
+	private JLabel labelProducts;
+	private JPanel panelDescription;
+	private JPanel panelFrame;
+	private JPanel panelButton;
 	private Controller controller;
 	private Controller cancelController;
 	private Offer offer;

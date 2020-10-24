@@ -103,8 +103,7 @@ public class Util {
 	 */
 	public static boolean checkDatabaseEntries(String attributeName, String dbTableName) {
 		try {
-			connection = getConnection();
-			Statement statement = connection.createStatement();
+			Statement statement = Util.getConnection().createStatement();
 			String queryEmpty = "SELECT COUNT(" + attributeName + ")FROM " + dbTableName;
 			ResultSet resultEmpty = statement.executeQuery(queryEmpty);
 			resultEmpty.next();
@@ -126,8 +125,7 @@ public class Util {
 	 */
 	public static boolean isUserFarmer() {
 		try {
-			connection = getConnection();
-			Statement statement = connection.createStatement();
+			Statement statement = Util.getConnection().createStatement();
 			String queryIsUserFarmer = "SELECT isFarmer FROM users WHERE userID = '" + LoginScreenView.userID + "'";
 			ResultSet resultIsUserFarmer = statement.executeQuery(queryIsUserFarmer);
 			resultIsUserFarmer.next();
@@ -150,13 +148,13 @@ public class Util {
 	public static String getPassword() {
 		Statement statementOldPassword;
 		try {
-			statementOldPassword = connection.createStatement();
+			statementOldPassword = Util.getConnection().createStatement();
 			String queryOldPassword = "SELECT password FROM users WHERE userID ='"+LoginScreenView.userID+"'";
 			ResultSet resultOldPassword = statementOldPassword.executeQuery(queryOldPassword);
 			resultOldPassword.next();
 			String oldPassword = resultOldPassword.getString(1);
 			return oldPassword;
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}

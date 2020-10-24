@@ -27,24 +27,14 @@ import view.View;
  * Represents the logic behind the shop screen UI.
  */
 public class ShopScreenController implements Controller{
-	private JPanel panelOffer;
-	public static ArrayList<Offer> offerList;
-	private Connection connection;
+	private ArrayList<Offer> offerList;
 	public static int lastOfferID;
+	private JPanel panelOffer;
 	private View view;
 
 	public ShopScreenController() {
 		panelOffer = new JPanel();
 		offerList = new ArrayList<Offer>();
-
-		try {
-			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
@@ -86,7 +76,7 @@ public class ShopScreenController implements Controller{
 		offerList.clear();
 		try {
 			String today = Util.returnDateAsString();
-			Statement statement = connection.createStatement();
+			Statement statement = Util.getConnection().createStatement();
 			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultOffers = statement.executeQuery(queryOffers);
 			resultOffers.next();
@@ -100,7 +90,7 @@ public class ShopScreenController implements Controller{
 				offerList.add(new Offer(offerID, userID, distance, expDate, price));
 				resultOffers.next();
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

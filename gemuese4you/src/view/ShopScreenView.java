@@ -17,8 +17,10 @@ import gemuese4you.Util;
  */
 public class ShopScreenView extends Screen implements View {
 
-	private JPanel panelEast, panelTitlebar;
-	private JButton buttonAddOffer, buttonRefresh;
+	private JPanel panelEast;
+	private JPanel panelTitlebar;
+	private JButton buttonAddOffer;
+	private JButton buttonRefresh;
 	private Controller controller;
 
 	public ShopScreenView() {

@@ -23,10 +23,16 @@ import model.ChangePasswordCredentials;
  */
 public class ChangePasswordDialogView extends JFrame implements DataView{
 	private Container container;
-	private JLabel labelOldPassword, labelNewPassword, labelNewPasswordRepeat;
-	private JPasswordField passwordFieldOldPassword, passwordFieldNewPassword, passwordFieldNewPasswordRepeat;
-	private JButton buttonSave, buttonCancel;
-	private JPanel panelButtons, panelInputFields;
+	private JLabel labelOldPassword;
+	private JLabel labelNewPassword;
+	private JLabel labelNewPasswordRepeat;
+	private JPasswordField passwordFieldOldPassword;
+	private JPasswordField passwordFieldNewPassword;
+	private JPasswordField passwordFieldNewPasswordRepeat;
+	private JButton buttonSave;
+	private JButton buttonCancel;
+	private JPanel panelButtons;
+	private JPanel panelInputFields;
 	private Controller controller;
 	private Controller cancelController;
 
@@ -56,10 +62,8 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 
 		panelButtons = new JPanel(new GridLayout(1, 2));
 
-		controller = new ChangePasswordDialogController();
-
 		buttonSave = new JButton("Save");
-		
+		controller = new ChangePasswordDialogController();
 		buttonSave.addActionListener(e -> controller.startProcess(this));
 
 		buttonCancel = new JButton("Cancel");
@@ -80,12 +84,12 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 
 
 	@Override
-	public <T> T getData() {
-		String oldPassword = String.valueOf(passwordFieldOldPassword.getPassword());
-		String newPassword = String.valueOf(passwordFieldNewPassword.getPassword());
-		String newPasswordRepeat = String.valueOf(passwordFieldNewPasswordRepeat.getPassword());
-		ChangePasswordCredentials changePasswordCredentials = new ChangePasswordCredentials(oldPassword, newPassword, newPasswordRepeat);
-		return (T) changePasswordCredentials;
+	public String[] getData() {
+		String[] inputArray = new String[3];
+		inputArray[0] = String.valueOf(passwordFieldOldPassword.getPassword());
+		inputArray[1] = String.valueOf(passwordFieldNewPassword.getPassword());
+		inputArray[2] = String.valueOf(passwordFieldNewPasswordRepeat.getPassword());
+		return inputArray;
 	}
 
 	

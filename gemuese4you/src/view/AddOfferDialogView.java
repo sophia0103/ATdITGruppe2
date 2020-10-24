@@ -23,16 +23,30 @@ import gemuese4you.Util;
  *         wants to add an offer.
  */
 public class AddOfferDialogView extends JFrame implements DataView {
-	private JTextField textFieldDistance, textFieldProducts, textFieldPrice, textFieldDate;
-	private JLabel labelDistance, labelProducts, labelPrice, labelExpirationDate, labelProductInfo, labelDateInfo,
-			labelDistanceMeters, labelPriceEuro;
-	private JPanel panelInput, panelProduct, panelDate, panelDistance, panelPrice, panelButton;
-	private JButton buttonSave, buttonCancel;
-	private String[] productArray;
 	public ArrayList<String> productList;
-	static Connection connection;
+	private JTextField textFieldDistance;
+	private JTextField textFieldProducts;
+	private JTextField textFieldPrice;
+	private JTextField textFieldDate;
+	private JLabel labelDistance;
+	private JLabel labelProducts;
+	private JLabel labelPrice;
+	private JLabel labelExpirationDate;
+	private JLabel labelProductInfo;
+	private JLabel labelDateInfo;
+	private JLabel labelDistanceMeters;
+	private JLabel labelPriceEuro;
+	private JPanel panelInput;
+	private JPanel panelProduct;
+	private JPanel panelDate;
+	private JPanel panelDistance;
+	private JPanel panelPrice;
+	private JPanel panelButton;
+	private JButton buttonSave;
+	private JButton buttonCancel;
 	private Controller controller;
 	private Controller cancelController;
+	static Connection connection;
 
 	public AddOfferDialogView() {
 

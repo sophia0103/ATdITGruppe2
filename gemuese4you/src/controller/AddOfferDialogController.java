@@ -26,22 +26,12 @@ import view.View;
  *         wants to create an offer.
  */
 public class AddOfferDialogController implements DataController {
-//	private Connection connection;
 	private String[] productArray;
 	public ArrayList<String> productList;
 	private View view;
-	private int offerID, distance;
-	private double price;
-	private String userID, expDate;
 
 	public AddOfferDialogController(AddOfferDialogView addOfferDialogView) {
-		try {
-//			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		ShopScreenController.lastOfferID = Offer.getLastOfferID();
 
 	}
@@ -57,7 +47,7 @@ public class AddOfferDialogController implements DataController {
 		setView(view);
 		if (Validator.isValidOffer(inputArray)) {
 			try {
-				Offer offer = createOffer(inputArray);
+				Offer offer = createModel(inputArray);
 				readProducts();
 				addOffer(offer);
 				addProductListOfOffer(offer);
@@ -104,7 +94,7 @@ public class AddOfferDialogController implements DataController {
 					addNonExistingProduct(productName);
 				}
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -117,10 +107,10 @@ public class AddOfferDialogController implements DataController {
 	 */
 	public void addNonExistingProduct(String productName) {
 		try {
-			Statement statementNonExistingProduct = connection.createStatement();
+			Statement statementNonExistingProduct = Util.getConnection().createStatement();
 			String queryNonExistingProduct = "INSERT INTO products(productName) VALUES ('" + productName + "')";
 			statementNonExistingProduct.executeQuery(queryNonExistingProduct);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -131,11 +121,18 @@ public class AddOfferDialogController implements DataController {
 	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addOffer(Offer offer) throws SQLException {
-		Statement statementAddOffer = connection.createStatement();
+		Statement statementAddOffer;
+		try {
+			statementAddOffer = Util.getConnection().createStatement();
+			String queryAddOffer = "INSERT INTO offers VALUES (" + offer.getOfferID() + ",'" + offer.getUserID() + "',"
+					+ offer.getDistance() + ",'" + offer.getExpDate() + "'," + offer.getPrice() + ")";
+			statementAddOffer.execute(queryAddOffer);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		String queryAddOffer = "INSERT INTO offers VALUES (" + offer.getOfferID() + ",'" + offer.getUserID() + "',"
-				+ offer.getDistance() + ",'" + offer.getExpDate() + "'," + offer.getPrice() + ")";
-		statementAddOffer.execute(queryAddOffer);
 	}
 
 	/**
@@ -143,13 +140,16 @@ public class AddOfferDialogController implements DataController {
 	 */
 	public void addProductListOfOffer(Offer offer) {
 		try {
-			Statement statementAddProductList = connection.createStatement();
+			Statement statementAddProductList = Util.getConnection().createStatement();
 			for (int i = 0; i < productList.size(); i++) {
 				String productOffer = "INSERT INTO productsinoffer VALUES (" + offer.getOfferID()
 						+ ",(SELECT productID FROM products WHERE products.productName ='" + productList.get(i) + "'))";
 				statementAddProductList.execute(productOffer);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

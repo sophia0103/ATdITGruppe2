@@ -21,11 +21,20 @@ import gemuese4you.Util;
  * Represents the UI of the Profile Screen.
  */
 public class ProfileScreenView extends Screen implements View{
-	private JButton buttonChangePassword, buttonDelete;
-	private JLabel labelUserID, labelUsername, labelJobOffer, labelOffer;
-	private JPanel panelTitlebar, panelUserInfo, panelFrame, panelCenter, panelExampleOffer, panelExampleJobOffer;
-	private static Border line = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+	private JButton buttonChangePassword;
+	private JButton buttonDelete;
+	private JLabel labelUserID;
+	private JLabel labelUsername;
+	private JLabel labelJobOffer;
+	private JLabel labelOffer;
+	private JPanel panelTitlebar;
+	private JPanel panelUserInfo;
+	private JPanel panelFrame;
+	private JPanel panelCenter;
+	private JPanel panelExampleOffer;
+	private JPanel panelExampleJobOffer;
 	private Controller controller;
+	private static Border line = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
 	public ProfileScreenView() {
 		this.setLayout(new BorderLayout());
