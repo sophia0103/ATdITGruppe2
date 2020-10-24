@@ -26,7 +26,7 @@ import view.View;
  *         wants to create an offer.
  */
 public class AddOfferDialogController implements DataController {
-	private Connection connection;
+//	private Connection connection;
 	private String[] productArray;
 	public ArrayList<String> productList;
 	private View view;
@@ -36,7 +36,7 @@ public class AddOfferDialogController implements DataController {
 
 	public AddOfferDialogController(AddOfferDialogView addOfferDialogView) {
 		try {
-			connection = Util.getConnection();
+//			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -92,7 +92,7 @@ public class AddOfferDialogController implements DataController {
 	 */
 	public void checkIfProductExists(String productName) {
 		try {
-			Statement statementProducts = connection.createStatement();
+			Statement statementProducts = Util.getConnection().createStatement();
 			int numberOfExistingProducts;
 			for (int i = 0; i < productList.size(); i++) {
 				String checkProductExists = "SELECT COUNT(productName) FROM products WHERE productName = '"
@@ -154,17 +154,17 @@ public class AddOfferDialogController implements DataController {
 		}
 	}
 
-	public Offer createOffer(String[] inputArray) {
-		// Auto increment in SQL doesn´t work properly, so we do it manually
+	@Override
+	public <T>T createModel(String[] inputArray) {
 		int offerID = ShopScreenController.lastOfferID;
 		String userID = LoginScreenView.userID;
 		int price = Integer.parseInt(inputArray[0]);
 		int distance = Integer.parseInt(inputArray[1]);
 		String exp_date = inputArray[2];
 		Offer offer = new Offer(offerID, userID, distance, exp_date, price);
-//		ShopScreenController.offerList.add(offer);
+		// Auto increment in SQL doesn´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
-		return offer;
+		return (T) offer;
 	}
 
 }

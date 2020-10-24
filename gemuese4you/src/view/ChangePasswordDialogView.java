@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import controller.CancelController;
 import controller.ChangePasswordDialogController;
 import controller.Controller;
 import gemuese4you.Util;
@@ -26,10 +27,12 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 	private JPasswordField passwordFieldOldPassword, passwordFieldNewPassword, passwordFieldNewPasswordRepeat;
 	private JButton buttonSave, buttonCancel;
 	private JPanel panelButtons, panelInputFields;
-	private ChangePasswordDialogController controller;
+	private Controller controller;
+	private Controller cancelController;
 
 	public ChangePasswordDialogView() {
-
+		cancelController = new CancelController();
+		
 		container = getContentPane();
 		container.setLayout(new BorderLayout());
 
@@ -57,10 +60,10 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 
 		buttonSave = new JButton("Save");
 		
-		buttonSave.addActionListener(e -> this.controller.startProcess(this));
+		buttonSave.addActionListener(e -> controller.startProcess(this));
 
 		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e -> this.dispose());
+		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
 		panelButtons.add(buttonSave);
 		panelButtons.add(buttonCancel);
