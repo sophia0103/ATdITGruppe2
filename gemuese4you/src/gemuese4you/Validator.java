@@ -1,11 +1,22 @@
 package gemuese4you;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import javax.swing.JOptionPane;
 
 public class Validator {
-
+	private static Validator validator;
+	
+	private static Validator getValidator(){
+		if (validator == null) {
+			validator = new Validator();
+		}
+		return validator;
+	}
+	
 	private boolean isInputEmpty(String input) {
 		if (input.equals("")) {
 			JOptionPane.showMessageDialog(null, "Input mustn´t be empty.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -35,30 +46,48 @@ public class Validator {
 	}
 
 	public static boolean isValidOffer(String[] inputArray) {
-		Validator validator = new Validator();
-		if (validator.isInputEmpty(inputArray[0]) || validator.isInputEmpty(inputArray[1])
-				|| validator.isInputEmpty(inputArray[2])) {
+		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
+				|| getValidator().isInputEmpty(inputArray[2])) {
 			return false;
 		}
 		//represents int price
-		if (!validator.isInputNumeric(inputArray[0])) {
+		if (!getValidator().isInputNumeric(inputArray[0])) {
 			return false;
 		}
 		//represents int distance
-		if (!validator.isInputNumeric(inputArray[1])) {
+		if (!getValidator().isInputNumeric(inputArray[1])) {
 			return false;
 		}
 		//represents String date
-		if (!validator.isInputString(inputArray[2])) {
+		if (!getValidator().isInputString(inputArray[2])) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean isValidJob(String[] inputArray) {
+		if (getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])
+				|| getValidator().isInputEmpty(inputArray[6])) {
+			return false;
+		}
+		//represents int distance
+		if (!getValidator().isInputNumeric(inputArray[2])) {
+			return false;
+		}
+		//represents int duration
+		if (!getValidator().isInputNumeric(inputArray[3])) {
+			return false;
+		}
+		//represents int salary
+		if (!getValidator().isInputNumeric(inputArray[6])) {
 			return false;
 		}
 		return true;
 	}
 	
 	public static boolean isValidChangeUserCredentials(String[] inputArray) {
-		Validator validator = new Validator();
-		if (validator.isInputEmpty(inputArray[0]) || validator.isInputEmpty(inputArray[1])
-				|| validator.isInputEmpty(inputArray[2])) {
+		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
+				|| getValidator().isInputEmpty(inputArray[2])) {
 			return false;
 		}
 		if (!inputArray[1].equals(inputArray[2])) {

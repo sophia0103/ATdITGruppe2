@@ -57,7 +57,9 @@ public class AddOfferDialogController implements DataController {
 				// Can´t check for wrong data type in inputIsValid method
 				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-
+		}else {
+			JOptionPane.showMessageDialog(null, "Unable to create offer - Check for wrong data type", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

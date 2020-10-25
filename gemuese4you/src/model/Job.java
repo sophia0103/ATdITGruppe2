@@ -51,7 +51,7 @@ public class Job {
 	/**
 	 * @return Returns the employment type of the job offer.
 	 */
-	public String getEmplyomentType() {
+	public String getEmploymentType() {
 		return employmentType;
 	}
 	

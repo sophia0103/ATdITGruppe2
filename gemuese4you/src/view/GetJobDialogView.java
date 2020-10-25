@@ -59,7 +59,7 @@ public class GetJobDialogView extends JFrame implements View{
 		labelExpirationDate = new JLabel("Offer expires on: " + job.getExpDate());
 		labelDuration = new JLabel("duration: " + job.getDuration());
 		labelDistance = new JLabel("Distance: " + job.getDistance() + " meters");
-		labelEmploymentType = new JLabel("EmploymentType: " + job.getEmplyomentType());
+		labelEmploymentType = new JLabel("EmploymentType: " + job.getEmploymentType());
 		labelSalary = new JLabel("Salaray: " + job.getSalary() + "€/h");
 		labelDescription = new JLabel("Description: " + job.getSalary() + "€/h");
 		
