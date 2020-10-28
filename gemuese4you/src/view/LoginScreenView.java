@@ -9,11 +9,13 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import controller.LoginScreenController;
+import controller.Controller;
+import controller.LoginController;
+import controller.OpenRegisterViewController;
 import gemuese4you.MainScreen;
 import gemuese4you.Util;
 
-public class LoginScreenView extends JFrame {
+public class LoginScreenView extends JFrame implements DataView{
 
 	
 	//declaring variables
@@ -26,7 +28,8 @@ public class LoginScreenView extends JFrame {
 	private JButton buttonLogin, buttonRegister;
 	private JPasswordField passwordFieldPassword;
 	private JTextField textFieldUser;
-	private LoginScreenController loginScreenController;
+	private Controller openRegisterViewController;
+	private Controller loginController;
 
 	// constructor to create a Screen with below components
 	public LoginScreenView() {
@@ -57,12 +60,12 @@ public class LoginScreenView extends JFrame {
 
 		passwordFieldPassword = new JPasswordField();
 
-		loginScreenController = new LoginScreenController(this);
-
 		buttonLogin = new JButton("Log-In");
-		buttonLogin.addActionListener(loginScreenController.getLoginListener());
+		loginController = new LoginController();
+		buttonLogin.addActionListener(e -> loginController.startProcess(this));
 		buttonRegister = new JButton("Register");
-		buttonRegister.addActionListener(loginScreenController.getRegisterListener());
+		openRegisterViewController = new OpenRegisterViewController();
+		buttonRegister.addActionListener(e -> openRegisterViewController.startProcess(this));
 
 		panelLogin.add(labelUser);
 		panelLogin.add(textFieldUser);
@@ -95,6 +98,14 @@ public class LoginScreenView extends JFrame {
 
 	public JTextField getTextFieldUser() {
 		return textFieldUser;
+	}
+
+	@Override
+	public String[] getData() {
+		String[] data = new String[2];
+		data[0] = textFieldUser.getText();
+		data[1] = String.valueOf(passwordFieldPassword.getPassword());
+		return data;
 	}
 
 

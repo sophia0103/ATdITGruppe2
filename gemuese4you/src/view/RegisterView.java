@@ -20,7 +20,7 @@ import controller.RegisterCancelController;
 import controller.RegisterController;
 import gemuese4you.Util;
 
-public class RegisterView extends JFrame implements View{
+public class RegisterView extends JFrame implements DataView{
 
 	
 	//declaring variables
@@ -32,8 +32,8 @@ public class RegisterView extends JFrame implements View{
 	private JLabel labelUser, labelPassword, labelRePassword, labelIsFarmer;
 	private JPanel panelRegister, panelButton;
 	private JButton buttonCancel, buttonRegister;
-	private RegisterController registerController;
 	private Controller registerCancelController;
+	private Controller registerController;
 
 	
 	//constructor to create a Screen with below components
@@ -64,12 +64,13 @@ public class RegisterView extends JFrame implements View{
 		panelRegister.setBackground(Util.orange);
 		panelButton.setBackground(Util.orange);
 		
-		registerController = new RegisterController(this);
 		registerCancelController = new RegisterCancelController();
 		
 		buttonRegister = new JButton("Confirm Registration");
-		buttonRegister.addActionListener(registerController.getRegistrationListener());
+		registerController = new RegisterController();
+		buttonRegister.addActionListener(e -> registerController.startProcess(this));
 		buttonCancel = new JButton("Cancel");
+		registerCancelController = new RegisterCancelController();
 		buttonCancel.addActionListener(e -> registerCancelController.startProcess(this));
 		
 		panelButton.add(buttonRegister);
@@ -103,6 +104,21 @@ public class RegisterView extends JFrame implements View{
 
 	public JPasswordField getPasswordFieldRePassword() {
 		return passwordFieldRePassword;
+	}
+
+	@Override
+	public String[] getData() {
+		String[] data = new String[4];
+		data[0] = textFieldUser.getText();
+		data[1] = String.valueOf(passwordFieldPassword.getPassword());
+		String isFarmer = textFieldIsFarmer.getText();
+		if (isFarmer.equals("Yes")) {
+			data[2] = "1";
+		} else {
+			data[2] = "0";
+		}
+		data[3] = String.valueOf(passwordFieldRePassword.getPassword());
+		return data;
 	}
 
 }

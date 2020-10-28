@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import controller.AddJobDialogController;
 import controller.CancelController;
 import controller.Controller;
-import controller.LoginScreenController;
 import gemuese4you.Util;
 import model.Job;
 
