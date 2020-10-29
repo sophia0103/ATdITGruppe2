@@ -29,20 +29,20 @@ import view.AddJobDialogView;
 import view.AddOfferDialogView;
 import view.GetJobDialogView;
 import view.GetOfferDialogView;
-import view.JobScreenView;
+import view.View;
 
 /**
  * @author Luis
  *Represents the logic behind the job Screen UI.
  */
-public class JobScreenController{
-	private JobScreenView jobScreenView;
+public class JobScreenController implements Controller{
+	private View view;
 	private ArrayList<Job> jobs;
 	private Connection connection;
 	private JPanel jobScreenContent;
 	
-	public JobScreenController(JobScreenView jobScreenView) {
-		this.jobScreenView = jobScreenView;
+	public JobScreenController() {
+		this.view = view;
 		jobScreenContent = new JPanel();
 		jobs = new ArrayList<Job>();
 		
@@ -60,10 +60,10 @@ public class JobScreenController{
 		// panel has to be removed and added again in order to fetch new jobs which
 		// might have been created in the process
 		if (jobScreenContent != null) {
-			jobScreenView.remove(jobScreenContent);
+			((JPanel)view).remove(jobScreenContent);
 			jobScreenContent = null;
 		}
-		readOffers();
+		readJobs();
 		JPanel jobScreenContent = new JPanel();
 		jobScreenContent.setLayout(new BoxLayout(jobScreenContent, BoxLayout.Y_AXIS));
 		jobScreenContent.setBackground(Util.orange);
@@ -79,14 +79,14 @@ public class JobScreenController{
 		JScrollPane scrollable = new JScrollPane(jobScreenContent, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollable.setBorder(BorderFactory.createEmptyBorder());
 		scrollable.setSize(450, 450);
-		jobScreenView.add(scrollable, BorderLayout.CENTER);
+		((JPanel)view).add(scrollable, BorderLayout.CENTER);
 		
 	}
 
 	/**
 	 * Reads the current job offers from the job database table.
 	 */
-	public void readOffers() {
+	public void readJobs() {
 		jobs.clear();
 		try {
 			String today = Util.returnDateAsString();
@@ -154,42 +154,17 @@ public class JobScreenController{
 		headline.setFont(new Font("Arial", Font.BOLD, 16));
 		return headline;
 	}
-	
-	/**
-	 * Action which is performed when the add offer button is clicked.
-	 * @return Returns a listener for the add offer button.
-	 */
-	public ActionListener getAddListener() {
-		ActionListener addListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddJobDialogView();
-			}
-		};
-		return addListener;
-	}
-	
 
-	/**
-	 * Action which is performed when the refresh button is clicked.
-	 * @return Returns a listener for the refresh button.
-	 */
-	public ActionListener getRefreshListener() {
-		ActionListener refreshListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				refresh();
-			}
-		};
-		return refreshListener;
+	@Override
+	public void setView(View view) {
+		this.view = view;		
 	}
-	
-	/**
-	 * Refreshes the UI.
-	 */
-	public void refresh() {
+
+	@Override
+	public void startProcess(View view) {
+		setView(view);
 		showCurrentJobs();
-		SwingUtilities.updateComponentTreeUI(jobScreenView);
+		SwingUtilities.updateComponentTreeUI((JPanel)view);		
 	}
 
 }

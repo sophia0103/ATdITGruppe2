@@ -9,30 +9,34 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.Controller;
 import controller.JobScreenController;
+import controller.OpenAddJobDialogController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 import model.Job;
 
-public class JobScreenView extends Screen {
+public class JobScreenView extends Screen implements View{
 	
 	ArrayList<Job> jobs = new ArrayList();
 	private static Connection connection;
 	private JPanel jobScreenContent, panelEast, panelTitlebar;
 	private JButton buttonAddOffer, buttonRefresh;
-	private JobScreenController jobScreenController;
+	private Controller jobScreenController;
+	private Controller openAddJobDialogController;
 	
 	public JobScreenView() {
 		this.setBackground(Util.orange);
 		panelTitlebar = getTitleBar("Job");
 		
-		jobScreenController = new JobScreenController(this);
+		jobScreenController = new JobScreenController();
+		openAddJobDialogController = new OpenAddJobDialogController();
 		
 		buttonAddOffer = Util.getCustomButton("add");
-		buttonAddOffer.addActionListener(jobScreenController.getAddListener());
+		buttonAddOffer.addActionListener(e -> openAddJobDialogController.startProcess(this));
 
 		buttonRefresh = Util.getCustomButton("refresh");
-		buttonRefresh.addActionListener(jobScreenController.getRefreshListener());
+		buttonRefresh.addActionListener(e -> jobScreenController.startProcess(this));
 		
 		// AddJobButton only exists for farmers (scope)
 		if (Util.isUserFarmer()) {
@@ -48,7 +52,7 @@ public class JobScreenView extends Screen {
 		this.add(panelTitlebar, BorderLayout.NORTH);
 		
 
-		jobScreenController.refresh();
+		jobScreenController.startProcess(this);
 	}
 	
 
