@@ -35,6 +35,7 @@ public class ChangePasswordDialogController implements DataController {
 				((ChangePasswordDialogView) view).dispose();
 			}
 		} catch (Exception e2) {
+			
 			e2.printStackTrace();
 		}
 

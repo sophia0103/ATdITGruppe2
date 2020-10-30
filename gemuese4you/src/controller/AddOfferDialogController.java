@@ -42,7 +42,7 @@ public class AddOfferDialogController implements DataController {
 	}
 
 	@Override
-	public void startProcess(View view) {
+	public void startProcess(View view){
 		String[] inputArray = ((DataView) view).getData();
 		setView(view);
 		if (Validator.isValidOffer(inputArray)) {
@@ -53,12 +53,13 @@ public class AddOfferDialogController implements DataController {
 				addProductListOfOffer(offer);
 				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
 				((AddOfferDialogView) view).dispose();
-			} catch (SQLException sqlException) {
+			} catch (SQLException | ClassNotFoundException exception) {
 				// Can´t check for wrong data type in inputIsValid method
-				JOptionPane.showMessageDialog(null, "Check for wrong data type", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Check for wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+				exception.printStackTrace();
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "Unable to create offer - Check for wrong data type", "Error",
+			JOptionPane.showMessageDialog(null, "Unable to create offer - Check for wrong data type.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -66,8 +67,9 @@ public class AddOfferDialogController implements DataController {
 	/**
 	 * Adds a valid offer and its products to the database. Gets the products from
 	 * the product text field.
+	 * @throws ClassNotFoundException 
 	 */
-	public void readProducts() {
+	public void readProducts() throws ClassNotFoundException {
 		productArray = ((AddOfferDialogView) view).getProducts().split(",");
 		productList = new ArrayList<String>();
 		for (int i = 0; i < productArray.length; i++) {
@@ -82,7 +84,7 @@ public class AddOfferDialogController implements DataController {
 	 * 
 	 * @param productName Name of the product which is checked upon.
 	 */
-	public void checkIfProductExists(String productName) {
+	public void checkIfProductExists(String productName) throws ClassNotFoundException {
 		try {
 			Statement statementProducts = Util.getConnection().createStatement();
 			int numberOfExistingProducts;
@@ -97,6 +99,8 @@ public class AddOfferDialogController implements DataController {
 				}
 			}
 		} catch (SQLException | ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Could not find the product you were looking for, please retry or add a new product.", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
@@ -107,14 +111,16 @@ public class AddOfferDialogController implements DataController {
 	 * @param productName Name of the product which should be added in the database
 	 *                    table.
 	 */
-	public void addNonExistingProduct(String productName) {
+	public void addNonExistingProduct(String productName)throws SQLException, ClassNotFoundException {
 		try {
 			Statement statementNonExistingProduct = Util.getConnection().createStatement();
 			String queryNonExistingProduct = "INSERT INTO products(productName) VALUES ('" + productName + "')";
 			statementNonExistingProduct.executeQuery(queryNonExistingProduct);
 		} catch (SQLException | ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Product could not be added to the list.", "Error",
+					JOptionPane.ERROR_MESSAGE);		
 			e.printStackTrace();
-		}
+			}
 	}
 
 	/**
@@ -130,8 +136,12 @@ public class AddOfferDialogController implements DataController {
 					+ offer.getDistance() + ",'" + offer.getExpDate() + "'," + offer.getPrice() + ")";
 			statementAddOffer.execute(queryAddOffer);
 		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart.", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Offer could not be added.", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
@@ -140,7 +150,7 @@ public class AddOfferDialogController implements DataController {
 	/**
 	 * Adds products of an offer to the database table productsInOffer.
 	 */
-	public void addProductListOfOffer(Offer offer) {
+	public void addProductListOfOffer(Offer offer) throws SQLException, ClassNotFoundException {
 		try {
 			Statement statementAddProductList = Util.getConnection().createStatement();
 			for (int i = 0; i < productList.size(); i++) {
@@ -149,6 +159,10 @@ public class AddOfferDialogController implements DataController {
 				statementAddProductList.execute(productOffer);
 			}
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "You tried to add a product which is not in the current product list.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, productList.toString(), "Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -29,8 +29,12 @@ public class AddJobDialogController implements DataController{
 		try {
 			connection = Util.getConnection();
 		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
@@ -52,6 +56,7 @@ public class AddJobDialogController implements DataController{
 				// Can´t check for wrong data type in inputIsValid method
 				JOptionPane.showMessageDialog(null, "Check if your input complies with formatting requirements and if the job offer already exists", "Error",
 						JOptionPane.ERROR_MESSAGE);
+				sqlException.printStackTrace();
 			}
 		}else {
 			JOptionPane.showMessageDialog(null, "Unable to create job offer - Check for wrong data type", "Error",

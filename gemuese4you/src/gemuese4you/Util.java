@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import view.LoginScreenView;
 
@@ -24,11 +25,11 @@ public class Util {
 		try {
 			connection = getConnection();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -40,7 +41,7 @@ public class Util {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gemuese4you", "root", "root");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Praktikum");
 		}
 		return connection;
 	}

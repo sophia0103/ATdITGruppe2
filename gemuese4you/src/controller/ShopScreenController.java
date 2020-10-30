@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -91,6 +92,8 @@ public class ShopScreenController implements Controller{
 				resultOffers.next();
 			}
 		} catch (SQLException | ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Something went wrong, please check the connection and try again", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
