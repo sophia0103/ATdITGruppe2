@@ -142,15 +142,12 @@ public class AddOfferDialogView extends JFrame implements DataView {
 
 	@Override
 	public String[] getData() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = textFieldPrice.getText();
 		inputArray[1] = textFieldDistance.getText();
 		inputArray[2] = textFieldDate.getText();
+		inputArray[3] = textFieldProducts.getText();
 		return inputArray;
-	}
-
-	public String getProducts() {
-		return textFieldProducts.getText();
 	}
 
 }

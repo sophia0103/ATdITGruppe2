@@ -22,15 +22,7 @@ public class Util {
 	public static Color orange = new Color(255, 229, 204);
 
 	public Util() {
-		try {
 			connection = getConnection();
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	/**
@@ -38,10 +30,23 @@ public class Util {
 	 * @throws ClassNotFoundException Throws an exception if the class is not found.
 	 * @throws SQLException Throws an exception if the SQL syntax is incorrect.
 	 */
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	public static Connection getConnection() {
 		if (connection == null) {
-			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Praktikum");
+			try {
+				Class.forName("org.mariadb.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "Driver has not been found.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+				System.exit(0);
+			}
+			try {
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gemuese4you", "root", "root");
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Connection couldn´t be created. Check for the right port, host and password.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
 		}
 		return connection;
 	}
@@ -114,8 +119,6 @@ public class Util {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -137,9 +140,6 @@ public class Util {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return false;
 		}
 	}
 	
@@ -155,7 +155,7 @@ public class Util {
 			resultOldPassword.next();
 			String oldPassword = resultOldPassword.getString(1);
 			return oldPassword;
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}

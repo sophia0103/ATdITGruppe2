@@ -26,26 +26,25 @@ public class Offer {
 		this.distance = distance;
 		this.expDate = expDate;
 
-		try {
 			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 	}
 
 	/**
 	 * @return Returns a ArrayList with all the products in an offer as Strings.
+	 * @throws Exception 
 	 */
-	public ArrayList<String> getProductList() {
+	public ArrayList<String> getProductList() throws Exception {
 		try {
 			ArrayList<String> productList = new ArrayList<String>();
 			Statement statement = connection.createStatement();
 			String queryGetProductList = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
 					+ offerID;
 			ResultSet resultGetProductList = statement.executeQuery(queryGetProductList);
+			if(Util.checkDatabaseEntries("productID", "productsinoffer") && !Util.checkDatabaseEntries("offerID", "offers")
+					|| resultGetProductList == null) {
+				throw new Exception();
+			}
 			while (!resultGetProductList.isAfterLast()) {
 				if (resultGetProductList.next()) {
 					productList.add(resultGetProductList.getString(1));
@@ -73,7 +72,7 @@ public class Offer {
 			ResultSet resultLastOfferID = statement.executeQuery(lastOfferIDQuery);
 			resultLastOfferID.next();
 			lastOfferID = resultLastOfferID.getInt(1);
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1;
 		}

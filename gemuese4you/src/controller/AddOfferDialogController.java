@@ -48,7 +48,7 @@ public class AddOfferDialogController implements DataController {
 		if (Validator.isValidOffer(inputArray)) {
 			try {
 				Offer offer = createModel(inputArray);
-				readProducts();
+				readProducts(inputArray[3]);
 				addOffer(offer);
 				addProductListOfOffer(offer);
 				JOptionPane.showMessageDialog(null, "Offer was successfully created! :)");
@@ -69,8 +69,8 @@ public class AddOfferDialogController implements DataController {
 	 * the product text field.
 	 * @throws ClassNotFoundException 
 	 */
-	public void readProducts() throws ClassNotFoundException {
-		productArray = ((AddOfferDialogView) view).getProducts().split(",");
+	public void readProducts(String products) throws ClassNotFoundException {
+		productArray = products.split(",");
 		productList = new ArrayList<String>();
 		for (int i = 0; i < productArray.length; i++) {
 			productList.add(productArray[i]);
@@ -116,7 +116,7 @@ public class AddOfferDialogController implements DataController {
 			Statement statementNonExistingProduct = Util.getConnection().createStatement();
 			String queryNonExistingProduct = "INSERT INTO products(productName) VALUES ('" + productName + "')";
 			statementNonExistingProduct.executeQuery(queryNonExistingProduct);
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Product could not be added to the list.", "Error",
 					JOptionPane.ERROR_MESSAGE);		
 			e.printStackTrace();
@@ -135,10 +135,6 @@ public class AddOfferDialogController implements DataController {
 			String queryAddOffer = "INSERT INTO offers VALUES (" + offer.getOfferID() + ",'" + offer.getUserID() + "',"
 					+ offer.getDistance() + ",'" + offer.getExpDate() + "'," + offer.getPrice() + ")";
 			statementAddOffer.execute(queryAddOffer);
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart.", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Offer could not be added.", "Error",
 					JOptionPane.ERROR_MESSAGE);
@@ -163,9 +159,6 @@ public class AddOfferDialogController implements DataController {
 					JOptionPane.ERROR_MESSAGE);
 			JOptionPane.showMessageDialog(null, productList.toString(), "Error",
 					JOptionPane.INFORMATION_MESSAGE);
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

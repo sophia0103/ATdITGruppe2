@@ -41,9 +41,16 @@ public class ShopScreenController implements Controller{
 	@Override
 	public void startProcess(View view) {
 		setView(view);
-		showCurrentOffers();
-		SwingUtilities.updateComponentTreeUI((JPanel)view);
-	}
+			try {
+				showCurrentOffers();
+				SwingUtilities.updateComponentTreeUI((JPanel)view);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "It seems as if there are no existing products in your database table 'productsinoffer'. Check for empty values.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+				System.exit(0);
+			}
+		}
 	
 	@Override
 	public void setView(View view) {
@@ -53,8 +60,9 @@ public class ShopScreenController implements Controller{
 	
 	/**
 	 * Displays existing offers.
+	 * @throws Exception 
 	 */
-	public void showCurrentOffers() {
+	public void showCurrentOffers() throws Exception {
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
 		if (panelOffer != null) {
@@ -91,7 +99,7 @@ public class ShopScreenController implements Controller{
 				offerList.add(new Offer(offerID, userID, distance, expDate, price));
 				resultOffers.next();
 			}
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Something went wrong, please check the connection and try again", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
@@ -102,8 +110,9 @@ public class ShopScreenController implements Controller{
 	 * Returns a panel for each offer in order to display them on the shopScreen.
 	 * @param offer Specifies the offer for which a JPanel is created.
 	 * @return Returns a JPanel with the information of the offer.
+	 * @throws Exception 
 	 */
-	public JPanel getOfferPanel(Offer offer) {
+	public JPanel getOfferPanel(Offer offer) throws Exception {
 		JPanel panelOffer = new JPanel(new BorderLayout());
 		JLabel panelFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
 		panelOffer.setBackground(new Color(255, 237, 203));
@@ -111,7 +120,14 @@ public class ShopScreenController implements Controller{
 		ActionListener offerListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new GetOfferDialogView(offer);
+				try {
+					new GetOfferDialogView(offer);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "It seems as if there are no existing products in your database table 'productsinoffer'. Check for empty values.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					e1.printStackTrace();
+					System.exit(0);
+				}
 			}
 		};
 		buttonIcon.addActionListener(offerListener);

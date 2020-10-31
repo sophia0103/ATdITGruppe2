@@ -17,10 +17,11 @@ class isValidOfferTest {
 	 */
 	@Test
 	void testEmptyInput() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = "";
 		inputArray[1] = "";
 		inputArray[2] = "";
+		inputArray[3] = "";
 		assertFalse(Validator.isValidOffer(inputArray));
 	}
 	
@@ -29,10 +30,11 @@ class isValidOfferTest {
 	 */
 	@Test
 	void testStringPrice() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = "abc";
 		inputArray[1] = "23";
 		inputArray[2] = "2020-12-12";
+		inputArray[3] = "apple";
 		assertFalse(Validator.isValidOffer(inputArray));
 	}
 	
@@ -41,10 +43,11 @@ class isValidOfferTest {
 	 */
 	@Test
 	void testStringDistance() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = "12";
 		inputArray[1] = "abc";
 		inputArray[2] = "2020-12-12";
+		inputArray[3] = "apple";
 		assertFalse(Validator.isValidOffer(inputArray));
 	}
 	
@@ -53,10 +56,24 @@ class isValidOfferTest {
 	 */
 	@Test
 	void testIntDate() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = "12";
 		inputArray[1] = "12";
 		inputArray[2] = "20201212";
+		inputArray[3] = "apple";
+		assertFalse(Validator.isValidOffer(inputArray));
+	}
+	
+	/**
+	 * This test tests if numeric values as a product are valid.
+	 */
+	@Test
+	void testIntProduct() {
+		String[] inputArray = new String[4];
+		inputArray[0] = "12";
+		inputArray[1] = "12";
+		inputArray[2] = "20201212";
+		inputArray[3] = "12";
 		assertFalse(Validator.isValidOffer(inputArray));
 	}
 	
@@ -65,10 +82,11 @@ class isValidOfferTest {
 	 */
 	@Test
 	void testValidInput() {
-		String[] inputArray = new String[3];
+		String[] inputArray = new String[4];
 		inputArray[0] = "12";
 		inputArray[1] = "12";
 		inputArray[2] = "2020-12-12";
+		inputArray[3] = "apple";
 		assertTrue(Validator.isValidOffer(inputArray));
 	}
 

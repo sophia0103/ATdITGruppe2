@@ -47,7 +47,7 @@ public class Validator {
 
 	public static boolean isValidOffer(String[] inputArray) {
 		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
-				|| getValidator().isInputEmpty(inputArray[2])) {
+				|| getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])) {
 			return false;
 		}
 		//represents int price
@@ -60,6 +60,9 @@ public class Validator {
 		}
 		//represents String date
 		if (!getValidator().isInputString(inputArray[2])) {
+			return false;
+		}
+		if (!getValidator().isInputString(inputArray[3])) {
 			return false;
 		}
 		return true;

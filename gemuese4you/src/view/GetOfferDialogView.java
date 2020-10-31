@@ -37,7 +37,7 @@ public class GetOfferDialogView extends JFrame implements View{
 	private Controller cancelController;
 	private Offer offer;
 
-	public GetOfferDialogView(Offer offer) {
+	public GetOfferDialogView(Offer offer) throws Exception {
 		this.offer = offer;
 		
 		container = getContentPane();
@@ -98,9 +98,10 @@ public class GetOfferDialogView extends JFrame implements View{
 	 * 
 	 * @param offer Offer which the productList belongs to.
 	 * @return Returns the productList as a String.
+	 * @throws Exception 
 	 */
 	
-	public void setFormattedProductList() {
+	public void setFormattedProductList() throws Exception {
 		String products = "";
 		for (int i = 0; i < offer.getProductList().size(); i++) {
 			products = products + offer.getProductList().get(i) + ", ";

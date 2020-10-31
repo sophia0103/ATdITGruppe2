@@ -55,9 +55,6 @@ public class RegisterController implements DataController{
 				((JFrame) view).dispose();
 			}
 
-		} catch (ClassNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -46,17 +46,7 @@ public class JobScreenController implements Controller{
 		jobScreenContent = new JPanel();
 		jobs = new ArrayList<Job>();
 		
-		try {
 			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
 	}
 	
 	// display existing jobs

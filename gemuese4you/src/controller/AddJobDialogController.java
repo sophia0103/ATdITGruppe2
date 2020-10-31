@@ -26,17 +26,8 @@ public class AddJobDialogController implements DataController{
 	private View view;
 	
 	public AddJobDialogController() {
-		try {
-			connection = Util.getConnection();
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Cannot connect to the data base, please try to restart", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
+
+		connection = Util.getConnection();
 
 	}
 	
