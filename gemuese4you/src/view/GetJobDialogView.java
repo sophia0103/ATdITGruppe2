@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 
 import controller.CancelController;
 import controller.Controller;
-import controller.GetJobDialogController;
-import controller.GetOfferDialogController;
+import controller.ApplyToJobController;
+import controller.BuyOfferController;
 import gemuese4you.Screen;
 import gemuese4you.Util;
 import model.Job;
@@ -35,7 +35,7 @@ public class GetJobDialogView extends JFrame implements View{
 	private Controller cancelController;
 	
 	public GetJobDialogView(Job job) {
-		getJobDialogController = new GetJobDialogController();
+		getJobDialogController = new ApplyToJobController();
 		cancelController = new CancelController();
 		
 		container = getContentPane();

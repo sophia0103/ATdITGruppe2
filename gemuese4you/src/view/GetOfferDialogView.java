@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import controller.CancelController;
 import controller.Controller;
-import controller.GetOfferDialogController;
+import controller.BuyOfferController;
 import gemuese4you.Util;
 import model.Offer;
 
@@ -44,7 +44,7 @@ public class GetOfferDialogView extends JFrame implements View{
 		this.setBackground(Util.orange);
 		
 		buttonBuy = new JButton("Buy");
-		controller = new GetOfferDialogController();
+		controller = new BuyOfferController();
 		buttonBuy.addActionListener(e -> controller.startProcess(this));
 		
 		buttonCancel = new JButton("Cancel");

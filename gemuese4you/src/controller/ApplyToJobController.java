@@ -14,7 +14,7 @@ import view.View;
  * 		   Represents the logic of the dialog which opens when the user
  *         clicks a job to get the details.
  */
-public class GetJobDialogController implements Controller{
+public class ApplyToJobController implements Controller{
 	private View view;
 
 	@Override
