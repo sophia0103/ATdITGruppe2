@@ -138,15 +138,14 @@ public class AddJobDialogView extends JFrame implements DataView {
 
 	@Override
 	public String[] getData() {
-		String[] input = new String[8];
+		String[] input = new String[7];
 		input[0] = textFieldTitle.getText();
-		input[1] = LoginScreenView.userID;
+		input[1] = textFieldDistance.getText();
 		input[2] = textFieldDuration.getText();
-		input[3] = textFieldDistance.getText();
+		input[3] = textFieldSalary.getText();
 		input[4] = textFieldDate.getText();
-		input[5] = textFieldEmploymentType.getText();
-		input[6] = textFieldSalary.getText();
-		input[7] = textFieldDescription.getText();
+		input[5] = textFieldEmploymentType.getText();		
+		input[6] = textFieldDescription.getText();
 		return input;
 
 	}

@@ -66,13 +66,13 @@ public class AddJobDialogController implements DataController{
 	@Override
 	public <T> T createModel(String[] inputArray) {
 		String title = inputArray[0];
-		String creator = inputArray[1];
-		int distance = Integer.parseInt(inputArray[2]);
-		int duration = Integer.parseInt(inputArray[3]);
+		String creator = LoginScreenView.userID;
+		int distance = Integer.parseInt(inputArray[1]);
+		int duration = Integer.parseInt(inputArray[2]);
+		double salary = Double.parseDouble(inputArray[3]);
 		String exp_date = inputArray[4];
 		String employmentType = inputArray[5];
-		double salary = Double.parseDouble(inputArray[6]);
-		String description = inputArray[7];
+		String description = inputArray[6];
 		Job job = new Job(title, creator, distance, duration, exp_date, employmentType, salary, description);
 		// Auto increment in SQL doesn´t work properly, so we do it manually
 		return (T) job;
