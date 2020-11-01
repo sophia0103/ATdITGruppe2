@@ -21,12 +21,12 @@ import view.ShopScreenView;
  * @author I518189
  * Represents the Main Screen which includes the tabbed pane with each individual screen.
  */
-public class MainScreen extends JFrame {
+public class MainFrame extends JFrame {
 	private Container c;
 	public static JTabbedPane tabPane;
 	private JPanel pHome, pShop, pJob, pProfile;
 
-	public MainScreen() {
+	public MainFrame() {
 		c = getContentPane();
 		c.setLayout(new BorderLayout());
 		c.setBackground(Util.orange);

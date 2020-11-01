@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import gemuese4you.MainScreen;
+import gemuese4you.MainFrame;
 import view.HomeScreenView;
 import view.ProfileScreenView;
 import view.View;
@@ -25,6 +25,6 @@ public class SwitchToJobScreenController implements Controller {
 	}
 	@Override
 	public void startProcess(View view) {
-		MainScreen.tabPane.setSelectedIndex(2);		
+		MainFrame.tabPane.setSelectedIndex(2);		
 	}
 }

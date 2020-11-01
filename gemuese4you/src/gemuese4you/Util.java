@@ -46,6 +46,7 @@ public class Util {
 				JOptionPane.showMessageDialog(null, "Connection couldn´t be created. Check for the right port, host and password.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
+				System.exit(0);
 			}
 		}
 		return connection;

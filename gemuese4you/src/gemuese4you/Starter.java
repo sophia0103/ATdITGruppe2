@@ -2,7 +2,7 @@ package gemuese4you;
 
 import view.LoginScreenView;
 
-public class Main {
+public class Starter {
 
 	// start of the program
 		public static void main(String[] args) {

@@ -41,8 +41,8 @@ public class Offer {
 			String queryGetProductList = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
 					+ offerID;
 			ResultSet resultGetProductList = statement.executeQuery(queryGetProductList);
-			if(Util.checkDatabaseEntries("productID", "productsinoffer") && !Util.checkDatabaseEntries("offerID", "offers")
-					|| resultGetProductList == null) {
+			if((Util.checkDatabaseEntries("productID", "productsinoffer") && !Util.checkDatabaseEntries("offerID", "offers"))
+					|| (!Util.checkDatabaseEntries("productID", "productsinoffer") && Util.checkDatabaseEntries("offerID", "offers")) || resultGetProductList == null) {
 				throw new Exception();
 			}
 			while (!resultGetProductList.isAfterLast()) {

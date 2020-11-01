@@ -42,7 +42,7 @@ public abstract class Screen extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Component parent = MainScreen.tabPane.getParent();
+				Component parent = MainFrame.tabPane.getParent();
 				do {
 					parent = parent.getParent();
 				} while (!(parent instanceof JFrame));

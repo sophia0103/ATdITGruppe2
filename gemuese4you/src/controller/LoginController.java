@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import gemuese4you.MainScreen;
+import gemuese4you.MainFrame;
 import gemuese4you.Util;
 import model.UserCredentials;
 import view.DataView;
@@ -45,7 +45,7 @@ public class LoginController implements DataController{
 			if (result.next()) {
 				JOptionPane.showMessageDialog(null, "Welcome");
 				LoginScreenView.userID = userCredentials.getUsername();
-				MainScreen mainScreen = new MainScreen();
+				MainFrame mainScreen = new MainFrame();
 				((JFrame) view).dispose();
 			} else {
 				JOptionPane.showMessageDialog(null, "Username or password wrong!", "Error",

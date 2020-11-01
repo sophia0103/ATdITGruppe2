@@ -12,7 +12,7 @@ import javax.swing.*;
 import controller.Controller;
 import controller.LoginController;
 import controller.OpenRegisterViewController;
-import gemuese4you.MainScreen;
+import gemuese4you.MainFrame;
 import gemuese4you.Util;
 
 public class LoginScreenView extends JFrame implements DataView{
