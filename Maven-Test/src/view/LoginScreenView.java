@@ -82,7 +82,7 @@ public class LoginScreenView extends JFrame implements DataView{
 		container.add(panelFrame, BorderLayout.CENTER);
 		container.add(panelButtons, BorderLayout.SOUTH);
 
-		ImageIcon frameIcon = new ImageIcon("images/carrotMain.png");
+		ImageIcon frameIcon = new ImageIcon("Docmages/images/carrotMain.png");
 
 		this.setIconImage(frameIcon.getImage());
 		this.setVisible(true);

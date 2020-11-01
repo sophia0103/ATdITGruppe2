@@ -41,13 +41,13 @@ public class MainScreen extends JFrame {
 		pJob.setBackground(Util.orange);
 		pProfile.setBackground(Util.orange);
 
-		tabPane.addTab("Home", new ImageIcon("images/home.png"), pHome);
-		tabPane.addTab("Shop", new ImageIcon("images/shop.png"), pShop);
-		tabPane.addTab("Jobs", new ImageIcon("images/farmer.png"), pJob);
-		tabPane.addTab("Profile", new ImageIcon("images/job.png"), pProfile);
+		tabPane.addTab("Home", new ImageIcon("Docmages/images/home.png"), pHome);
+		tabPane.addTab("Shop", new ImageIcon("Docmages/images/shop.png"), pShop);
+		tabPane.addTab("Jobs", new ImageIcon("Docmages/images/farmer.png"), pJob);
+		tabPane.addTab("Profile", new ImageIcon("Docmages/images/job.png"), pProfile);
 		c.add(tabPane);
 
-		ImageIcon frameIcon = new ImageIcon("images/carrotMain.png");
+		ImageIcon frameIcon = new ImageIcon("Docmages/images/carrotMain.png");
 		this.setIconImage(frameIcon.getImage());
 
 		this.setVisible(true);

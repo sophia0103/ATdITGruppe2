@@ -67,7 +67,7 @@ public class GetOfferDialogView extends JFrame implements View{
 		panelFrame = new JPanel(new BorderLayout());
 		
 		JPanel panelImage = new JPanel();
-		JLabel labelImageProduct = new JLabel(new ImageIcon("images/"+offer.getProductList().get(0)+".png"));
+		JLabel labelImageProduct = new JLabel(new ImageIcon("Docmages/images/"+offer.getProductList().get(0)+".png"));
 		panelImage.add(labelImageProduct);
 		panelImage.setBackground(Util.orange);
 

@@ -41,7 +41,7 @@ public class Util {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		if (connection == null) {
 			Class.forName("org.mariadb.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Praktikum");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gemuese4you", "root", "root");
 		}
 		return connection;
 	}
@@ -88,7 +88,7 @@ public class Util {
 		JButton customButton = new JButton();
 		customButton = new JButton();
 		customButton.setBackground(orange);
-		customButton.setIcon(new ImageIcon("images/" + iconName + ".png"));
+		customButton.setIcon(new ImageIcon("Docmages/images/" + iconName + ".png"));
 		customButton.setMargin(new Insets(0, 0, 0, 0));
 		customButton.setBorder(null);
 		return customButton;

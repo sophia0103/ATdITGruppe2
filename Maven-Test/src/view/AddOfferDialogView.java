@@ -71,7 +71,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelProduct.setBackground(Util.orange);
 		labelProducts = new JLabel("Products: ");
 		labelProductInfo = new JLabel();
-		labelProductInfo.setIcon(new ImageIcon("images/info.png"));
+		labelProductInfo.setIcon(new ImageIcon("Docmages/images/info.png"));
 		labelProductInfo.setToolTipText("You can enter values as follows: apple,pear,...");
 		panelProduct.add(labelProducts);
 		panelProduct.add(labelProductInfo);
@@ -91,7 +91,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelDate.setBackground(Util.orange);
 		labelExpirationDate = new JLabel("Expiration Date: ");
 		labelDateInfo = new JLabel();
-		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
+		labelDateInfo.setIcon(new ImageIcon("Docmages/images/info.png"));
 		labelDateInfo
 				.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
 		panelDate.add(labelExpirationDate);
