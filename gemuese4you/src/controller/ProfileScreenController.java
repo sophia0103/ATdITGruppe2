@@ -12,14 +12,9 @@ public class ProfileScreenController implements Controller {
 
 	@Override
 	public void startProcess(View view) {
-		setView(view);
+		this.view = view;
 		JOptionPane.showMessageDialog(null,
 				"Are you sure you want to delete this offer? (Hasn´t been implemented yet).");
-	}
-
-	@Override
-	public void setView(View view) {
-		this.view = view;
 	}
 
 }

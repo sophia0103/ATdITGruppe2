@@ -40,7 +40,7 @@ public class ShopScreenController implements Controller{
 
 	@Override
 	public void startProcess(View view) {
-		setView(view);
+		this.view = view;
 			try {
 				showCurrentOffers();
 				SwingUtilities.updateComponentTreeUI((JPanel)view);
@@ -52,11 +52,6 @@ public class ShopScreenController implements Controller{
 			}
 		}
 	
-	@Override
-	public void setView(View view) {
-		this.view = view;
-	}
-
 	
 	/**
 	 * Displays existing offers.

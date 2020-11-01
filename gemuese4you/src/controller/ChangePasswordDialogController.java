@@ -22,7 +22,7 @@ public class ChangePasswordDialogController implements DataController {
 	@Override
 	public void startProcess(View view) {
 		String[] inputArray = ((DataView) view).getData();
-		setView(view);
+		this.view = view;
 		try {
 			if (Validator.isValidChangeUserCredentials(inputArray)) {
 				ChangePasswordCredentials changePasswordCredentials = createModel(inputArray);
@@ -39,11 +39,6 @@ public class ChangePasswordDialogController implements DataController {
 			e2.printStackTrace();
 		}
 
-	}
-
-	@Override
-	public void setView(View view) {
-		this.view = view;
 	}
 
 	@Override

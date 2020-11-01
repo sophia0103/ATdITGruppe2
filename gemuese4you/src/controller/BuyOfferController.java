@@ -12,13 +12,8 @@ public class BuyOfferController implements Controller {
 	private View view;
 
 	@Override
-	public void setView(View view) {
-		this.view = view;
-	}
-
-	@Override
 	public void startProcess(View view) {
-		setView(view);
+		this.view = view;
 		JOptionPane.showMessageDialog(null,
 				"By pushing this button you can add this offer to your shopping cart (function hasn´t been implemented yet).");
 	}

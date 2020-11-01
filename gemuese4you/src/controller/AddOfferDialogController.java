@@ -37,14 +37,9 @@ public class AddOfferDialogController implements DataController {
 	}
 
 	@Override
-	public void setView(View view) {
-		this.view = view;
-	}
-
-	@Override
 	public void startProcess(View view){
 		String[] inputArray = ((DataView) view).getData();
-		setView(view);
+		this.view = view;
 		if (Validator.isValidOffer(inputArray)) {
 			try {
 				Offer offer = createModel(inputArray);
