@@ -69,20 +69,27 @@ public class Validator {
 	}
 	
 	public static boolean isValidJob(String[] inputArray) {
-		if (getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])
+		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
+				|| getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])
+				|| getValidator().isInputEmpty(inputArray[4]) || getValidator().isInputEmpty(inputArray[5]) 
 				|| getValidator().isInputEmpty(inputArray[6])) {
 			return false;
 		}
 		//represents int distance
-		if (!getValidator().isInputNumeric(inputArray[2])) {
+		if (!getValidator().isInputNumeric(inputArray[1])) {
 			return false;
 		}
 		//represents int duration
+		if (!getValidator().isInputNumeric(inputArray[2])) {
+			return false;
+		}
+		
+		//represents int salary
 		if (!getValidator().isInputNumeric(inputArray[3])) {
 			return false;
 		}
-		//represents int salary
-		if (!getValidator().isInputNumeric(inputArray[6])) {
+		//represents String date
+		if (!getValidator().isInputString(inputArray[4])) {
 			return false;
 		}
 		return true;
