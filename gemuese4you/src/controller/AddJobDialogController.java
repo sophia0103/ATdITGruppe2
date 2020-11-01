@@ -22,19 +22,12 @@ import view.View;
  * Represents the logic of a dialog which opens when the user wants to create a job offer
  */
 public class AddJobDialogController implements DataController{
-	private Connection connection;
 	private View view;
-	
-	public AddJobDialogController() {
-
-		connection = Util.getConnection();
-
-	}
 	
 	@Override
 	public void startProcess(View view) {
 		
-		setView(view);
+		this.view = view;
 		
 		String[] data =  ((DataView) view).getData();
 		if (Validator.isValidJob(data)) {
@@ -59,7 +52,7 @@ public class AddJobDialogController implements DataController{
 	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addJob(Job job) throws SQLException {
-		Statement statementAddOffer = connection.createStatement();
+		Statement statementAddOffer = Util.getConnection().createStatement();
 		// Auto increment in SQL doesn´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
 
@@ -67,12 +60,6 @@ public class AddJobDialogController implements DataController{
 				"','" + job.getCreator() + "', '" + job.getEmploymentType() + "'," + job.getSalary() + ",'"
 				+ job.getDescription() + "');";
 		statementAddOffer.execute(queryAddOffer);
-	}
-	
-	
-	@Override
-	public void setView(View view) {
-		this.view = view;
 	}
 
 

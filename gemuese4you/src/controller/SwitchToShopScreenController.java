@@ -16,14 +16,7 @@ import view.View;
  *Represents the logic behind the profile Screen UI.
  */
 public class SwitchToShopScreenController implements Controller {
-	private View view;
-	
-	
-	@Override
-	public void setView(View view) {
-		this.view = view;
-		
-	}
+
 	@Override
 	public void startProcess(View view) {
 		MainFrame.tabPane.setSelectedIndex(1);

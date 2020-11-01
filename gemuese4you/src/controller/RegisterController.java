@@ -14,11 +14,6 @@ import view.View;
 
 public class RegisterController implements DataController{
 	private View view;
-	
-	@Override
-	public void setView(View view) {
-		this.view = view;
-	}
 
 	@Override
 	public void startProcess(View view) {

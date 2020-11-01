@@ -18,13 +18,8 @@ public class ApplyToJobController implements Controller{
 	private View view;
 
 	@Override
-	public void setView(View view) {
-		this.view = view;
-	}
-
-	@Override
 	public void startProcess(View view) {
-		setView(view);
+		this.view = view;
 		JOptionPane.showMessageDialog(null,
 				"By pushing this button you can apply to this job (function hasn´t been implemented yet).");
 	}

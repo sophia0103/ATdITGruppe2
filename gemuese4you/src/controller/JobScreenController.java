@@ -38,15 +38,11 @@ import view.View;
 public class JobScreenController implements Controller{
 	private View view;
 	private ArrayList<Job> jobs;
-	private Connection connection;
 	private JPanel jobScreenContent;
 	
 	public JobScreenController() {
-		this.view = view;
 		jobScreenContent = new JPanel();
 		jobs = new ArrayList<Job>();
-		
-			connection = Util.getConnection();
 	}
 	
 	// display existing jobs
@@ -84,7 +80,7 @@ public class JobScreenController implements Controller{
 		jobs.clear();
 		try {
 			String today = Util.returnDateAsString();
-			Statement statement = connection.createStatement();
+			Statement statement = Util.getConnection().createStatement();
 			String queryOffers = "SELECT * FROM jobs WHERE exp_date > '" + today + "' ORDER BY distance";
 			ResultSet resultJobs = statement.executeQuery(queryOffers);
 			while (!resultJobs.isAfterLast() && Util.checkDatabaseEntries("title", "jobs") && resultJobs!=null) {
@@ -150,13 +146,8 @@ public class JobScreenController implements Controller{
 	}
 
 	@Override
-	public void setView(View view) {
-		this.view = view;		
-	}
-
-	@Override
 	public void startProcess(View view) {
-		setView(view);
+		this.view = view;
 		showCurrentJobs();
 		SwingUtilities.updateComponentTreeUI((JPanel)view);		
 	}
