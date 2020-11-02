@@ -1,18 +1,12 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.swing.*;
 
 import controller.Controller;
 import controller.LoginController;
 import controller.OpenRegisterViewController;
-import gemuese4you.MainFrame;
 import gemuese4you.Util;
 
 public class LoginScreenView extends JFrame implements DataView{

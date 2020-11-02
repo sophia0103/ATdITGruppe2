@@ -1,16 +1,11 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -27,10 +22,11 @@ public class RegisterView extends JFrame implements DataView{
 	Container container;
 	static Connection connection;
 
-	private JTextField textFieldUser, textFieldIsFarmer;
+	private JTextField textFieldUser;
 	private JPasswordField passwordFieldPassword, passwordFieldRePassword;
 	private JLabel labelUser, labelPassword, labelRePassword, labelIsFarmer;
 	private JPanel panelRegister, panelButton;
+	private JCheckBox checkBoxIsFarmer;
 	private JButton buttonCancel, buttonRegister;
 	private Controller registerCancelController;
 	private Controller registerController;
@@ -46,7 +42,7 @@ public class RegisterView extends JFrame implements DataView{
 		textFieldUser = new JTextField();
 		passwordFieldPassword = new JPasswordField();
 		passwordFieldRePassword = new JPasswordField();
-		textFieldIsFarmer = new JTextField();
+		checkBoxIsFarmer = new JCheckBox();
 		labelUser = new JLabel("Username: ");
 		labelPassword = new JLabel("Password: ");
 		labelRePassword = new JLabel("Confirm Password: ");
@@ -59,7 +55,7 @@ public class RegisterView extends JFrame implements DataView{
 		panelRegister.add(labelRePassword);
 		panelRegister.add(passwordFieldRePassword);
 		panelRegister.add(labelIsFarmer);
-		panelRegister.add(textFieldIsFarmer);
+		panelRegister.add(checkBoxIsFarmer);
 
 		panelRegister.setBackground(Util.orange);
 		panelButton.setBackground(Util.orange);
@@ -94,8 +90,8 @@ public class RegisterView extends JFrame implements DataView{
 		return textFieldUser;
 	}
 
-	public JTextField getTextFieldIsFarmer() {
-		return textFieldIsFarmer;
+	public JCheckBox getCheckBoxFieldIsFarmer() {
+		return checkBoxIsFarmer;
 	}
 
 	public JPasswordField getPasswordFieldPassword() {
@@ -111,13 +107,12 @@ public class RegisterView extends JFrame implements DataView{
 		String[] data = new String[4];
 		data[0] = textFieldUser.getText();
 		data[1] = String.valueOf(passwordFieldPassword.getPassword());
-		String isFarmer = textFieldIsFarmer.getText();
-		if (isFarmer.equals("Yes")) {
-			data[2] = "1";
-		} else {
-			data[2] = "0";
-		}
-		data[3] = String.valueOf(passwordFieldRePassword.getPassword());
+		if (checkBoxIsFarmer.isSelected()) 
+			data[3] = "1";
+		else
+			data[3] = "0";
+		
+		data[2] = String.valueOf(passwordFieldRePassword.getPassword());
 		return data;
 	}
 

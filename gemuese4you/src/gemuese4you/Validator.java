@@ -117,4 +117,31 @@ public class Validator {
 		return true;
 	}
 
+	public static boolean isValidUserLogin(String[] inputArray) {
+		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public static boolean isValidRegistration(String[] inputArray) {
+		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
+				|| getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])) {
+			return false;
+		}
+		if (Util.checkUsername(inputArray[0])) {
+			JOptionPane.showMessageDialog(null, "Username is already existing, please try another one.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!inputArray[1].equals(inputArray[2])) {
+			JOptionPane.showMessageDialog(null, "Please enter the same values for the password.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		return true;
+	}
+	
 }

@@ -161,4 +161,26 @@ public class Util {
 			return null;
 		}
 	}
+	
+	public static boolean checkUsername(String username) {
+		try {
+		PreparedStatement statement;
+		ResultSet result;
+		boolean checkUser = false;
+
+		String query = "SELECT * FROM users WHERE UserID = ?";
+		
+			statement = Util.getConnection().prepareStatement(query);
+			statement.setString(1, username);
+			result = statement.executeQuery();
+			if (result.next()) {
+				checkUser = true;
+			}
+		return checkUser;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
