@@ -4,7 +4,6 @@ M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\AddJobDialogCont
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\model\Offer.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\View.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\model\Job.java
-M:\eclipse\workspace\ATdITGruppe2Maven\src\test\java\tests\isValidUserCredentialsTest.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\GetJobDialogView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\HomeScreenView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\RegisterView.java
@@ -21,14 +20,12 @@ M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\OpenAddJobDialog
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\DataController.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\gemuese4you\MainFrame.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\OpenRegisterViewController.java
-M:\eclipse\workspace\ATdITGruppe2Maven\src\test\java\tests\isValidJobTest.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\RegisterController.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\SwitchToJobScreenController.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\ShopScreenView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\AddJobDialogView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\ProfileScreenView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\ChangePasswordDialogView.java
-M:\eclipse\workspace\ATdITGruppe2Maven\src\test\java\tests\isValidOfferTest.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\gemuese4you\Starter.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\Controller.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\ShopScreenController.java
@@ -39,7 +36,6 @@ M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\model\ChangePasswordCredent
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\LoginScreenView.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\model\UserCredentials.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\model\User.java
-M:\eclipse\workspace\ATdITGruppe2Maven\src\test\java\tests\IsValidRegistrationTest.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\BuyOfferController.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\controller\ProfileScreenController.java
 M:\eclipse\workspace\ATdITGruppe2Maven\src\main\java\view\DataView.java

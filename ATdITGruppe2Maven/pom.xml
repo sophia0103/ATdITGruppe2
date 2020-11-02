@@ -49,13 +49,12 @@
 	</dependencies>
 
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<release>13</release>
 				</configuration>
 			</plugin>
 			<plugin>
