@@ -17,10 +17,9 @@ import gemuese4you.Screen;
 import gemuese4you.Util;
 
 /**
- * @author I518189
- * Represents the UI of the Profile Screen.
+ * @author I518189 Represents the UI of the Profile Screen.
  */
-public class ProfileScreenView extends Screen implements View{
+public class ProfileScreenView extends Screen implements View {
 	private JButton buttonChangePassword;
 	private JButton buttonDelete;
 	private JLabel labelUserID;
@@ -40,7 +39,7 @@ public class ProfileScreenView extends Screen implements View{
 		this.setLayout(new BorderLayout());
 		panelTitlebar = getTitleBar("Profile");
 		panelTitlebar.setBackground(Util.orange);
-		
+
 		panelUserInfo = getUserInfoPanel();
 
 		labelOffer = new JLabel("These are your current offers: ");

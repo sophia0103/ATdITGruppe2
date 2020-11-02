@@ -94,7 +94,7 @@ public class Util {
 		JButton customButton = new JButton();
 		customButton = new JButton();
 		customButton.setBackground(orange);
-		customButton.setIcon(new ImageIcon("images/" + iconName + ".png"));
+		customButton.setIcon(new ImageIcon("src/main/resources/" + iconName + ".png"));
 		customButton.setMargin(new Insets(0, 0, 0, 0));
 		customButton.setBorder(null);
 		return customButton;

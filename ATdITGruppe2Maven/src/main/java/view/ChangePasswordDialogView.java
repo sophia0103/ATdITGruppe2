@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
@@ -15,13 +14,12 @@ import controller.CancelController;
 import controller.ChangePasswordDialogController;
 import controller.Controller;
 import gemuese4you.Util;
-import model.ChangePasswordCredentials;
 
 /**
- * @author I518189
- * Represents the UI of the dialog which opens when the user wants to change the password.
+ * @author I518189 Represents the UI of the dialog which opens when the user
+ *         wants to change the password.
  */
-public class ChangePasswordDialogView extends JFrame implements DataView{
+public class ChangePasswordDialogView extends JFrame implements DataView {
 	private Container container;
 	private JLabel labelOldPassword;
 	private JLabel labelNewPassword;
@@ -38,7 +36,7 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 
 	public ChangePasswordDialogView() {
 		cancelController = new CancelController();
-		
+
 		container = getContentPane();
 		container.setLayout(new BorderLayout());
 
@@ -82,7 +80,6 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 		this.setTitle("Change your Password");
 	}
 
-
 	@Override
 	public String[] getData() {
 		String[] inputArray = new String[3];
@@ -92,5 +89,4 @@ public class ChangePasswordDialogView extends JFrame implements DataView{
 		return inputArray;
 	}
 
-	
 }

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import gemuese4you.Util;
 
 /**
@@ -52,6 +54,7 @@ public class Offer {
 			}
 			return productList;
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "SQL statement failed.", "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			return null;
 		}

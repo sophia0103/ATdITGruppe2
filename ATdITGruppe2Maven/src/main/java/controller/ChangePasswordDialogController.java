@@ -35,7 +35,7 @@ public class ChangePasswordDialogController implements DataController {
 				((ChangePasswordDialogView) view).dispose();
 			}
 		} catch (Exception e2) {
-			
+			JOptionPane.showMessageDialog(null, "SQL statement failed.", "Error", JOptionPane.ERROR_MESSAGE);
 			e2.printStackTrace();
 		}
 

@@ -1,0 +1,4 @@
+tests\isValidOfferTest.class
+tests\isValidJobTest.class
+tests\isValidUserCredentialsTest.class
+tests\IsValidRegistrationTest.class
