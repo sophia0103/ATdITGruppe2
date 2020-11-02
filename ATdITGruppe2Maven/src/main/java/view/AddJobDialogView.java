@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import controller.AddJobDialogController;
 import controller.CancelController;
 import controller.Controller;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Job;
 
@@ -49,45 +50,45 @@ public class AddJobDialogView extends JFrame implements DataView {
 		textFieldSalary = new JTextField();
 		textFieldDescription = new JTextField();
 
-		labelTitle = new JLabel("Title: ");
+		labelTitle = new JLabel(Starter.content.getString("title"));
 
-		labelDistance = new JLabel("Distance: ");
+		labelDistance = new JLabel(Starter.content.getString("distance"));
 		panelDistance = new JPanel(new BorderLayout());
-		labelDistanceMeters = new JLabel(" meters   ");
+		labelDistanceMeters = new JLabel(Starter.content.getString("meters"));
 		panelDistance.add(textFieldDistance, BorderLayout.CENTER);
 		panelDistance.add(labelDistanceMeters, BorderLayout.EAST);
 		panelDistance.setBackground(Util.orange);
 
-		labelDuration = new JLabel("Duration:");
-		labelDurationMonths = new JLabel("months   ");
+		labelDuration = new JLabel(Starter.content.getString("duration"));
+		labelDurationMonths = new JLabel(Starter.content.getString("months"));
 		panelDuration = new JPanel(new BorderLayout());
 		panelDuration.add(textFieldDuration, BorderLayout.CENTER);
 		panelDuration.add(labelDurationMonths, BorderLayout.EAST);
 		panelDuration.setBackground(Util.orange);
 
-		labelSalary = new JLabel("Salary: ");
+		labelSalary = new JLabel(Starter.content.getString("wage"));
 		panelSalary = new JPanel(new BorderLayout());
-		labelSalaryEuroPerHour = new JLabel(" €    ");
+		labelSalaryEuroPerHour = new JLabel(Starter.content.getString("euro"));
 		panelSalary.add(textFieldSalary, BorderLayout.CENTER);
 		panelSalary.add(labelSalaryEuroPerHour, BorderLayout.EAST);
 		panelSalary.setBackground(Util.orange);
 
 		panelDate = new JPanel(new GridLayout(1, 5));
 		panelDate.setBackground(Util.orange);
-		labelDate = new JLabel("Expiration Date: ");
+		labelDate = new JLabel(Starter.content.getString("applicationDeadline"));
 		labelDateInfo = new JLabel();
 		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
 		labelDateInfo
-				.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
+				.setToolTipText(Starter.content.getString("tooltipJob"));
 		panelDate.add(labelDate);
 		panelDate.add(labelDateInfo);
 		panelDate.add(getEmptyLabel());
 		panelDate.add(getEmptyLabel());
 		panelDate.add(getEmptyLabel());
 
-		labelEmploymentType = new JLabel("Employment Type: ");
+		labelEmploymentType = new JLabel(Starter.content.getString("employmentType"));
 
-		labelDescription = new JLabel("Description: ");
+		labelDescription = new JLabel(Starter.content.getString("description"));
 
 		panelInput.add(labelTitle);
 		panelInput.add(textFieldTitle);
@@ -121,7 +122,7 @@ public class AddJobDialogView extends JFrame implements DataView {
 		container.add(panelInput, BorderLayout.CENTER);
 		container.add(panelButton, BorderLayout.SOUTH);
 		this.setVisible(true);
-		this.setTitle("Create a job offer");
+		this.setTitle(Starter.content.getString("titleAddJob"));
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 

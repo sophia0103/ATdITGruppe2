@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import gemuese4you.Validator;
 import model.User;
@@ -44,7 +45,7 @@ public class RegisterController implements DataController {
 		statement.setInt(3, user.getIsFarmer());
 
 		if (statement.executeUpdate() > 0) {
-			JOptionPane.showMessageDialog(null, "New User Added");
+			JOptionPane.showMessageDialog(null, Starter.content.getString("newUserAdded"));
 			LoginScreenView log = new LoginScreenView();
 		}
 

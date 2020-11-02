@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import view.GetJobDialogView;
 import view.GetOfferDialogView;
 import view.View;
@@ -21,7 +22,7 @@ public class ApplyToJobController implements Controller{
 	public void startProcess(View view) {
 		this.view = view;
 		JOptionPane.showMessageDialog(null,
-				"By pushing this button you can apply to this job (function hasn´t been implemented yet).");
+				Starter.content.getString("passwordChange"));
 	}
 
 }

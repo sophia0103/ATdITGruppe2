@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Job;
 import view.AddJobDialogView;
@@ -58,7 +59,7 @@ public class JobScreenController implements Controller{
 		jobScreenContent.setLayout(new BoxLayout(jobScreenContent, BoxLayout.Y_AXIS));
 		jobScreenContent.setBackground(Util.orange);
 		
-		JLabel headlineJobs = createHeadline("Neueste Stellenangebote in deiner Naehe:");
+		JLabel headlineJobs = createHeadline(Starter.content.getString("jobScreenHeadline"));
 		jobScreenContent.add(headlineJobs);
 		jobScreenContent.setBorder(BorderFactory.createEmptyBorder(10, 30, 5, 30));
 		
@@ -113,12 +114,12 @@ public class JobScreenController implements Controller{
 		JLabel title = new JLabel(job.getTitle());
 		title.setFont(new Font("Arail", Font.BOLD, 18));
 		button.add(title);
-		button.add(new JLabel("Ersteller: " + job.getCreator()));
-		button.add(new JLabel("Dauer: " + job.getDuration()));
-		button.add(new JLabel("Entfernung: " + job.getDistance()));
-		button.add(new JLabel("Bewerberschluss: " + job.getExpDate()));
-		button.add(new JLabel("Stundenlohn: " + job.getSalary()));
-		button.add(new JLabel("Beschreibung: " + job.getDescription()));
+		button.add(new JLabel(Starter.content.getString("creator") + job.getCreator()));
+		button.add(new JLabel(Starter.content.getString("duration") + job.getDuration()));
+		button.add(new JLabel(Starter.content.getString("distance") + job.getDistance()));
+		button.add(new JLabel(Starter.content.getString("applicationDeadline") + job.getExpDate()));
+		button.add(new JLabel(Starter.content.getString("wage") + job.getSalary()));
+		button.add(new JLabel(Starter.content.getString("description") + job.getDescription()));
 		button.setBackground(new Color(255, 242, 229));
 		button.setOpaque(true);
 		button.setPreferredSize(new Dimension(400,135));

@@ -1,9 +1,11 @@
 package controller;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import gemuese4you.Validator;
 import model.ChangePasswordCredentials;
@@ -31,12 +33,12 @@ public class ChangePasswordDialogController implements DataController {
 						+ changePasswordCredentials.getNewPasswordRepeat() + "' WHERE userID ='"
 						+ LoginScreenView.userID + "'";
 				statement.execute(queryChangePassword);
-				JOptionPane.showMessageDialog(null, "Password changed.");
+				JOptionPane.showMessageDialog(null, Starter.content.getString("passwordChange"));
 				((ChangePasswordDialogView) view).dispose();
 			}
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "SQL statement failed.", "Error", JOptionPane.ERROR_MESSAGE);
-			e2.printStackTrace();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"), "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 
 	}

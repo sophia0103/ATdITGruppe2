@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import gemuese4you.MainFrame;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import gemuese4you.Validator;
 import model.UserCredentials;
@@ -27,16 +28,16 @@ public class LoginController implements DataController {
 			try {
 				UserCredentials userCredentials = createModel(data);
 				if(userLogin(userCredentials)) {
-					JOptionPane.showMessageDialog(null, "Welcome");
+					JOptionPane.showMessageDialog(null, Starter.content.getString("welcome"));
 					LoginScreenView.userID = userCredentials.getUsername();
 					MainFrame mainScreen = new MainFrame();
 					((JFrame) view).dispose();
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Username or password wrong!.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, Starter.content.getString("loginCredentialsWrong"), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (SQLException | ClassNotFoundException exception) {
-				JOptionPane.showMessageDialog(null, "SQL statement failed.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"), "Error", JOptionPane.ERROR_MESSAGE);
 				exception.printStackTrace();
 			}
 	}

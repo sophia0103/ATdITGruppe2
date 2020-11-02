@@ -2,6 +2,7 @@ package controller;
 
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import view.View;
 
 /**
@@ -14,7 +15,7 @@ public class ProfileScreenController implements Controller {
 	public void startProcess(View view) {
 		this.view = view;
 		JOptionPane.showMessageDialog(null,
-				"Are you sure you want to delete this offer? (Hasn´t been implemented yet).");
+				Starter.content.getString("deleteOffer"));
 	}
 
 }

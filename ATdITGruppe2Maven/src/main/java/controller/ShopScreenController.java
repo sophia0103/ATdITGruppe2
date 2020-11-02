@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Offer;
 import view.GetOfferDialogView;
@@ -43,7 +44,7 @@ public class ShopScreenController implements Controller {
 			SwingUtilities.updateComponentTreeUI((JPanel) view);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"It seems as if there are no existing products in your database table 'productsinoffer'. Check for empty values.",
+					Starter.content.getString("productsDataBaseError"),
 					"Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(0);
@@ -93,7 +94,7 @@ public class ShopScreenController implements Controller {
 				resultOffers.next();
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Something went wrong, please check the connection and try again",
+			JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"),
 					"Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
@@ -118,8 +119,7 @@ public class ShopScreenController implements Controller {
 					new GetOfferDialogView(offer);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null,
-							"It seems as if there are no existing products in your database table 'productsinoffer'. Check for empty values.",
-							"Error", JOptionPane.ERROR_MESSAGE);
+							Starter.content.getString("productsDataBaseError"), "Error", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 					System.exit(0);
 				}

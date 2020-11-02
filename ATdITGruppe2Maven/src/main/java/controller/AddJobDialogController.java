@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import gemuese4you.Validator;
 import model.Job;
@@ -34,16 +35,16 @@ public class AddJobDialogController implements DataController{
 			Job job = createModel(data);
 			try {
 				addJob(job);
-				JOptionPane.showMessageDialog(null, "Job offer was successfully created! :)");
+				JOptionPane.showMessageDialog(null, Starter.content.getString("jobCreated"));
 				((AddJobDialogView)view).dispose();
 			} catch (SQLException sqlException) {
 				// Can´t check for wrong data type in inputIsValid method
-				JOptionPane.showMessageDialog(null, "Check if your input complies with formatting requirements and if the job offer already exists", "Error",
+				JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"), "Error",
 						JOptionPane.ERROR_MESSAGE);
 				sqlException.printStackTrace();
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "Unable to create job offer - Check for wrong data type", "Error",
+			JOptionPane.showMessageDialog(null, Starter.content.getString("unableToCreateJob"), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
