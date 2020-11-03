@@ -72,7 +72,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelProduct.setBackground(Util.orange);
 		labelProducts = new JLabel(Starter.content.getString("products"));
 		labelProductInfo = new JLabel();
-		labelProductInfo.setIcon(new ImageIcon("images/info.png"));
+		labelProductInfo.setIcon(new ImageIcon("src/main/resources/info.png"));
 		labelProductInfo.setToolTipText(Starter.content.getString("offerToolTipProduct"));
 		panelProduct.add(labelProducts);
 		panelProduct.add(labelProductInfo);
@@ -92,7 +92,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelDate.setBackground(Util.orange);
 		labelExpirationDate = new JLabel(Starter.content.getString("expDate"));
 		labelDateInfo = new JLabel();
-		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
+		labelDateInfo.setIcon(new ImageIcon("src/main/resources/info.png"));
 		labelDateInfo
 				.setToolTipText(Starter.content.getString("offerToolTipDate"));
 		panelDate.add(labelExpirationDate);
