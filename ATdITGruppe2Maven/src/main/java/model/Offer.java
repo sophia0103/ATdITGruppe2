@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -19,7 +20,6 @@ public class Offer {
 	private double price;
 	private String userID, expDate;
 	private ArrayList<String> productList;
-	private static Connection connection;
 
 	public Offer(int offerID, String userID, int distance, String expDate, double price) {
 		this.offerID = offerID;
@@ -27,58 +27,40 @@ public class Offer {
 		this.price = price;
 		this.distance = distance;
 		this.expDate = expDate;
-
-			connection = Util.getConnection();
-
 	}
 
 	/**
 	 * @return Returns a ArrayList with all the products in an offer as Strings.
 	 * @throws Exception 
 	 */
-	public ArrayList<String> getProductList() throws Exception {
-		try {
-			ArrayList<String> productList = new ArrayList<String>();
-			Statement statement = connection.createStatement();
-			String queryGetProductList = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
-					+ offerID;
-			ResultSet resultGetProductList = statement.executeQuery(queryGetProductList);
-			if((Util.checkDatabaseEntries("productID", "productsinoffer") && !Util.checkDatabaseEntries("offerID", "offers"))
-					|| (!Util.checkDatabaseEntries("productID", "productsinoffer") && Util.checkDatabaseEntries("offerID", "offers")) || resultGetProductList == null) {
-				throw new Exception();
-			}
-			while (!resultGetProductList.isAfterLast()) {
-				if (resultGetProductList.next()) {
-					productList.add(resultGetProductList.getString(1));
-				}
-			}
-			return productList;
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "SQL statement failed.", "Error", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-			return null;
+	public ArrayList<String> getProductList() throws Exception, SQLException {
+		ArrayList<String> productList = new ArrayList<String>();
+		Statement statement = Util.getConnection().createStatement();
+		String queryGetProductList = "SELECT productName FROM products JOIN productsinoffer WHERE productsinoffer.productID = products.productID AND offerID ="
+				+ offerID;
+		ResultSet resultGetProductList = statement.executeQuery(queryGetProductList);
+		if((Util.checkDatabaseEntries("productID", "productsinoffer") && !Util.checkDatabaseEntries("offerID", "offers"))
+				|| (!Util.checkDatabaseEntries("productID", "productsinoffer") && Util.checkDatabaseEntries("offerID", "offers")) || resultGetProductList == null) {
+			throw new Exception(Starter.content.getString("dataBaseMissingEntriesError"));
 		}
-
+		while (!resultGetProductList.isAfterLast()) {
+			if (resultGetProductList.next()) {
+				productList.add(resultGetProductList.getString(1));
+			}
+		}
+		return productList;
 	}
 
 	/**
 	 * @return Returns the ID/number of the last offer in the database table offers.
 	 */
-	public static int getLastOfferID() {
+	public static int getLastOfferID() throws SQLException{
 		int lastOfferID;
-		try {
-			if (connection == null) {
-				connection = Util.getConnection();
-			}
-			Statement statement = connection.createStatement();
-			String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
-			ResultSet resultLastOfferID = statement.executeQuery(lastOfferIDQuery);
-			resultLastOfferID.next();
-			lastOfferID = resultLastOfferID.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return -1;
-		}
+		Statement statement = Util.getConnection().createStatement();
+		String lastOfferIDQuery = "SELECT COUNT(offerID) FROM offers";
+		ResultSet resultLastOfferID = statement.executeQuery(lastOfferIDQuery);
+		resultLastOfferID.next();
+		lastOfferID = resultLastOfferID.getInt(1);
 		return lastOfferID;
 	}
 
