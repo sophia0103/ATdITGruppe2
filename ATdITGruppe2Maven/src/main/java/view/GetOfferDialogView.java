@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import controller.BuyOfferController;
 import controller.CancelController;
 import controller.Controller;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Offer;
 
@@ -43,11 +44,11 @@ public class GetOfferDialogView extends JFrame implements View {
 		container = getContentPane();
 		this.setBackground(Util.orange);
 
-		buttonBuy = new JButton("Buy");
+		buttonBuy = new JButton(Starter.content.getString("buy"));
 		controller = new BuyOfferController();
 		buttonBuy.addActionListener(e -> controller.startProcess(this));
 
-		buttonCancel = new JButton("Cancel");
+		buttonCancel = new JButton(Starter.content.getString("cancel"));
 		cancelController = new CancelController();
 		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
@@ -58,11 +59,11 @@ public class GetOfferDialogView extends JFrame implements View {
 		panelDescription = new JPanel(new GridLayout(5, 1));
 		panelDescription.setBackground(Util.orange);
 
-		labelOfferTitle = new JLabel(offer.getUserID() + "´s offer: ");
+		labelOfferTitle = new JLabel(offer.getUserID() + Starter.content.getString("creatorsOffer"));
 		labelOfferTitle.setFont(new Font("Verdana", Font.BOLD, 20));
-		labelExpirationDate = new JLabel("Offer expires on: " + offer.getExpDate());
-		labelPrice = new JLabel("Price: " + offer.getPrice() + "€");
-		labelDistance = new JLabel("Distance: " + offer.getDistance() + " meters");
+		labelExpirationDate = new JLabel(Starter.content.getString("offerExpires") + offer.getExpDate());
+		labelPrice = new JLabel(Starter.content.getString("price") + offer.getPrice() + Starter.content.getString("euro"));
+		labelDistance = new JLabel(Starter.content.getString("distance") + offer.getDistance() + Starter.content.getString("meters"));
 
 		panelFrame = new JPanel(new BorderLayout());
 
@@ -88,7 +89,7 @@ public class GetOfferDialogView extends JFrame implements View {
 		container.add(panelFrame);
 
 		this.setVisible(true);
-		this.setTitle("Details");
+		this.setTitle(Starter.content.getString("getDialogTitle"));
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 	}
@@ -107,7 +108,7 @@ public class GetOfferDialogView extends JFrame implements View {
 			products = products + offer.getProductList().get(i) + ", ";
 		}
 		products = products.substring(0, products.length() - 2);
-		labelProducts = new JLabel("Products included: " + products);
+		labelProducts = new JLabel(Starter.content.getString("productsIncluded") + products);
 	}
 
 }

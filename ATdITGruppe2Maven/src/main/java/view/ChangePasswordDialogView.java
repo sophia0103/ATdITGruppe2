@@ -13,6 +13,7 @@ import javax.swing.JPasswordField;
 import controller.CancelController;
 import controller.ChangePasswordDialogController;
 import controller.Controller;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -42,11 +43,11 @@ public class ChangePasswordDialogView extends JFrame implements DataView {
 
 		panelInputFields = new JPanel(new GridLayout(6, 1));
 
-		labelOldPassword = new JLabel("Enter your old password: ");
+		labelOldPassword = new JLabel(Starter.content.getString("oldPassword"));
 		passwordFieldOldPassword = new JPasswordField();
-		labelNewPassword = new JLabel("Enter your new password: ");
+		labelNewPassword = new JLabel(Starter.content.getString("newPassword"));
 		passwordFieldNewPassword = new JPasswordField();
-		labelNewPasswordRepeat = new JLabel("Repeat your new password: ");
+		labelNewPasswordRepeat = new JLabel(Starter.content.getString("repeatPassword"));
 		passwordFieldNewPasswordRepeat = new JPasswordField();
 
 		panelInputFields.add(labelOldPassword);
@@ -60,11 +61,11 @@ public class ChangePasswordDialogView extends JFrame implements DataView {
 
 		panelButtons = new JPanel(new GridLayout(1, 2));
 
-		buttonSave = new JButton("Save");
+		buttonSave = new JButton(Starter.content.getString("save"));
 		controller = new ChangePasswordDialogController();
 		buttonSave.addActionListener(e -> controller.startProcess(this));
 
-		buttonCancel = new JButton("Cancel");
+		buttonCancel = new JButton(Starter.content.getString("cancel"));
 		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
 		panelButtons.add(buttonSave);
@@ -77,7 +78,7 @@ public class ChangePasswordDialogView extends JFrame implements DataView {
 		this.setLocationRelativeTo(null);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Change your Password");
+		this.setTitle(Starter.content.getString("changePwTitle"));
 	}
 
 	@Override

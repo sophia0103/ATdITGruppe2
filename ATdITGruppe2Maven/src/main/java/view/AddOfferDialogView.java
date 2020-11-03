@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import controller.AddOfferDialogController;
 import controller.CancelController;
 import controller.Controller;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -60,19 +61,19 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		textFieldPrice = new JTextField();
 		textFieldDate = new JTextField();
 
-		labelDistance = new JLabel("Distance: ");
+		labelDistance = new JLabel(Starter.content.getString("distance"));
 		panelDistance = new JPanel(new BorderLayout());
-		labelDistanceMeters = new JLabel(" meters   ");
+		labelDistanceMeters = new JLabel(Starter.content.getString("meters"));
 		panelDistance.add(textFieldDistance, BorderLayout.CENTER);
 		panelDistance.add(labelDistanceMeters, BorderLayout.EAST);
 		panelDistance.setBackground(Util.orange);
 
 		panelProduct = new JPanel(new GridLayout(1, 6));
 		panelProduct.setBackground(Util.orange);
-		labelProducts = new JLabel("Products: ");
+		labelProducts = new JLabel(Starter.content.getString("products"));
 		labelProductInfo = new JLabel();
 		labelProductInfo.setIcon(new ImageIcon("images/info.png"));
-		labelProductInfo.setToolTipText("You can enter values as follows: apple,pear,...");
+		labelProductInfo.setToolTipText(Starter.content.getString("offerToolTipProduct"));
 		panelProduct.add(labelProducts);
 		panelProduct.add(labelProductInfo);
 		panelProduct.add(getEmptyLabel());
@@ -80,20 +81,20 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelProduct.add(getEmptyLabel());
 		panelProduct.add(getEmptyLabel());
 
-		labelPrice = new JLabel("Price: ");
+		labelPrice = new JLabel(Starter.content.getString("price"));
 		panelPrice = new JPanel(new BorderLayout());
-		labelPriceEuro = new JLabel(" €    ");
+		labelPriceEuro = new JLabel(Starter.content.getString("euro"));
 		panelPrice.add(textFieldPrice, BorderLayout.CENTER);
 		panelPrice.add(labelPriceEuro, BorderLayout.EAST);
 		panelPrice.setBackground(Util.orange);
 
 		panelDate = new JPanel(new GridLayout(1, 5));
 		panelDate.setBackground(Util.orange);
-		labelExpirationDate = new JLabel("Expiration Date: ");
+		labelExpirationDate = new JLabel(Starter.content.getString("expDate"));
 		labelDateInfo = new JLabel();
 		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
 		labelDateInfo
-				.setToolTipText("This is the date when your offer expires. A valid input looks as follows: 2020-12-10");
+				.setToolTipText(Starter.content.getString("offerToolTipDate"));
 		panelDate.add(labelExpirationDate);
 		panelDate.add(labelDateInfo);
 		panelDate.add(getEmptyLabel());
@@ -110,11 +111,11 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		panelInput.add(textFieldDate);
 		panelInput.setBackground(Util.orange);
 
-		buttonCancel = new JButton("Cancel");
+		buttonCancel = new JButton(Starter.content.getString("cancel"));
 		cancelController = new CancelController();
 		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
-		buttonSave = new JButton("Save");
+		buttonSave = new JButton(Starter.content.getString("save"));
 		controller = new AddOfferDialogController(this);
 		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
@@ -125,7 +126,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		container.add(panelInput, BorderLayout.CENTER);
 		container.add(panelButton, BorderLayout.SOUTH);
 		this.setVisible(true);
-		this.setTitle("Create an offer");
+		this.setTitle(Starter.content.getString("createOffer"));
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 

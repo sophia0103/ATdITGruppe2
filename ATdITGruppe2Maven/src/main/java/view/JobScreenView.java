@@ -13,6 +13,7 @@ import controller.Controller;
 import controller.JobScreenController;
 import controller.OpenAddJobDialogController;
 import gemuese4you.Screen;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Job;
 
@@ -27,7 +28,7 @@ public class JobScreenView extends Screen implements View{
 	
 	public JobScreenView() {
 		this.setBackground(Util.orange);
-		panelTitlebar = getTitleBar("Job");
+		panelTitlebar = getTitleBar(Starter.content.getString("jobScreenTitle"));
 		
 		jobScreenController = new JobScreenController();
 		openAddJobDialogController = new OpenAddJobDialogController();

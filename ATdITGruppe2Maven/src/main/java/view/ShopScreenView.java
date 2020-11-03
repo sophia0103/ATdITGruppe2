@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import controller.Controller;
 import controller.ShopScreenController;
 import gemuese4you.Screen;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -25,7 +26,7 @@ public class ShopScreenView extends Screen implements View {
 	public ShopScreenView() {
 
 		this.setLayout(new BorderLayout());
-		panelTitlebar = getTitleBar("Shop");
+		panelTitlebar = getTitleBar(Starter.content.getString("shopScreenTitle"));
 
 		buttonAddOffer = Util.getCustomButton("add");
 		buttonAddOffer.addActionListener(e -> new AddOfferDialogView());

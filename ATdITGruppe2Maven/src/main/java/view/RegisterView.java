@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import controller.Controller;
 import controller.RegisterCancelController;
 import controller.RegisterController;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 public class RegisterView extends JFrame implements DataView{
@@ -43,10 +44,10 @@ public class RegisterView extends JFrame implements DataView{
 		passwordFieldPassword = new JPasswordField();
 		passwordFieldRePassword = new JPasswordField();
 		checkBoxIsFarmer = new JCheckBox();
-		labelUser = new JLabel("Username: ");
-		labelPassword = new JLabel("Password: ");
-		labelRePassword = new JLabel("Confirm Password: ");
-		labelIsFarmer = new JLabel("Farmer? (Yes/No)");
+		labelUser = new JLabel(Starter.content.getString("username"));
+		labelPassword = new JLabel(Starter.content.getString("password"));
+		labelRePassword = new JLabel(Starter.content.getString("confirmPassword"));
+		labelIsFarmer = new JLabel(Starter.content.getString("farmerQuestion"));
 
 		panelRegister.add(labelUser);
 		panelRegister.add(textFieldUser);
@@ -62,10 +63,10 @@ public class RegisterView extends JFrame implements DataView{
 		
 		registerCancelController = new RegisterCancelController();
 		
-		buttonRegister = new JButton("Confirm Registration");
+		buttonRegister = new JButton(Starter.content.getString("confirmRegistration"));
 		registerController = new RegisterController();
 		buttonRegister.addActionListener(e -> registerController.startProcess(this));
-		buttonCancel = new JButton("Cancel");
+		buttonCancel = new JButton(Starter.content.getString("cancel"));
 		registerCancelController = new RegisterCancelController();
 		buttonCancel.addActionListener(e -> registerCancelController.startProcess(this));
 		
@@ -79,7 +80,7 @@ public class RegisterView extends JFrame implements DataView{
 		this.setVisible(true);
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
-		this.setTitle("Register");
+		this.setTitle(Starter.content.getString("register"));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}

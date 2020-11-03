@@ -20,6 +20,7 @@ import controller.ProfileScreenController;
 import controller.SwitchToJobScreenController;
 import controller.SwitchToShopScreenController;
 import gemuese4you.Screen;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -38,7 +39,7 @@ public class HomeScreenView extends Screen implements View{
 	public HomeScreenView() {
 		this.setBackground(Util.orange);
 		this.setLayout(new BorderLayout());
-		this.add(this.getTitleBar("Home"), BorderLayout.NORTH);
+		this.add(this.getTitleBar(Starter.content.getString("homeScreenTitle")), BorderLayout.NORTH);
 		
 		switchToJobScreenController = new SwitchToJobScreenController();
 		switchToShopScreenController = new SwitchToShopScreenController();
@@ -47,26 +48,26 @@ public class HomeScreenView extends Screen implements View{
 		homeScreenContent.setLayout(new BoxLayout(homeScreenContent, BoxLayout.Y_AXIS));
 		homeScreenContent.setBackground(Util.orange);
 		
-		JLabel headlineJobs = createHeadline("Neueste Stellenangebote:");
+		JLabel headlineJobs = createHeadline(Starter.content.getString("homeHeadlineJobs"));
 		
 		String[] contentJobs = {"\n\u2022 Erntehelfer/in Ludwigshafen", "\n\u2022 Ernteleiter/in Kaiserslautern", "\n\u2022 Kassierer/in Hofladen Juergens in Walldorf"}; 
 		buttonJobs = createButton(contentJobs);
 		buttonJobs.addActionListener(e -> switchToJobScreenController.startProcess(this));
 
-		JLabel headlineShop= createHeadline("Neueste Angebote:");
+		JLabel headlineShop= createHeadline(Starter.content.getString("homeHeadlineOffers"));
 		
 		String[] contentShop = {"\n\u2022 Kartoffeln super g¸nstig!", "\n\u2022 Spagel 500g bei Bauer Fitz", "\n\u2022 Pflaumen 10 kaufen 2 umsonst"};
 		buttonShop = createButton(contentShop);
 		buttonShop.addActionListener(e -> switchToShopScreenController.startProcess(this));
 		
-		JLabel headlineNews = createHeadline("Neuigkeiten:");
+		JLabel headlineNews = createHeadline(Starter.content.getString("homeNews"));
 		
 		String[] contentNews = {"\n\u2022 Spargelsaison hat endlich angefangen. Jetzt Spagel kaufen!", "\n\u2022 Coronavirus: Was Sie wissen m√ºssen", "\n\u2022 Aktion: Wochen auf jeden Einkauf 5% sparen"};
 		buttonNews = createButton(contentNews);
 		buttonNews.setBorderPainted( false );
 		buttonNews.setFocusPainted( false );
 		
-		JLabel headlineAboutUs = createHeadline("‹ber unsere App:");
+		JLabel headlineAboutUs = createHeadline(Starter.content.getString("aboutUs"));
 		
 		String[] contentAboutUs = {"\n\u2022 Das Ziel unserer App", "\n\u2022 Wer sind wir?", "\n\u2022 Wie kann man uns erreichen?"};
 		buttonAboutUs = createButton(contentAboutUs);

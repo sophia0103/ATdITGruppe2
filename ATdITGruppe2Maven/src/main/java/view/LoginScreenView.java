@@ -7,6 +7,7 @@ import javax.swing.*;
 import controller.Controller;
 import controller.LoginController;
 import controller.OpenRegisterViewController;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 public class LoginScreenView extends JFrame implements DataView{
@@ -42,10 +43,10 @@ public class LoginScreenView extends JFrame implements DataView{
 		panelButtons = new JPanel(new GridLayout(1, 2));
 		panelButtons.setBackground(orange);
 
-		labelUser = new JLabel("Username: ");
-		labelPassword = new JLabel("Password: ");
+		labelUser = new JLabel(Starter.content.getString("username"));
+		labelPassword = new JLabel(Starter.content.getString("password"));
 
-		labelTitle = new JLabel("Log-In");
+		labelTitle = new JLabel(Starter.content.getString("login"));
 		labelTitle.setFont(new Font("Verdana", Font.BOLD, 20));
 		labelEmpty = new JLabel("");
 
@@ -54,10 +55,10 @@ public class LoginScreenView extends JFrame implements DataView{
 
 		passwordFieldPassword = new JPasswordField();
 
-		buttonLogin = new JButton("Log-In");
+		buttonLogin = new JButton(Starter.content.getString("login"));
 		loginController = new LoginController();
 		buttonLogin.addActionListener(e -> loginController.startProcess(this));
-		buttonRegister = new JButton("Register");
+		buttonRegister = new JButton(Starter.content.getString("register"));
 		openRegisterViewController = new OpenRegisterViewController();
 		buttonRegister.addActionListener(e -> openRegisterViewController.startProcess(this));
 

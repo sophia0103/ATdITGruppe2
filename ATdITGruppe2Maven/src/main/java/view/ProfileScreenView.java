@@ -14,6 +14,7 @@ import javax.swing.border.EtchedBorder;
 import controller.Controller;
 import controller.ProfileScreenController;
 import gemuese4you.Screen;
+import gemuese4you.Starter;
 import gemuese4you.Util;
 
 /**
@@ -37,15 +38,15 @@ public class ProfileScreenView extends Screen implements View {
 
 	public ProfileScreenView() {
 		this.setLayout(new BorderLayout());
-		panelTitlebar = getTitleBar("Profile");
+		panelTitlebar = getTitleBar(Starter.content.getString("profileTitle"));
 		panelTitlebar.setBackground(Util.orange);
 
 		panelUserInfo = getUserInfoPanel();
 
-		labelOffer = new JLabel("These are your current offers: ");
+		labelOffer = new JLabel(Starter.content.getString("currentOffers"));
 		panelExampleOffer = getExampleOffer();
 
-		labelJobOffer = new JLabel("These are your current job offers: ");
+		labelJobOffer = new JLabel(Starter.content.getString("currentJobOffers"));
 		panelExampleJobOffer = getExampleOffer();
 
 		panelFrame = new JPanel(new GridLayout(5, 1));
@@ -74,7 +75,7 @@ public class ProfileScreenView extends Screen implements View {
 	public JPanel getUserInfoPanel() {
 		JPanel panelUserInfo = new JPanel(new GridLayout(2, 1));
 
-		labelUsername = new JLabel("You are logged in as:   ");
+		labelUsername = new JLabel(Starter.content.getString("loggedInAs"));
 		labelUserID = new JLabel(LoginScreenView.userID);
 
 		JPanel panelUsername = new JPanel(new GridLayout(1, 2));
@@ -82,7 +83,7 @@ public class ProfileScreenView extends Screen implements View {
 		panelUsername.add(labelUserID);
 		panelUsername.setBackground(Util.orange);
 
-		buttonChangePassword = new JButton("Change password");
+		buttonChangePassword = new JButton(Starter.content.getString("changePwd"));
 		buttonChangePassword.addActionListener(e -> new ChangePasswordDialogView());
 
 		panelUserInfo.add(panelUsername);
@@ -97,16 +98,16 @@ public class ProfileScreenView extends Screen implements View {
 	 * @return Returns a JPanel which represents an example offer (mock data).
 	 */
 	public JPanel getExampleOffer() {
-		buttonDelete = Util.getCustomButton("delete");
+		buttonDelete = Util.getCustomButton(Starter.content.getString("delete"));
 		buttonDelete.setBackground(new Color(255, 237, 203));
 		controller = new ProfileScreenController();
 		buttonDelete.addActionListener(e -> this.controller.startProcess(this));
 
 		JPanel panelExampleOffer = new JPanel(new BorderLayout());
 
-		JLabel labelExampleOffer = new JLabel("Example offer");
+		JLabel labelExampleOffer = new JLabel(Starter.content.getString("exampleOffer"));
 		labelExampleOffer.setToolTipText(
-				"This function hasn´t been implemented. By pushing this you could e.g. change details of your job offer.");
+				Starter.content.getString("tooltipProfileScreen"));
 
 		panelExampleOffer.setBorder(line);
 		panelExampleOffer.setBackground(new Color(255, 237, 203));

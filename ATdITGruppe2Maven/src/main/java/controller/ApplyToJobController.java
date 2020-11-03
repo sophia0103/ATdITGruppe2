@@ -22,7 +22,7 @@ public class ApplyToJobController implements Controller{
 	public void startProcess(View view) {
 		this.view = view;
 		JOptionPane.showMessageDialog(null,
-				Starter.content.getString("passwordChange"));
+				Starter.content.getString("applyToJob"));
 	}
 
 }
