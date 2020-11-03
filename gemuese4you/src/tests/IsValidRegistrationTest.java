@@ -48,7 +48,7 @@ public class IsValidRegistrationTest {
 		inputArray[0] = "JUnitTestName";
 		inputArray[1] = "testPassword";
 		inputArray[2] = "testPassword";
-		inputArray[2] = "1";
+		inputArray[3] = "1";
 		assertTrue(Validator.isValidRegistration(inputArray));
 	}
 	
