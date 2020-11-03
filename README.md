@@ -1,6 +1,7 @@
 # Documentation of ATdITGruppe2 Repo
 
 In this documentation you can find info about the content of this repository and how to run our app.
+**Please consider that the branch "Maven-Test" is our main branch, not the master branch. Please rate the "Maven-Test" branch.**
 
 ### How to get around in this repository
 
