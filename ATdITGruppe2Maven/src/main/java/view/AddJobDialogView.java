@@ -77,7 +77,7 @@ public class AddJobDialogView extends JFrame implements DataView {
 		panelDate.setBackground(Util.orange);
 		labelDate = new JLabel(Starter.content.getString("applicationDeadline"));
 		labelDateInfo = new JLabel();
-		labelDateInfo.setIcon(new ImageIcon("images/info.png"));
+		labelDateInfo.setIcon(new ImageIcon("src/main/resources/info.png"));
 		labelDateInfo
 				.setToolTipText(Starter.content.getString("tooltipJob"));
 		panelDate.add(labelDate);
