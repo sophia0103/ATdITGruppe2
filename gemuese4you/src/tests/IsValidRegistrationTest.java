@@ -21,23 +21,8 @@ public class IsValidRegistrationTest {
 		inputArray[1] = "";
 		inputArray[2] = "";
 		inputArray[3] = "";
-		assertFalse(Validator.isValidChangeUserCredentials(inputArray));
+		assertFalse(Validator.isValidRegistration(inputArray));
 	}
-	
-//	/**
-//	 * This test tests if a username can be taken twice.
-//	 */
-//	@Test
-//	void testSameUsername() {
-//		String[] inputArray = new String[4];
-//		inputArray[0] = "Martin";
-//		inputArray[1] = "def";
-//		inputArray[2] = "defg";
-//		inputArray[3] = "Yes";
-//		assertFalse(Validator.isValidChangeUserCredentials(inputArray));
-//	}
-	
-	
 	
 	/**
 	 * This test tests if the entry of two different new passwords is invalid.
@@ -50,7 +35,7 @@ public class IsValidRegistrationTest {
 		inputArray[1] = "def";
 		inputArray[2] = "defg";
 		inputArray[3] = "1";
-		assertFalse(Validator.isValidChangeUserCredentials(inputArray));
+		assertFalse(Validator.isValidRegistration(inputArray));
 	}
 	
 	
@@ -64,7 +49,7 @@ public class IsValidRegistrationTest {
 		inputArray[1] = "testPassword";
 		inputArray[2] = "testPassword";
 		inputArray[2] = "1";
-		assertTrue(Validator.isValidChangeUserCredentials(inputArray));
+		assertTrue(Validator.isValidRegistration(inputArray));
 	}
 	
 }
