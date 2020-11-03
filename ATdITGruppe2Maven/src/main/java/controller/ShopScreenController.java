@@ -42,9 +42,13 @@ public class ShopScreenController implements Controller {
 		try {
 			showCurrentOffers();
 			SwingUtilities.updateComponentTreeUI((JPanel) view);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"),
+					"Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
-					Starter.content.getString("productsDataBaseError"),
+					e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(0);
@@ -56,7 +60,7 @@ public class ShopScreenController implements Controller {
 	 * 
 	 * @throws Exception
 	 */
-	public void showCurrentOffers() throws Exception {
+	public void showCurrentOffers() throws SQLException, Exception {
 		// panel has to be removed and added again in order to fetch new offers which
 		// might have been created in the process
 		if (panelOffer != null) {
@@ -75,28 +79,22 @@ public class ShopScreenController implements Controller {
 	/**
 	 * Reads the current offers in the database and adds them to the offer list.
 	 */
-	public void readOffers() {
+	public void readOffers() throws SQLException{
 		offerList.clear();
-		try {
-			String today = Util.returnDateAsString();
-			Statement statement = Util.getConnection().createStatement();
-			String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
-			ResultSet resultOffers = statement.executeQuery(queryOffers);
+		String today = Util.returnDateAsString();
+		Statement statement = Util.getConnection().createStatement();
+		String queryOffers = "SELECT * FROM offers WHERE exp_date > '" + today + "' ORDER BY distance";
+		ResultSet resultOffers = statement.executeQuery(queryOffers);
+		resultOffers.next();
+		while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers") && resultOffers != null
+				&& resultOffers.getString(2) != null) {
+			int offerID = resultOffers.getInt(1);
+			String userID = resultOffers.getString(2);
+			int distance = resultOffers.getInt(3);
+			String expDate = resultOffers.getString(4);
+			double price = resultOffers.getDouble(5);
+			offerList.add(new Offer(offerID, userID, distance, expDate, price));
 			resultOffers.next();
-			while (!resultOffers.isAfterLast() && Util.checkDatabaseEntries("offerID", "offers") && resultOffers != null
-					&& resultOffers.getString(2) != null) {
-				int offerID = resultOffers.getInt(1);
-				String userID = resultOffers.getString(2);
-				int distance = resultOffers.getInt(3);
-				String expDate = resultOffers.getString(4);
-				double price = resultOffers.getDouble(5);
-				offerList.add(new Offer(offerID, userID, distance, expDate, price));
-				resultOffers.next();
-			}
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"),
-					"Error", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
 		}
 	}
 
@@ -105,11 +103,12 @@ public class ShopScreenController implements Controller {
 	 * 
 	 * @param offer Specifies the offer for which a JPanel is created.
 	 * @return Returns a JPanel with the information of the offer.
+	 * @throws SQLException 
 	 * @throws Exception
 	 */
-	public JPanel getOfferPanel(Offer offer) throws Exception {
+	public JPanel getOfferPanel(Offer offer) throws SQLException, Exception {
 		JPanel panelOffer = new JPanel(new BorderLayout());
-		JLabel panelFooter = new JLabel(offer.getUserID() + "´s offer is " + offer.getDistance() + " m away.");
+		JLabel panelFooter = new JLabel(offer.getUserID() + Starter.content.getString("creatorsOfferIs") + " " + offer.getDistance() + Starter.content.getString("metersAway"));
 		panelOffer.setBackground(new Color(255, 237, 203));
 		JButton buttonIcon = Util.getCustomButton(offer.getProductList().get(0));
 		ActionListener offerListener = new ActionListener() {
@@ -117,10 +116,10 @@ public class ShopScreenController implements Controller {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new GetOfferDialogView(offer);
-				} catch (Exception e1) {
+				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(null,
-							Starter.content.getString("productsDataBaseError"), "Error", JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
+							exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					exception.printStackTrace();
 					System.exit(0);
 				}
 			}
