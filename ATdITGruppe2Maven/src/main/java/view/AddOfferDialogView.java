@@ -116,7 +116,7 @@ public class AddOfferDialogView extends JFrame implements DataView {
 		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
 		buttonSave = new JButton(Starter.content.getString("save"));
-		controller = new AddOfferDialogController(this);
+		controller = new AddOfferDialogController();
 		buttonSave.addActionListener(e -> this.controller.startProcess(this));
 
 		panelButton = new JPanel(new GridLayout(1, 2));
