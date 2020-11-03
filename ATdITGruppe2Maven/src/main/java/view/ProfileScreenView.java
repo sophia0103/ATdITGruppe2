@@ -98,7 +98,7 @@ public class ProfileScreenView extends Screen implements View {
 	 * @return Returns a JPanel which represents an example offer (mock data).
 	 */
 	public JPanel getExampleOffer() {
-		buttonDelete = Util.getCustomButton(Starter.content.getString("delete"));
+		buttonDelete = Util.getCustomButton("delete");
 		buttonDelete.setBackground(new Color(255, 237, 203));
 		controller = new ProfileScreenController();
 		buttonDelete.addActionListener(e -> this.controller.startProcess(this));
