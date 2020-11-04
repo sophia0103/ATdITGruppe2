@@ -47,6 +47,7 @@ public class RegisterView extends JFrame implements DataView{
 		passwordFieldPassword = new JPasswordField();
 		passwordFieldRePassword = new JPasswordField();
 		checkBoxIsFarmer = new JCheckBox();
+		checkBoxIsFarmer.setBackground(Util.orange);
 		labelUser = new JLabel(Starter.content.getString("username"));
 		labelPassword = new JLabel(Starter.content.getString("password"));
 		labelRePassword = new JLabel(Starter.content.getString("confirmPassword"));

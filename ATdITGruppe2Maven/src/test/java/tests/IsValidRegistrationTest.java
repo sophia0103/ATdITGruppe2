@@ -21,11 +21,12 @@ public class IsValidRegistrationTest {
 		inputArray[1] = "";
 		inputArray[2] = "";
 		inputArray[3] = "";
-		assertFalse(Validator.isValidChangeUserCredentials(inputArray));
+		assertFalse(Validator.isValidRegistration(inputArray));
 	}
 	
 //	/**
 //	 * This test tests if a username can be taken twice.
+//	 * Has to be checked with database entries.
 //	 */
 //	@Test
 //	void testSameUsername() {
@@ -44,13 +45,12 @@ public class IsValidRegistrationTest {
 	 */
 	@Test
 	void testDifferentPasswords() {
-		LoginScreenView.userID = "Martin";
 		String[] inputArray = new String[4];
 		inputArray[0] = "abc";
 		inputArray[1] = "def";
 		inputArray[2] = "defg";
 		inputArray[3] = "1";
-		assertFalse(Validator.isValidChangeUserCredentials(inputArray));
+		assertFalse(Validator.isValidRegistration(inputArray));
 	}
 	
 	
@@ -63,8 +63,8 @@ public class IsValidRegistrationTest {
 		inputArray[0] = "JUnitTestName";
 		inputArray[1] = "testPassword";
 		inputArray[2] = "testPassword";
-		inputArray[2] = "1";
-		assertTrue(Validator.isValidChangeUserCredentials(inputArray));
+		inputArray[3] = "1";
+		assertTrue(Validator.isValidRegistration(inputArray));
 	}
 	
 }
