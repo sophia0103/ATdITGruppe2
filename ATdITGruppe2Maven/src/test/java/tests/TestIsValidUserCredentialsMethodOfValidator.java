@@ -12,7 +12,7 @@ import view.LoginScreenView;
  * @author I518189
  * This class tests the funcionality of the isValidChangeUserCredentials method of the Validator class.
  */
-class isValidUserCredentialsTest {
+class TestIsValidUserCredentialsMethodOfValidator {
 
 	/**
 	 * This test tests if empty input is invalid.

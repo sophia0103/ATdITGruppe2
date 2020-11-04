@@ -9,7 +9,7 @@ import gemuese4you.Validator;
 import view.LoginScreenView;
 
 
-public class IsValidRegistrationTest {
+public class TestIsValidRegistrationMethoOfValidator {
 
 	/**
 	 * This test tests if empty input is invalid.

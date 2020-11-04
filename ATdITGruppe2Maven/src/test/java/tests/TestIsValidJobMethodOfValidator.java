@@ -10,7 +10,7 @@ import gemuese4you.Validator;
  * @author Luis
  * This class tests the funcionality of the isValidOffer method of the Validator class.
  */
-class isValidJobTest {
+class TestIsValidJobMethodOfValidator {
 	
 	/**
 	 * This test tests if empty input is invalid.
