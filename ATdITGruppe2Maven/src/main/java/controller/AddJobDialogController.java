@@ -50,6 +50,7 @@ public class AddJobDialogController implements DataController{
 	}
 
 	/**Inserts a new job into the job database table.
+	 * @param job the Job that is added to the database.
 	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addJob(Job job) throws SQLException {
@@ -57,7 +58,7 @@ public class AddJobDialogController implements DataController{
 		// Auto increment in SQL doesn´t work properly, so we do it manually
 		ShopScreenController.lastOfferID++;
 
-		String queryAddOffer = "INSERT INTO jobs VALUES ('" + job.getTitle() + "'," + job.getDuration() + "," + job.getDistance() + ",'" + job.getExpDate() +
+		String queryAddOffer = "INSERT INTO jobs VALUES ('" + job.getTitle() + "'," + job.getDistance() + "," + job.getDuration() + ",'" + job.getExpDate() +
 				"','" + job.getCreator() + "', '" + job.getEmploymentType() + "'," + job.getSalary() + ",'"
 				+ job.getDescription() + "');";
 		statementAddOffer.execute(queryAddOffer);

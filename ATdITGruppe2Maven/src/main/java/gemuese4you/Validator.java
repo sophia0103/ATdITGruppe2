@@ -44,7 +44,7 @@ public class Validator {
 			return false;
 		}
 	}
-
+	
 	public static boolean isValidOffer(String[] inputArray) {
 		if (getValidator().isInputEmpty(inputArray[0]) || getValidator().isInputEmpty(inputArray[1])
 				|| getValidator().isInputEmpty(inputArray[2]) || getValidator().isInputEmpty(inputArray[3])) {

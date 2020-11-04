@@ -25,11 +25,30 @@ import model.Job;
  */
 public class AddJobDialogView extends JFrame implements DataView {
 
-	private JTextField textFieldTitle, textFieldDuration, textFieldDistance, textFieldDate, textFieldEmploymentType,
-			textFieldSalary, textFieldDescription;
-	private JLabel labelTitle, labelDuration, labelDistance, labelDate, labelEmploymentType, labelSalary,
-			labelDescription, labelDateInfo, labelDistanceMeters, labelSalaryEuroPerHour, labelDurationMonths;
-	private JPanel panelInput, panelDuration, panelDistance, panelDate, panelSalary, panelButton;
+	private JTextField textFieldTitle;
+	private JTextField textFieldDuration; 
+	private JTextField textFieldDistance;
+	private JTextField textFieldDate;
+	private JTextField textFieldEmploymentType;
+	private JTextField textFieldSalary;
+	private JTextField textFieldDescription;
+	private JLabel labelTitle;
+	private JLabel labelDuration;
+	private JLabel labelDistance;
+	private JLabel labelDate;
+	private JLabel labelEmploymentType;
+	private JLabel labelSalary;
+	private JLabel labelDescription;
+	private JLabel labelDateInfo;
+	private JLabel labelDistanceMeters;
+	private JLabel labelSalaryEuroPerHour;
+	private JLabel labelDurationMonths;
+	private JPanel panelInput;
+	private JPanel panelDuration;
+	private JPanel panelDistance;
+	private JPanel panelDate;
+	private JPanel panelSalary;
+	private JPanel panelButton;
 	private JButton buttonSave, buttonCancel;
 	private Controller controller;
 	private Controller cancelController;
@@ -37,11 +56,13 @@ public class AddJobDialogView extends JFrame implements DataView {
 	
 	public AddJobDialogView() {
 
+		//Container and Layout
 		Container container = getContentPane();
 		container.setBackground(Util.orange);
 		container.setLayout(new BorderLayout());
 		panelInput = new JPanel(new GridLayout(14, 1));
 
+		//Textfields
 		textFieldTitle = new JTextField();
 		textFieldDuration = new JTextField();
 		textFieldDistance = new JTextField();
@@ -49,10 +70,11 @@ public class AddJobDialogView extends JFrame implements DataView {
 		textFieldEmploymentType = new JTextField();
 		textFieldSalary = new JTextField();
 		textFieldDescription = new JTextField();
-
+		
 		labelTitle = new JLabel(Starter.content.getString("title"));
 
 		labelDistance = new JLabel(Starter.content.getString("distance"));
+
 		panelDistance = new JPanel(new BorderLayout());
 		labelDistanceMeters = new JLabel(Starter.content.getString("meters"));
 		panelDistance.add(textFieldDistance, BorderLayout.CENTER);
@@ -60,6 +82,7 @@ public class AddJobDialogView extends JFrame implements DataView {
 		panelDistance.setBackground(Util.orange);
 
 		labelDuration = new JLabel(Starter.content.getString("duration"));
+		
 		labelDurationMonths = new JLabel(Starter.content.getString("months"));
 		panelDuration = new JPanel(new BorderLayout());
 		panelDuration.add(textFieldDuration, BorderLayout.CENTER);
@@ -67,19 +90,20 @@ public class AddJobDialogView extends JFrame implements DataView {
 		panelDuration.setBackground(Util.orange);
 
 		labelSalary = new JLabel(Starter.content.getString("wage"));
+		
 		panelSalary = new JPanel(new BorderLayout());
 		labelSalaryEuroPerHour = new JLabel(Starter.content.getString("euro"));
 		panelSalary.add(textFieldSalary, BorderLayout.CENTER);
 		panelSalary.add(labelSalaryEuroPerHour, BorderLayout.EAST);
 		panelSalary.setBackground(Util.orange);
 
-		panelDate = new JPanel(new GridLayout(1, 5));
-		panelDate.setBackground(Util.orange);
 		labelDate = new JLabel(Starter.content.getString("applicationDeadline"));
+		
+		panelDate = new JPanel(new GridLayout(1, 5));
+		panelDate.setBackground(Util.orange);		
 		labelDateInfo = new JLabel();
 		labelDateInfo.setIcon(new ImageIcon("src/main/resources/info.png"));
-		labelDateInfo
-				.setToolTipText(Starter.content.getString("tooltipJob"));
+		labelDateInfo.setToolTipText(Starter.content.getString("tooltipJob"));
 		panelDate.add(labelDate);
 		panelDate.add(labelDateInfo);
 		panelDate.add(getEmptyLabel());
@@ -87,7 +111,7 @@ public class AddJobDialogView extends JFrame implements DataView {
 		panelDate.add(getEmptyLabel());
 
 		labelEmploymentType = new JLabel(Starter.content.getString("employmentType"));
-
+		
 		labelDescription = new JLabel(Starter.content.getString("description"));
 
 		panelInput.add(labelTitle);
@@ -107,11 +131,11 @@ public class AddJobDialogView extends JFrame implements DataView {
 
 		panelInput.setBackground(Util.orange);
 
-		buttonCancel = new JButton("Cancel");
+		buttonCancel = new JButton(Starter.content.getString("cancel"));
 		cancelController = new CancelController();
 		buttonCancel.addActionListener(e -> cancelController.startProcess(this));
 
-		buttonSave = new JButton("Save");
+		buttonSave = new JButton(Starter.content.getString("save"));
 		controller = new AddJobDialogController();
 		buttonSave.addActionListener(e -> controller.startProcess(this));
 

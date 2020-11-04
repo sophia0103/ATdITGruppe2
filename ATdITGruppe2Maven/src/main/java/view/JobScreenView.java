@@ -17,6 +17,10 @@ import gemuese4you.Starter;
 import gemuese4you.Util;
 import model.Job;
 
+/**
+ * @author Luis
+ * Represents the UI of the job screen.
+ */
 public class JobScreenView extends Screen implements View{
 	
 	ArrayList<Job> jobs = new ArrayList();

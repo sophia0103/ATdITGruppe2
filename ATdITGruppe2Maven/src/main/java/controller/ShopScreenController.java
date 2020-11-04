@@ -57,8 +57,8 @@ public class ShopScreenController implements Controller {
 
 	/**
 	 * Displays existing offers.
-	 * 
-	 * @throws Exception
+	 * @throws SQLException That exception is received from method readOffers and is passed on.
+	 * @throws Exception That exception is received from method getOfferPanel and is passed on.
 	 */
 	public void showCurrentOffers() throws SQLException, Exception {
 		// panel has to be removed and added again in order to fetch new offers which
@@ -78,6 +78,8 @@ public class ShopScreenController implements Controller {
 
 	/**
 	 * Reads the current offers in the database and adds them to the offer list.
+	 * 
+	 * @throws SQLException That Exception is thrown if the SQL statement is incorrect.
 	 */
 	public void readOffers() throws SQLException{
 		offerList.clear();
@@ -103,8 +105,8 @@ public class ShopScreenController implements Controller {
 	 * 
 	 * @param offer Specifies the offer for which a JPanel is created.
 	 * @return Returns a JPanel with the information of the offer.
-	 * @throws SQLException 
-	 * @throws Exception
+	 * @throws SQLException That Exception is thrown if the SQL statement is incorrect.
+	 * @throws Exception That exception is received from method getProductList and is passed on.
 	 */
 	public JPanel getOfferPanel(Offer offer) throws SQLException, Exception {
 		JPanel panelOffer = new JPanel(new BorderLayout());

@@ -13,7 +13,7 @@ import view.View;
 /**
  * @author Luis 
  * 		   Represents the logic of the dialog which opens when the user
- *         clicks a job to get the details.
+ *         wants to apply to a job.
  */
 public class ApplyToJobController implements Controller{
 	private View view;

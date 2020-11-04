@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Martin
+ * Represents user input of the login screen.
+ */
 public class UserCredentials {
 	private String username;
 	private String password;
@@ -9,16 +13,18 @@ public class UserCredentials {
 		this.password = password;
 	}
 	
+	/**
+	 * @return Returns password attribute of a user.
+	 */
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
+	/**
+	 * @return Returns username attribute of a user.
+	 */
 	public String getUsername() {
 		return username;
 	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 }

@@ -9,7 +9,10 @@ import controller.LoginController;
 import controller.OpenRegisterViewController;
 import gemuese4you.Starter;
 import gemuese4you.Util;
-
+/**
+ * @author Martin
+ * Represents the UI of the login screen.
+ */
 public class LoginScreenView extends JFrame implements DataView{
 
 	
@@ -87,13 +90,6 @@ public class LoginScreenView extends JFrame implements DataView{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	public JPasswordField getPasswordFieldPassword() {
-		return passwordFieldPassword;
-	}
-
-	public JTextField getTextFieldUser() {
-		return textFieldUser;
-	}
 
 	@Override
 	public String[] getData() {

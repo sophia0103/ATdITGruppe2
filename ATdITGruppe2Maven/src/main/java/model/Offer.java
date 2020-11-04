@@ -31,7 +31,9 @@ public class Offer {
 
 	/**
 	 * @return Returns a ArrayList with all the products in an offer as Strings.
-	 * @throws Exception 
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
+	 * @throws Exception That is a custom exception which is thrown when there are faulty or missing database entries which prohibit
+	 * the program from starting properly.
 	 */
 	public ArrayList<String> getProductList() throws Exception, SQLException {
 		ArrayList<String> productList = new ArrayList<String>();
@@ -53,6 +55,7 @@ public class Offer {
 
 	/**
 	 * @return Returns the ID/number of the last offer in the database table offers.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public static int getLastOfferID() throws SQLException{
 		int lastOfferID;

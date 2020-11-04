@@ -14,6 +14,9 @@ import view.DataView;
 import view.LoginScreenView;
 import view.View;
 
+/**
+ * @author I518189 Represents the logic behind the registration process.
+ */
 public class RegisterController implements DataController {
 	private View view;
 
@@ -27,14 +30,19 @@ public class RegisterController implements DataController {
 				User user = createModel(data);
 				userRegistration(user);
 				((JFrame) view).dispose();
-			} catch (SQLException | ClassNotFoundException exception) {
+			} catch (SQLException exception) {
 				exception.printStackTrace();
 			}
 		}
 
 	}
 
-	public void userRegistration(User user) throws SQLException, ClassNotFoundException {
+	/**
+	 * Adds the user model to the database
+	 * @param user The user model that is added to the database.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
+	 */
+	public void userRegistration(User user) throws SQLException {
 
 		PreparedStatement statement;
 		String query = "INSERT INTO users (UserID, Password, isFarmer) VALUES (?, ?, ?)";

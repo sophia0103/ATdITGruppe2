@@ -99,7 +99,7 @@ public class GetOfferDialogView extends JFrame implements View {
 	 * 
 	 * @param offer Offer which the productList belongs to.
 	 * @return Returns the productList as a String.
-	 * @throws Exception
+	 * @throws Exception That exception is received from getProductList and is passed on.
 	 */
 
 	public void setFormattedProductList() throws Exception {

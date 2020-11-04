@@ -7,7 +7,7 @@ import view.View;
 
 /**
  * @author I518189 Represents the logic of the dialog which opens when the user
- *         clicks an offer to get the details.
+ *         wants to buy an offer.
  */
 public class BuyOfferController implements Controller {
 	private View view;

@@ -52,6 +52,8 @@ public class AddOfferDialogController implements DataController {
 	/**
 	 * Adds a valid offer and its products to the database. Gets the products from
 	 * the product text field.
+	 * @param products The products that are added to the ArrayList of products.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void readProducts(String products) throws SQLException{
 		productArray = products.split(",");
@@ -67,6 +69,7 @@ public class AddOfferDialogController implements DataController {
 	 * products database table.
 	 * 
 	 * @param productName Name of the product which is checked upon.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void checkIfProductExists(String productName) throws SQLException{
 		Statement statementProducts = Util.getConnection().createStatement();
@@ -88,6 +91,7 @@ public class AddOfferDialogController implements DataController {
 	 * 
 	 * @param productName Name of the product which should be added in the database
 	 *                    table.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addNonExistingProduct(String productName) throws SQLException{
 		Statement statementNonExistingProduct = Util.getConnection().createStatement();
@@ -97,6 +101,8 @@ public class AddOfferDialogController implements DataController {
 
 	/**
 	 * Inserts a new offer into the offers database table.
+	 * @param offer The offer that is added to the database.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addOffer(Offer offer) throws SQLException{
 		Statement statementAddOffer;
@@ -109,6 +115,8 @@ public class AddOfferDialogController implements DataController {
 
 	/**
 	 * Adds products of an offer to the database table productsInOffer.
+	 * @param offer The offer of which the products are added to the database.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
 	public void addProductListOfOffer(Offer offer) throws SQLException{
 		Statement statementAddProductList = Util.getConnection().createStatement();

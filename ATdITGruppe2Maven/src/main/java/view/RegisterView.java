@@ -15,7 +15,10 @@ import controller.RegisterCancelController;
 import controller.RegisterController;
 import gemuese4you.Starter;
 import gemuese4you.Util;
-
+/**
+ * @author Martin
+ * Represents the UI of the registration screen.
+ */
 public class RegisterView extends JFrame implements DataView{
 
 	
@@ -83,24 +86,6 @@ public class RegisterView extends JFrame implements DataView{
 		this.setTitle(Starter.content.getString("register"));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-	}
-
-	//give getter methods for easy access to text in textfields
-	
-	public JTextField getTextFieldUser() {
-		return textFieldUser;
-	}
-
-	public JCheckBox getCheckBoxFieldIsFarmer() {
-		return checkBoxIsFarmer;
-	}
-
-	public JPasswordField getPasswordFieldPassword() {
-		return passwordFieldPassword;
-	}
-
-	public JPasswordField getPasswordFieldRePassword() {
-		return passwordFieldRePassword;
 	}
 
 	@Override

@@ -7,13 +7,14 @@ import view.LoginScreenView;
 
 public class Starter {
 	public static ResourceBundle content;
+	
 	// start of the program
-		public static void main(String[] args) {			
-			String language = new String(args[0]);
-			String country = new String(args[1]);
-			Locale currentLocale = new Locale(language, country);
-			content = ResourceBundle.getBundle("Content", currentLocale);
-			LoginScreenView log = new LoginScreenView();
-		}
+	public static void main(String[] args) {			
+		String language = new String(args[0]);
+		String country = new String(args[1]);
+		Locale currentLocale = new Locale(language, country);
+		content = ResourceBundle.getBundle("Content", currentLocale);
+		LoginScreenView log = new LoginScreenView();
+	}
 	
 }

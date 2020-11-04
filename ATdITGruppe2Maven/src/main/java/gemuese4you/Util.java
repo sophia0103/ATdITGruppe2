@@ -27,8 +27,6 @@ public class Util {
 
 	/**
 	 * @return Returns a connection to the Heidi SQL database.
-	 * @throws ClassNotFoundException Throws an exception if the class is not found.
-	 * @throws SQLException Throws an exception if the SQL syntax is incorrect.
 	 */
 	public static Connection getConnection() {
 		if (connection == null) {

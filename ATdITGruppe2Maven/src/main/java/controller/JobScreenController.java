@@ -46,7 +46,17 @@ public class JobScreenController implements Controller{
 		jobs = new ArrayList<Job>();
 	}
 	
-	// display existing jobs
+	@Override
+	public void startProcess(View view) {
+		this.view = view;
+		showCurrentJobs();
+		SwingUtilities.updateComponentTreeUI((JPanel)view);		
+	}
+	
+	/**
+	 * Display existing offers
+	 * 
+	 */
 	public void showCurrentJobs() {
 		// panel has to be removed and added again in order to fetch new jobs which
 		// might have been created in the process
@@ -54,7 +64,14 @@ public class JobScreenController implements Controller{
 			((JPanel)view).remove(jobScreenContent);
 			jobScreenContent = null;
 		}
-		readJobs();
+		
+		try {
+			readJobs();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"),
+					"Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		JPanel jobScreenContent = new JPanel();
 		jobScreenContent.setLayout(new BoxLayout(jobScreenContent, BoxLayout.Y_AXIS));
 		jobScreenContent.setBackground(Util.orange);
@@ -76,34 +93,33 @@ public class JobScreenController implements Controller{
 
 	/**
 	 * Reads the current job offers from the job database table.
+	 * @throws SQLException Throws Exception if the SQL statement is incorrect.
 	 */
-	public void readJobs() {
+	public void readJobs() throws SQLException{
 		jobs.clear();
-		try {
-			String today = Util.returnDateAsString();
-			Statement statement = Util.getConnection().createStatement();
-			String queryOffers = "SELECT * FROM jobs WHERE exp_date > '" + today + "' ORDER BY distance";
-			ResultSet resultJobs = statement.executeQuery(queryOffers);
-			while (!resultJobs.isAfterLast() && Util.checkDatabaseEntries("title", "jobs") && resultJobs!=null) {
-				if (resultJobs.next()) {
-					String title = resultJobs.getString(1);
-					int duration = resultJobs.getInt(2);
-					int distance = resultJobs.getInt(3);
-					String expDate = resultJobs.getString(4);
-					String creator = resultJobs.getString(5);
-					String employmentType = resultJobs.getString(6);
-					double salary = resultJobs.getDouble(7);
-					String description = resultJobs.getString(8);
-					jobs.add(new Job(title, creator, duration, distance, expDate, employmentType, salary, description));
-				}
+
+		String today = Util.returnDateAsString();
+		Statement statement = Util.getConnection().createStatement();
+		String queryOffers = "SELECT * FROM jobs WHERE exp_date > '" + today + "' ORDER BY distance";
+		ResultSet resultJobs = statement.executeQuery(queryOffers);
+		while (!resultJobs.isAfterLast() && Util.checkDatabaseEntries("title", "jobs") && resultJobs!=null) {
+			if (resultJobs.next()) {
+				String title = resultJobs.getString(1);
+				int duration = resultJobs.getInt(2);
+				int distance = resultJobs.getInt(3);
+				String expDate = resultJobs.getString(4);
+				String creator = resultJobs.getString(5);
+				String employmentType = resultJobs.getString(6);
+				double salary = resultJobs.getDouble(7);
+				String description = resultJobs.getString(8);
+				jobs.add(new Job(title, creator, duration, distance, expDate, employmentType, salary, description));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * @param job Specifies the job offer which the details are shown to.
+	 * Creates a button which shows the job details.
+	 * @param job The job model that a button is to be created for.
 	 * @return Returns a JButton with the details of the job offer.
 	 */
 	private JButton createJobButton(Job job) {
@@ -137,6 +153,7 @@ public class JobScreenController implements Controller{
 	}
 	
 	/**
+	 * Creates a specifically designed headline.
 	 * @param content Content which is displayed in the headline.
 	 * @return Returns a JLabel with the headline.
 	 */
@@ -146,11 +163,5 @@ public class JobScreenController implements Controller{
 		return headline;
 	}
 
-	@Override
-	public void startProcess(View view) {
-		this.view = view;
-		showCurrentJobs();
-		SwingUtilities.updateComponentTreeUI((JPanel)view);		
-	}
 
 }

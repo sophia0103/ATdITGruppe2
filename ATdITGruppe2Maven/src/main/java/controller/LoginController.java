@@ -18,6 +18,9 @@ import view.DataView;
 import view.LoginScreenView;
 import view.View;
 
+/**
+ * @author I518189 Represents the logic behind the login process.
+ */
 public class LoginController implements DataController {
 	private View view;
 
@@ -36,15 +39,19 @@ public class LoginController implements DataController {
 				else {
 					JOptionPane.showMessageDialog(null, Starter.content.getString("loginCredentialsWrong"), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} catch (SQLException | ClassNotFoundException exception) {
+			} catch (SQLException exception) {
 				JOptionPane.showMessageDialog(null, Starter.content.getString("sqlStatementError"), "Error", JOptionPane.ERROR_MESSAGE);
 				exception.printStackTrace();
 			}
 	}
 
-	// checks if user + password combination exists and logs in if the query was
-	// successful
-	public boolean userLogin(UserCredentials userCredentials) throws SQLException, ClassNotFoundException {
+	/**
+	* checks if user + password combination exists and logs in if the query was
+	* successful
+	* @param userCredentials The user credentials entered by the user which are to be checked if the combination exists.
+	* @throws SQLException Throws Exception if the SQL statement is incorrect.
+	*/
+	public boolean userLogin(UserCredentials userCredentials) throws SQLException {
 		PreparedStatement statement;
 		ResultSet result;
 

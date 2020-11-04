@@ -6,7 +6,7 @@ import view.View;
 
 /**
  * @author Luis
- *Represents the logic behind the profile Screen UI.
+ *Represents the process of a switch to the JobScreen.
  */
 public class SwitchToJobScreenController implements Controller {
 
