@@ -33,7 +33,7 @@ public class ChangePasswordDialogController implements DataController {
 						+ changePasswordCredentials.getNewPasswordRepeat() + "' WHERE userID ='"
 						+ LoginScreenView.userID + "'";
 				statement.execute(queryChangePassword);
-				JOptionPane.showMessageDialog(null, Starter.content.getString("passwordChange"));
+				JOptionPane.showMessageDialog(null, Starter.content.getString("passwordChanged"));
 				((ChangePasswordDialogView) view).dispose();
 			}
 		} catch (SQLException e) {
